@@ -4,25 +4,25 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home_active"
-        android:title="@string/Home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"
         app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/history_inactive"
-        android:title="@string/History"
+        android:icon="@drawable/ic_history"
+        android:title="@string/history"
         app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/navigation_store"
-        android:icon="@drawable/store_inactive"
-        android:title="@string/Store"
+        android:icon="@drawable/ic_shopping"
+        android:title="@string/store"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/navigation_info"
-        android:icon="@drawable/info_inactive"
-        android:title="@string/Info"
+        android:icon="@drawable/ic_info"
+        android:title="@string/info"
         app:showAsAction="always|withText" />
 
 </menu>

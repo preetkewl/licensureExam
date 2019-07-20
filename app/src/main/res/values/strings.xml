@@ -3,14 +3,6 @@
     <string name="crc_exam">CRC Exam</string>
     <string name="api_key">7L8xdPEa6OLiHk9BumiuP36XZZW63hhjDAeOYLDZ84jIA3nzm8</string>
 
-    <string name="Home">Home</string>
-    <string name="History">History</string>
-    <string name="result">Results</string>
-    <string name="refer">Refer</string>
-    <string name="profile">Profile</string>
-    <string name="Store">Store</string>
-    <string name="Info">Info</string>
-
 
     <string name="Email_Alert">Please enter Email.</string>
     <string name="Name_Alert">Please enter Name.</string>
@@ -85,7 +77,7 @@ your own home. It\'s in there.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">Dashboard Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -93,12 +85,13 @@ your own home. It\'s in there.</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_dashboard">Dashboard</string>
-    <string name="menu_results">Results</string>
-    <string name="menu_profile">Profile</string>
-    <string name="menu_refer">Refer</string>
-    <string name="menu_store">Store</string>
-    <string name="menu_history">History</string>
-    <string name="menu_info">Info</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="result">Results</string>
+    <string name="refer">Refer</string>
+    <string name="profile">Profile</string>
+    <string name="store">Store</string>
+    <string name="info">Info</string>
 
 </resources>

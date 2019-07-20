@@ -1,6 +1,7 @@
 package com.crcexam.android.UI.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -21,45 +22,48 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.fragments.HistoryFragment;
 import com.crcexam.android.UI.fragments.HomeFragment;
 import com.crcexam.android.UI.fragments.InfoFragment;
+import com.crcexam.android.UI.fragments.ProfileFragment;
 import com.crcexam.android.UI.fragments.StoreFragment;
 import com.crcexam.android.helper.BottomNavigationBehavior;
+import com.crcexam.android.utils.PreferenceClass;
+
+import static com.crcexam.android.constants.Constant.UserData.EMAIL;
+import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    public static BottomNavigationView navigation;
+    public static BottomNavigationView bottomNav;
     Context mContext;
     Toolbar mToolbar;
+    private NavigationView navDrawer;
+    private DrawerLayout mdrawer;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mToolbar.setTitle(mContext.getResources().getString(R.string.Home));
-                    loadFragment(new HomeFragment());
+                    openDashboard();
                     return true;
                 case R.id.navigation_history:
-                    mToolbar.setTitle(mContext.getResources().getString(R.string.History));
-                    loadFragment(new HistoryFragment());
+                    openHistory();
                     return true;
                 case R.id.navigation_store:
-                    mToolbar.setTitle(mContext.getResources().getString(R.string.Store));
-                    loadFragment(new StoreFragment());
+                    openStore();
                     return true;
                 case R.id.navigation_info:
-                    mToolbar.setTitle(mContext.getResources().getString(R.string.Info));
-                    loadFragment(new InfoFragment());
+                    openInfo();
                     return true;
             }
-
             return false;
         }
     };
@@ -72,27 +76,36 @@ public class DashboardActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mContext = this;
         setActionBar();
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        mdrawer = findViewById(R.id.drawer_layout);
+        navDrawer = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mdrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mdrawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //drawer.openDrawer(Gravity.LEFT);
-        //  toolbar = getSupportActionBar();
-        // toolbar.setTitle(mContext.getResources().getString(R.string.Home));
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-       /* CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationBehavior());*/
-        loadFragment(new HomeFragment());
+        navDrawer.setNavigationItemSelectedListener(this);
+        bottomNav = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        openDashboard();
         setClickListeners();
+        setDrawerData();
+    }
+
+    private void setDrawerData() {
+        if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("")) {
+            ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
+            ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
+        } else if (!PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
+            ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
+            ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
+        } else {
+            ((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
+            ((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
+        }
+
     }
 
     private void setClickListeners() {
-
+        ((ImageView) findViewById(R.id.imgMenu)).setOnClickListener(this);
     }
 
     private void setActionBar() {
@@ -111,26 +124,29 @@ public class DashboardActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle bottomNav view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.menu_dashboard) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.Home));
-            loadFragment(new HomeFragment());
+            bottomNav.setSelectedItemId(R.id.navigation_home);
+            openDashboard();
         } else if (id == R.id.menu_results) {
-
+            bottomNav.setSelectedItemId(R.id.navigation_history);
+            openHistory();
         } else if (id == R.id.menu_profile) {
-
+            bottomNav.setSelected(false);
+            openProfile();
         } else if (id == R.id.menu_history) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.History));
-            loadFragment(new HistoryFragment());
+            bottomNav.setSelectedItemId(R.id.navigation_history);
+            openHistory();
         } else if (id == R.id.menu_refer) {
-
+            mdrawer.closeDrawer(Gravity.LEFT);
+            shareLink();
+            return false;
         } else if (id == R.id.menu_info) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.Info));
-            loadFragment(new InfoFragment());
+            bottomNav.setSelectedItemId(R.id.navigation_info);
+            openInfo();
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -145,7 +161,7 @@ public class DashboardActivity extends AppCompatActivity
             if (getCurrentFragment() instanceof HomeFragment) {
                 super.onBackPressed();
             } else {
-                navigation.setSelectedItemId(R.id.navigation_home);
+                bottomNav.setSelectedItemId(R.id.navigation_home);
                 loadFragment(new HomeFragment());
             }
             //super.onBackPressed();
@@ -161,5 +177,90 @@ public class DashboardActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgMenu:
+                switchDrawer();
+                break;
+        }
+    }
+
+    private void shareLink() {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // Add data to the intent, the receiving app will decide
+        // what to do with it.
+        share.putExtra(Intent.EXTRA_SUBJECT, "Share App");
+        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.crcexam.android");
+        startActivity(Intent.createChooser(share, "Share App"));
+    }
+
+
+    private void switchDrawer() {
+        if (mdrawer.isDrawerOpen(navDrawer)) {
+            mdrawer.closeDrawer(Gravity.LEFT);
+        } else {
+            mdrawer.openDrawer(Gravity.LEFT);
+        }
+    }
+
+    private void openProfile() {
+        if (getCurrentFragment() instanceof ProfileFragment) {
+            switchDrawer();
+        } else {
+            setToolbarTitle(getResources().getString(R.string.profile));
+            navDrawer.setCheckedItem(R.id.menu_profile);
+            loadFragment(new ProfileFragment());
+        }
+    }
+
+    private void openInfo() {
+        if (getCurrentFragment() instanceof InfoFragment) {
+            switchDrawer();
+        } else {
+            setToolbarTitle(getResources().getString(R.string.info));
+            navDrawer.setCheckedItem(R.id.menu_info);
+            loadFragment(new InfoFragment());
+        }
+    }
+
+    private void setToolbarTitle(String title) {
+        ((TextView) findViewById(R.id.tv_title)).setText(title);
+    }
+
+    private void openStore() {
+        if (getCurrentFragment() instanceof StoreFragment) {
+            switchDrawer();
+        } else {
+            setToolbarTitle(getResources().getString(R.string.store));
+            loadFragment(new StoreFragment());
+        }
+
+    }
+
+    private void openHistory() {
+
+        if (getCurrentFragment() instanceof HistoryFragment) {
+            switchDrawer();
+        } else {
+            setToolbarTitle(getResources().getString(R.string.history));
+            navDrawer.setCheckedItem(R.id.menu_history);
+            loadFragment(new HistoryFragment());
+        }
+    }
+
+    private void openDashboard() {
+        if (getCurrentFragment() instanceof HomeFragment) {
+            switchDrawer();
+        } else {
+            setToolbarTitle(getResources().getString(R.string.app_name));
+            navDrawer.setCheckedItem(R.id.menu_dashboard);
+            loadFragment(new HomeFragment());
+        }
     }
 }

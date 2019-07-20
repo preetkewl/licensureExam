@@ -46,6 +46,8 @@ public class Constant {
     public static class UserData {
         public static final String AUTH_TOKEN = "authtoken";
         public static final String REFRESH_TOKEN = "refreshtoken";
+        public static final String USER_NAME = "user_name";
+        public static final String EMAIL = "email";
     }
 
     public static class BroadcastString {

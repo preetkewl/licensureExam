@@ -23,6 +23,7 @@ import com.crcexam.android.constants.Constant;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
 import com.crcexam.android.network.RetrofitLoggedIn;
 import com.crcexam.android.network.RetrofitService;
+import com.crcexam.android.utils.ConnectionDetector;
 import com.crcexam.android.utils.PreferenceClass;
 import com.crcexam.android.utils.ProgressHUD;
 import com.crcexam.android.utils.Utility;
@@ -38,6 +39,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.crcexam.android.constants.Constant.UserData.EMAIL;
+import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
+
 public class HomeFragment extends Fragment implements RecyclerviewClickListner, View.OnClickListener {
 
     View rootView;
@@ -47,6 +51,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     ExamListAdapter homeAdapter;
     RecyclerviewClickListner recyclerviewClickListner;
     ProgressHUD progressHUD;
+    private ConnectionDetector connectionDetector;
 
     @Nullable
     @Override
@@ -55,7 +60,74 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         mContext = getActivity();
         setFontStyle();
         setListener();
+        connectionDetector = new ConnectionDetector(mContext);
+        if (connectionDetector.isConnectingToInternet()) {
+            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
+                getProfile();
+            }
+        } else {
+            Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
+        }
         return rootView;
+    }
+
+    private void getProfile() {
+        try {
+            RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
+            Retrofit retrofit = retrofitLoggedIn.RetrofitClient(getActivity(), false);
+            RetrofitService home2hotel = null;
+            if (retrofit != null) {
+                home2hotel = retrofit.create(RetrofitService.class);
+            }
+            if (home2hotel != null) {
+                home2hotel.getProfile(Constant.API_KEY, Constant.SITE_ID, PreferenceClass.getStringPreferences(mContext, Constant.UserData.AUTH_TOKEN)).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            if (progressHUD != null && progressHUD.isShowing()) {
+                                progressHUD.dismiss();
+                            }
+                            // hideLoader(indicatorView);
+
+                            Log.e("res code ", response.code() + "");
+                            if (response.code() == 200) {
+                                String res = response.body().string();
+                                Log.e("log object ", res + "");
+                                JSONObject object = new JSONObject(res);
+                                Log.e("log obj ", object + "");
+                                String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
+                                PreferenceClass.setStringPreference(mContext, USER_NAME, username);
+                                PreferenceClass.setStringPreference(mContext, EMAIL, object.getJSONObject("account").getString("Username"));
+                            } else {
+                                String error = response.errorBody().string();
+                                Log.e("errorr ", error);
+                                JSONObject object = new JSONObject(error);
+                                if (object.has("response")) {
+                                    Utility.toastHelper(object.getString("response"), mContext);
+                                } else {
+                                    Utility.toastHelper(response.message(), mContext);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        t.getLocalizedMessage();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setFontStyle() {
@@ -85,10 +157,12 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         try {
             JSONObject object = new JSONObject(response);
             if (object.getString("contentType").equalsIgnoreCase("FlipSet")) {
+                loadFragment(new FlipSetSelectionFragment());
                 //startActivity(new Intent(getActivity(), FlipSetSelectionActivity.class).putExtra("data", response));
 
             } else {
-               // startActivity(new Intent(getActivity(), SelectionActivity.class).putExtra("data", response));
+                loadFragment(new SelectionFragment());
+                // startActivity(new Intent(getActivity(), SelectionActivity.class).putExtra("data", response));
 
             }
         } catch (Exception e) {
@@ -165,20 +239,21 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         switch (v.getId()) {
             case R.id.btnSampleQuiz:
                 Log.e("contentType mul ", "MultipleChoice");
+                loadFragment(new MultipleSelectQstCountFragment());
                 //startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "MultipleChoice"));
                 break;
             case R.id.btnSampleFlip:
                 Log.e("contentType flip ", "Flipset");
-               // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
+                loadFragment(new MultipleSelectQstCountFragment());
+                // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
                 break;
             case R.id.txtProfile:
-              //  startActivity(new Intent(getActivity(), ProfileActivity.class));
+                loadFragment(new ProfileFragment());
+                //  startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.btnExamPro:
-                Fragment fragment;
-                fragment = new StoreFragment();
-                loadFragment(fragment);
-               // navigation.setSelectedItemId(R.id.navigation_store);
+                loadFragment(new StoreFragment());
+                // navigation.setSelectedItemId(R.id.navigation_store);
                 break;
 
             case R.id.txtRef:
@@ -190,21 +265,18 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 
     private void loadFragment(Fragment fragment) {
         // load fragment
-      /*  FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
-        transaction.commit();*/
+        transaction.commit();
     }
 
     private void shareLink() {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-
-        // Add data to the intent, the receiving app will decide
-        // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, "Share App");
-        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.crc.android");
+        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.crcexam.android");
         startActivity(Intent.createChooser(share, "Share App"));
     }
 

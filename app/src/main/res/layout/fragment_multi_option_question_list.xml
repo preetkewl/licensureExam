@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_questnNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:gravity="left"
+        android:padding="@dimen/padding_10"
+        android:text="Question 5 of 5 :"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_size_heading"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/v1"
+        android:layout_below="@+id/tv_questnNumber">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@color/colorWhite"
+                android:gravity="start"
+                android:padding="@dimen/padding_10"
+                android:textColor="@color/colorBlack"
+                android:typeface="serif" />
+
+            <LinearLayout
+                android:id="@+id/rl_missed_question"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_question"
+                android:padding="@dimen/margin_10"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+
+                <TextView
+                    android:id="@+id/txtYourAns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtYourAnsTitle"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:paddingLeft="@dimen/margin_05" />
+
+                <TextView
+                    android:id="@+id/txtCorrectAns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtCorrectAnsTitle"
+                    android:layout_marginTop="@dimen/margin_05"
+                    android:paddingLeft="@dimen/margin_05" />
+
+                <TextView
+                    android:id="@+id/txtExplaintion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtCorrectAns"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/colorWhite"
+                    android:gravity="start"
+                    android:padding="@dimen/padding_10"
+                    android:textColor="@color/colorBlack"
+                    android:typeface="serif" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_question"
+                android:layout_marginTop="@dimen/margin_20"
+                android:nestedScrollingEnabled="false">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_answerDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerview_option"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/colorWhite"
+                android:gravity="start"
+                android:padding="@dimen/padding_10"
+                android:textColor="@color/colorBlack"
+                android:typeface="serif" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/ll_bottom"
+        android:background="@color/colorGray" />
+
+    <RelativeLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imv_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="start"
+            android:padding="@dimen/padding_10"
+            android:src="@drawable/ic_square_cross"
+            android:tint="@color/colorAccent"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:padding="@dimen/padding_10"
+            android:src="@drawable/ic_right_box"
+            android:tint="@color/colorAccent" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

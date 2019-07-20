@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+-->
+
+
+    <TextView
+        android:id="@+id/tv_testName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="@dimen/margin_20"
+        android:paddingTop="@dimen/margin_05"
+        android:paddingBottom="@dimen/margin_05"
+        android:text="@string/app_name"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_size_24"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_20"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_selection_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:background="@drawable/shape_black_border"
+            android:gravity="center"
+            android:padding="@dimen/padding_10"
+            android:text="Start 5 random questions"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_regular"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/tv_selection_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:background="@drawable/shape_black_border"
+            android:gravity="center"
+            android:padding="@dimen/padding_10"
+            android:text="Start all 5 questions"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_regular"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/tv_selection_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:background="@drawable/shape_black_border"
+            android:gravity="center"
+            android:padding="@dimen/padding_10"
+            android:text="Start marked question quiz"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_regular"
+            android:typeface="serif" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_50"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Questions"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/font_size_regular" />
+
+            <Spinner
+                android:id="@+id/spinnerQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

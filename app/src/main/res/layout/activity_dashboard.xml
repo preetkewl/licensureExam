@@ -40,6 +40,7 @@
             android:background="?android:attr/windowBackground"
             android:foreground="?attr/selectableItemBackground"
             app:itemBackground="@color/colorWhite"
+            app:elevation="@dimen/margin_10"
             app:itemTextColor="@drawable/buttom_view_text_color_selector"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
