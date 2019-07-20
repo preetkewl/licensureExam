@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtCrc"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingBottom="@dimen/margin_10"
+        android:text="@string/crc_exam"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/title_heading_xxx" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_storelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txtCrc"
+        tool:listitem="@layout/row_home_list" />
+
+    <TextView
+        android:id="@+id/txtNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="No data available"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/font_size_16"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,0 +1,127 @@
+{
+  "multioption": [
+    {
+      "question": "1 The BEST approach to take as a crisis intervention therapist seeking to de-escalate and stabilize a crisis situation is to be:",
+      "options": [
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 1",
+          "is_true":true
+        },
+        {
+          "option": "Active, directive, and systematic 2",
+          "is_true":false
+
+        },
+        {
+          "option": "Passive, non-directive,and systematic 3",
+          "is_true":false
+        }
+
+      ]
+    },
+    {
+      "question": "2 The BEST approach to take as a crisis intervention therapist seeking to de-escalate and stabilize a crisis situation is to be:",
+      "options": [
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 1",
+          "is_true":false
+        },
+        {
+          "option": "Active, directive, and systematic 2",
+          "is_true":true
+        },
+        {
+          "option": "Passive, non-directive,and systematic 3",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 4",
+          "is_true":false
+        }
+      ]
+    },
+    {
+      "question": "3 The BEST approach to take as a crisis intervention therapist seeking to de-escalate and stabilize a crisis situation is to be:",
+      "options": [
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 1",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 2",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 3",
+          "is_true":true
+        },
+        {
+          "option": "Active, directive, and systematic 4",
+          "is_true":false
+        },
+        {
+          "option": "Passive, non-directive,and systematic 5",
+          "is_true":false
+        }
+      ]
+    },
+    {
+      "question": "4 The BEST approach to take as a crisis intervention therapist seeking to de-escalate and stabilize a crisis situation is to be:",
+      "options": [
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 1",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 2",
+          "is_true":false
+        },
+        {
+          "option": "Active, directive, and systematic 3",
+          "is_true":false
+        },
+        {
+          "option": "Passive, non-directive,and systematic 4",
+          "is_true":true
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 5",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 6",
+          "is_true":false
+        }
+      ]
+    },
+    {
+      "question": "5 The BEST approach to take as a crisis intervention therapist seeking to de-escalate and stabilize a crisis situation is to be:",
+      "options": [
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 1",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 2",
+          "is_true":false
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 3",
+          "is_true":false
+        },
+        {
+          "option": "Active, directive, and systematic  4",
+          "is_true":false
+        },
+        {
+          "option": "Passive, non-directive,and systematic 5",
+          "is_true":true
+        },
+        {
+          "option": "Active, fostering self-determination and client-desired outcome 6",
+          "is_true":false
+        }
+      ]
+    }
+  ]
+}

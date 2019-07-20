@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">Licensure Exams</string>
+    <string name="crc_exam">CRC Exam</string>
+    <string name="api_key">7L8xdPEa6OLiHk9BumiuP36XZZW63hhjDAeOYLDZ84jIA3nzm8</string>
+
+    <string name="Home">Home</string>
+    <string name="History">History</string>
+    <string name="result">Results</string>
+    <string name="refer">Refer</string>
+    <string name="profile">Profile</string>
+    <string name="Store">Store</string>
+    <string name="Info">Info</string>
+
+
+    <string name="Email_Alert">Please enter Email.</string>
+    <string name="Name_Alert">Please enter Name.</string>
+    <string name="Password_Alert">Please enter your password.</string>
+    <string name="Password_length">Password field reqiures min 8 characters.</string>
+    <string name="name_Alert">Please enter your name.</string>
+    <string name="phone_Alert">Please enter your Phone Number.</string>
+    <string name="Email_Validation_Alert">Please enter a valid email address.</string>
+
+
+    <!--History-->
+    <string name="Date">Date :</string>
+    <string name="Correct_Answer">Correct Answer :</string>
+    <string name="Correct_Answer1">Correct Answer: </string>
+    <string name="your_Answer1">Your Answer: </string>
+
+    <!--login-->
+    <string name="please_login">Please Log in:</string>
+    <!--Info-->
+    <string name="Directors_msg">Director\'s Message</string>
+    <string name="info_content">Hi I am Linton and guess What? I went through the same agony and anxiety that you might be experiencing right now. I personally look fonlvard to taking
+tests as much as I look fonNard to a trip to the dentist.
+        \n\n\n
+We were the first Certified Rehabilitation Counselor Exam test prep site online and for 18 years we\'ve been providing a
+way to study for your exam so you can get on with your life and put this experience behind you as quickly and as painlessly as possible, right from
+your own home. It\'s in there.</string>
+
+
+    <string name="subscription_period_prompt">Select your subscription period</string>
+    <string name="subscription_resignup_prompt">To reactivate your subscription, select your subscription period</string>
+    <string name="subscription_update_prompt">To change your subscription, select your new subscription period</string>
+    <string name="subscription_period_monthly">Monthly</string>
+    <string name="subscription_period_yearly">Yearly</string>
+    <string name="subscription_prompt_continue">Continue</string>
+    <string name="subscription_prompt_cancel">Cancel</string>
+    <string name="content_description_app_loading_image">App loading image</string>
+    <string name="content_description_title_image">80\'s Video Game Style Car Logo</string>
+    <string name="content_desc_gas_gauge_indicator">Gas gauge indicator</string>
+    <string name="content_desc_free_vs_premium_indicator">Free or Premium Image Indicator</string>
+    <string name="new_user">New User? <font color="#00A69C">Register</font></string>
+    <string name="already_account">Already have an account? <font color="#00A69C">Login</font></string>
+
+    <!--Alert-->
+    <string name="check_network">Please check you internet connection.</string>
+    <string name="data_not_available">Data not available</string>
+    <string name="Not_available">Not available</string>
+    <string name="Nill">Nill</string>
+    <string name="Are_you_sure_want_to_logout">Are you sure want to logout ?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Alert">Alert</string>
+    <string name="add_another_city">Please add another location first.</string>
+    <string name="send_location_to_main_contact">Successfully send the location to maincontact.</string>
+    <string name="send_location_to_main_contact1">Successfully send the location to your main contact.</string>
+    <string name="alert_sos_success">Your location has been successfully sent to ARC.</string>
+
+    <!--Profile-->
+    <string name="Username">Username:</string>
+    <string name="First_Name">First Name:</string>
+    <string name="Last_Name">Last Name:</string>
+    <string name="Telephone">Telephone:</string>
+    <string name="Study_Goal">Study Goal:</string>
+    <string name="Exam_Date">Exam Date:</string>
+    <string name="Receive_Emails">Receive Emails:</string>
+    <string name="Billing_Address">Billing Address</string>
+    <string name="Address_1">Address 1:</string>
+    <string name="Address_2">Address 2:</string>
+    <string name="City">City:</string>
+    <string name="State">State:</string>
+    <string name="ZIP_Code">ZIP Code:</string>
+    <string name="directr_msg">Hi, I\'m Linton and guess what? I went through the same agony and anxiety that you might be experiencing right now. I personally look forward to taking tests as much as I look forward to a trip to the dentist. We were the first Certified Rehabilitation Counselor Exam test prep site online, and for 18 years we\'ve been providing a way to study for your exam so you can get on with your life and put this experience behind you as quickly and as painlessly as possible, right from your own home. It\'s in there.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_results">Results</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_refer">Refer</string>
+    <string name="menu_store">Store</string>
+    <string name="menu_history">History</string>
+    <string name="menu_info">Info</string>
+
+</resources>

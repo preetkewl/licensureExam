@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayBg">
+
+    <TextView
+        android:id="@+id/txtCrc"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingBottom="@dimen/margin_10"
+        android:text="@string/crc_exam"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/title_heading_xxx" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_historylist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txtCrc"
+        android:layout_marginTop="@dimen/margin_10">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtNot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="No History available"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/font_size_16"
+        android:visibility="gone" />
+</RelativeLayout>
