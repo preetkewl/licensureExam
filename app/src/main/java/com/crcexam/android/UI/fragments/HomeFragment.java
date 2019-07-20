@@ -62,13 +62,13 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         setListener();
         connectionDetector = new ConnectionDetector(mContext);
         if (connectionDetector.isConnectingToInternet()) {
-            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    // TODO Auto-generated method stub
-                }
-            });
             if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
+                progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // TODO Auto-generated method stub
+                    }
+                });
                 getProfile();
             }
         } else {

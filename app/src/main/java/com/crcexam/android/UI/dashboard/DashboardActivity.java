@@ -91,7 +91,7 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void setDrawerData() {
-        if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("")) {
+       /* if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("")) {
             ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
         } else if (!PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
@@ -100,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity
         } else {
             ((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
-        }
+        }*/
 
     }
 
