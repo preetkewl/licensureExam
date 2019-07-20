@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,76 +35,6 @@ public class DashboardActivity extends AppCompatActivity
     public static BottomNavigationView navigation;
     Context mContext;
     Toolbar mToolbar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mContext = this;
-        setActionBar();
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-        //  toolbar = getSupportActionBar();
-        // toolbar.setTitle(mContext.getResources().getString(R.string.Home));
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-       /* CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationBehavior());*/
-        loadFragment(new HomeFragment());
-    }
-
-    private void setActionBar() {
-        try {
-            mToolbar = findViewById(R.id.toolbar_dash);
-            setSupportActionBar(mToolbar);
-            ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setHomeButtonEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.menu_dashboard) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.Home));
-            loadFragment(new HomeFragment());
-        } else if (id == R.id.menu_results) {
-
-        } else if (id == R.id.menu_profile) {
-
-        } else if (id == R.id.menu_history) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.History));
-            loadFragment(new HistoryFragment());
-        } else if (id == R.id.menu_refer) {
-
-        } else if (id == R.id.menu_info) {
-            mToolbar.setTitle(mContext.getResources().getString(R.string.Info));
-            loadFragment(new InfoFragment());
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -133,6 +64,77 @@ public class DashboardActivity extends AppCompatActivity
         }
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dashboard);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mContext = this;
+        setActionBar();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //drawer.openDrawer(Gravity.LEFT);
+        //  toolbar = getSupportActionBar();
+        // toolbar.setTitle(mContext.getResources().getString(R.string.Home));
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+       /* CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());*/
+        loadFragment(new HomeFragment());
+        setClickListeners();
+    }
+
+    private void setClickListeners() {
+
+    }
+
+    private void setActionBar() {
+        try {
+            mToolbar = findViewById(R.id.toolbar_dash);
+            setSupportActionBar(mToolbar);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setHomeButtonEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.menu_dashboard) {
+            mToolbar.setTitle(mContext.getResources().getString(R.string.Home));
+            loadFragment(new HomeFragment());
+        } else if (id == R.id.menu_results) {
+
+        } else if (id == R.id.menu_profile) {
+
+        } else if (id == R.id.menu_history) {
+            mToolbar.setTitle(mContext.getResources().getString(R.string.History));
+            loadFragment(new HistoryFragment());
+        } else if (id == R.id.menu_refer) {
+
+        } else if (id == R.id.menu_info) {
+            mToolbar.setTitle(mContext.getResources().getString(R.string.Info));
+            loadFragment(new InfoFragment());
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     @Override
     public void onBackPressed() {
@@ -140,7 +142,6 @@ public class DashboardActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-
             if (getCurrentFragment() instanceof HomeFragment) {
                 super.onBackPressed();
             } else {

@@ -39,7 +39,6 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_history, container, false);
         mContext = getActivity();
-        ((TextView) rootView.findViewById(R.id.txtCrc)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         adapter();
         return rootView;
     }

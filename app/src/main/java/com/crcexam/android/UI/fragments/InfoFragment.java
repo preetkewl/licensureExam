@@ -41,7 +41,6 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     private void setFontStyle() {
         ((TextView) rootView.findViewById(R.id.txtDirectTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((TextView) rootView.findViewById(R.id.txtDirectMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.txtCrc)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
 
     }
 

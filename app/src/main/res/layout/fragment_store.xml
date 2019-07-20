@@ -4,17 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtCrc"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorPrimary"
-        android:gravity="bottom"
-        android:paddingStart="@dimen/margin_10"
-        android:paddingBottom="@dimen/margin_10"
-        android:text="@string/crc_exam"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/title_heading_xxx" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_storelist"
