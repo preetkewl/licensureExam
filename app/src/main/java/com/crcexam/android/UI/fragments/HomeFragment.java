@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         try {
             JSONObject object = new JSONObject(response);
             if (object.getString("contentType").equalsIgnoreCase("FlipSet")) {
-                loadFragment(new FlipSetSelectionFragment());
+                loadFragment(new SetSelectionFragment());
                 //startActivity(new Intent(getActivity(), FlipSetSelectionActivity.class).putExtra("data", response));
 
             } else {

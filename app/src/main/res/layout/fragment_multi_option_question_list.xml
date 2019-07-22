@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:gravity="left"
+        android:gravity="center"
         android:padding="@dimen/padding_10"
         android:text="Question 5 of 5 :"
         android:textAllCaps="true"
@@ -33,6 +34,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MultiOptionQuestionListFragment"/>
 
             <TextView
                 android:id="@+id/tv_question"
@@ -90,6 +97,7 @@
                 android:id="@+id/recyclerview_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tool:listitem="@layout/row_radio_button"
                 android:layout_below="@+id/tv_question"
                 android:layout_marginTop="@dimen/margin_20"
                 android:nestedScrollingEnabled="false">

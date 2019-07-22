@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -43,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity
     public static BottomNavigationView bottomNav;
     Context mContext;
     Toolbar mToolbar;
+    private static final String TAG = "DashboardActivity";
     private NavigationView navDrawer;
     private DrawerLayout mdrawer;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -230,7 +232,12 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void setToolbarTitle(String title) {
-        ((TextView) findViewById(R.id.tv_title)).setText(title);
+        try {
+            ((TextView) findViewById(R.id.tv_title)).setText(title);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void openStore() {

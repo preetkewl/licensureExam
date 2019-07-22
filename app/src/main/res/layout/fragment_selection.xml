@@ -9,6 +9,7 @@
         layout="@layout/toolbar" />-->
 
 
+<!--
     <TextView
         android:id="@+id/tv_testName"
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:textSize="@dimen/font_size_24"
         android:textStyle="bold"
         android:typeface="serif" />
+-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +33,11 @@
         android:layout_margin="@dimen/margin_20"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="SelectionFragment"/>
 
         <TextView
             android:id="@+id/tv_selection_one"

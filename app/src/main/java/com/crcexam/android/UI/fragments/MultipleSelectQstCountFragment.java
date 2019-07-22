@@ -3,13 +3,11 @@ package com.crcexam.android.UI.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +45,7 @@ import retrofit2.Retrofit;
  */
 public class MultipleSelectQstCountFragment extends Fragment implements RecyclerviewClickListner, View.OnClickListener {
 
+    private static final String TAG = "MultipleSelectQstCountF";
     RecyclerView recyclerView;
     ArrayList<JSONObject> homeArraylist = new ArrayList<>();
     ExamListAdapter homeAdapter;
@@ -134,13 +133,15 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
     @Override
     public void onItemClick(View view, int position, String response) {
         try {
+            Log.e(TAG, "onItemClick: setCheck " + response);
             JSONObject object = new JSONObject(response);
             Bundle bundle = new Bundle();
             if (object.getString("contentType").equalsIgnoreCase("FlipSet")) {
-                FlipSetSelectionFragment flipSetSelectionFragment = new FlipSetSelectionFragment();
+                SetSelectionFragment setSelectionFragment = new SetSelectionFragment();
                 bundle.putString("data", response);
-                loadFragment(flipSetSelectionFragment);
-                // startActivity(new Intent(mContext, FlipSetSelectionFragment.class).putExtra("data", response));
+                setSelectionFragment.setArguments(bundle);
+                loadFragment(setSelectionFragment);
+                // startActivity(new Intent(mContext, SetSelectionFragment.class).putExtra("data", response));
             } else {
                 SelectionFragment selectionFragment = new SelectionFragment();
                 bundle.putString("data", response);

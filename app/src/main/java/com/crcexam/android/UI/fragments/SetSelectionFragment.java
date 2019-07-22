@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.ExamListAdapter;
@@ -44,8 +44,9 @@ import retrofit2.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FlipSetSelectionFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SetSelectionFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    private static final String TAG = "FlipSetSelectionFragmen";
     Toolbar mToolbar;
     ArrayList<String> lstSpinner = new ArrayList<>();
     ArrayList<JSONObject> lstQuestions = new ArrayList<>();
@@ -59,7 +60,7 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
     private View rootView;
     private int SelectedPos = 0;
 
-    public FlipSetSelectionFragment() {
+    public SetSelectionFragment() {
         // Required empty public constructor
     }
 
@@ -73,7 +74,9 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
         cd = new ConnectionDetector(mContext);
         //setActionBar();
         setFontStyle();
+        Log.e(TAG, "onCreateView: setCheck " );
         init();
+        listner();
         return rootView;
     }
 
@@ -97,7 +100,7 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
     }
 
     private void setFontStyle() {
-        ((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
+        // ((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -107,13 +110,15 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
 
     private void init() {
         try {
-            Bundle bundle = FlipSetSelectionFragment.this.getArguments();
+            Bundle bundle = SetSelectionFragment.this.getArguments();
             if (bundle != null) {
                 String bundleStr = bundle.getString("data");
                 JSONObject object = new JSONObject(bundleStr);
                 getAllExamList(object.getInt("id"));
-                listner();
-                ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+
+                // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+            }else {
+                Log.e(TAG, "setCheck init: else bundle null" );
             }
 
         } catch (Exception e) {
@@ -192,6 +197,7 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
     }
 
     private void getAllExamList(int id) {
+        Log.e(TAG, "getAllExamList: setCheck "+id );
         try {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -213,9 +219,9 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
                             if (progressHUD.isShowing() && progressHUD != null) {
                                 progressHUD.dismiss();
                             }
-                            Log.e("onResponse idddd ", response.code() + "");
                             if (response.code() == 200) {
                                 JSONObject obj = new JSONObject(response.body().string());
+                                Log.e(TAG, "setCheck onResponse: obj "+obj );
                                 setData(obj);
                             } else {
                                 String error = response.errorBody().string();
@@ -278,13 +284,22 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
                 loadFragment(new HomeFragment());
                 break;*/
             case R.id.tv_selection_one:
+                Toast.makeText(mContext, "clicked", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onClick:tv_selection_one setCheck "+lstQuestions);
                 if (SelectedPos == 0) {
+                    FlipQuestionListFragment flipQuestionListFragment = new FlipQuestionListFragment();
+                    Bundle bundle = new Bundle();
+
                     if (lstQuestions.size() > 4) {
-                        Log.e(" not 555 ", lstQuestions.subList(0, 5) + "");
-                        //startActivity(new Intent(FlipSetSelectionFragment.this, FlipQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
+                        bundle.putString("data", lstQuestions.subList(0, 5) + "");
+                        flipQuestionListFragment.setArguments(bundle);
+                        loadFragment(flipQuestionListFragment);
+                        //startActivity(new Intent(SetSelectionFragment.this, FlipQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
 
                     } else {
-                        Log.e(" df", lstQuestions.subList(0, lstQuestions.size()).size() + "");
+                        bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()) + "");
+                        flipQuestionListFragment.setArguments(bundle);
+                        loadFragment(flipQuestionListFragment);
                         // startActivity(new Intent(FlipSetSelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
                         // startActivity(new Intent(FlipSetSelectionActivity.this, MultiOptionQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
 

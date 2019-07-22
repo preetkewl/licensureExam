@@ -85,7 +85,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
     }
 
     private void setFontStyle() {
-        ((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
+        //((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -101,7 +101,8 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 JSONObject object = new JSONObject(bundleStr);
                 getAllExamList(object.getInt("id"));
                 listner();
-                ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+                ((TextView) getActivity().findViewById(R.id.tv_title)).setText(object.getString("displayName"));
+               // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
             }
 
         } catch (Exception e) {

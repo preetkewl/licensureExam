@@ -1,11 +1,17 @@
 package com.crcexam.android.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crcexam.android.R;
 import com.crcexam.android.constants.Constant;
 
 import java.text.DecimalFormat;
@@ -14,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class Utility {
@@ -33,6 +40,22 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void clearBackStack(Context context) {
+        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
+
+    public static void loadFragment(Fragment fragment, Context context, boolean addToBackStack) {
+        FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(fragment.getClass().getName());
+        }
+        transaction.commit();
     }
 
     public static void toastHelper(String msg, Context context) {

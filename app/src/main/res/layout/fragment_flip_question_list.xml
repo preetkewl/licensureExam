@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/colorPrimary"
-        android:gravity="left"
+        android:gravity="center"
         android:padding="@dimen/padding_10"
         android:text="Question 5 of 5 :"
         android:textAllCaps="true"
@@ -44,9 +44,10 @@ a family in creating change?"
         android:gravity="center"
         android:padding="@dimen/padding_10"
         android:textColor="@color/colorBlack"
-        android:visibility="gone"
         android:textSize="@dimen/font_size_regular"
-        android:typeface="serif" />
+        android:typeface="serif"
+        android:visibility="gone" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

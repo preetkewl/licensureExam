@@ -3,7 +3,9 @@ package com.crcexam.android.UI.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -162,14 +165,16 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         JSONObject obj = null;
         try {
             // JSONArray jsonArray = obj.getJSONArray("questions");
-            JSONArray jsonArray = new JSONArray(getActivity().getIntent().getStringExtra("data"));
-            Log.e("question length  ", jsonArray.length() + "");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                questionArraylist.add(jsonArray.getJSONObject(i));
+            Bundle bundle = FlipQuestionListFragment.this.getArguments();
+            if (bundle!= null){
+                JSONArray jsonArray = new JSONArray(bundle.getString("data"));
+                Log.e(" setCheck length  ", jsonArray.length() + "");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    questionArraylist.add(jsonArray.getJSONObject(i));
+                }
+                ((TextView) rootView.findViewById(R.id.tv_question)).setText(questionArraylist.get(0).getString("Front"));
+                ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card 1 of" + " " + questionArraylist.size());
             }
-            ((TextView) rootView.findViewById(R.id.tv_question)).setText(questionArraylist.get(0).getString("Front"));
-            ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card 1 of" + " " + questionArraylist.size());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -263,12 +268,15 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imv_previous:
                 //finish();
-                loadFragment(new HomeFragment());
+                Utility.clearBackStack(mContext);
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                //loadFragment(new HomeFragment());
                 //setPreviousQuestnFromList();
                 break;
             case R.id.imv_next:
@@ -280,8 +288,9 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                         showBackAnswer();
                         isFirstForFinish = true;
                     } else {
-                       // getActivity().finish();
-                        loadFragment(new HomeFragment());
+                        // getActivity().finish();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+                        //loadFragment(new HomeFragment());
 
                     }
                 } else {

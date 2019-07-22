@@ -31,6 +31,7 @@ import com.crcexam.android.adapters.AnswerListAdapter;
 import com.crcexam.android.adapters.MissedQuestionAdapter;
 import com.crcexam.android.database.DatabaseHandler;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
+import com.crcexam.android.utils.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -277,7 +279,9 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
         switch (v.getId()) {
             case R.id.imv_previous:
                 //finish();
-                loadFragment(new HomeFragment());
+                Utility.clearBackStack(mContext);
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                //loadFragment(new HomeFragment());
                 // setPreviousQuestnFromList();
                 break;
             case R.id.imv_next:
@@ -303,7 +307,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                                 loadFragment(resultFragment);
                                 // startActivity(new Intent(mContext, ResultFragment.class).putExtra("data", object + ""));
                                 //finish();
-                                loadFragment(new HomeFragment());
+                                //loadFragment(new HomeFragment());
                             } else {
                                 setNextQuestnFromList();
                             }
@@ -314,6 +318,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 } else {
                     if (missed_qst_pos == lstMissedQuestion.size() - 1) {
                         //finish();
+                        Utility.clearBackStack(mContext);
                         loadFragment(new HomeFragment());
                     } else {
                         missed_qst_pos++;
@@ -326,12 +331,11 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onItemClick(View view, int position, String response) {
         try {
