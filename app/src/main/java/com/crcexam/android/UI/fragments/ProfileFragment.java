@@ -41,6 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.crcexam.android.UI.dashboard.DashboardActivity.bottomNav;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -89,6 +91,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }
+        /*int id =bottomNav.getMenu().;
+        bottomNav.setC*/
 
         return rootView;
     }

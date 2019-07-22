@@ -46,6 +46,7 @@ import java.util.ArrayList;
 public class MultiOptionQuestionListFragment extends Fragment implements View.OnClickListener, RecyclerviewClickListner {
 
 
+    private static final String TAG = "MultiOptionQuestionList";
     public static int totalCurrectAns = 0;
     RecyclerView recyclerView;
     ArrayList<JSONObject> lstMissedQst = new ArrayList<>();
@@ -85,11 +86,20 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
     private void init() {
         listner();
-        if (getActivity().getIntent().getStringExtra("data") != null) {
+        Bundle bundle = MultiOptionQuestionListFragment.this.getArguments();
+        if (bundle != null) {
+            Log.e(TAG, "init: bundle.toString()  " + bundle.toString());
+            if (bundle.getString("data") != null) {
+                getList();
+            } else {
+                Toast.makeText(mContext, "No data found", Toast.LENGTH_SHORT).show();
+            }
+        }
+        /*if (getActivity().getIntent().getStringExtra("data") != null) {
             getList();
         } else {
             Toast.makeText(mContext, "No data found", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     private void listner() {
@@ -169,40 +179,43 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
     private void getList() {
         try {
-            totalCurrectAns = 0;
-            if (getActivity().getIntent().hasExtra("is_misssed")) {
-                Log.e("hasExtra  ", " ismissedddd");
-                is_Missed = true;
-            }
-            if (!is_Missed) {
-                if (is_first) {
-                    is_first = false;
-                    db.clearAllQuestion();
+            Bundle bundle = MultiOptionQuestionListFragment.this.getArguments();
+            if (bundle != null) {
+                totalCurrectAns = 0;
+                // if (bundle.getString("data").)
+                if (getActivity().getIntent().hasExtra("is_misssed")) {
+                    Log.e("hasExtra  ", " ismissedddd");
+                    is_Missed = true;
                 }
-                if (db.getAllQuestions().size() == 0) {
-                    JSONArray jsonArray = new JSONArray(getActivity().getIntent().getStringExtra("data"));
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
-                            if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
-                                db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
-                                        jsonArray.getJSONObject(i).getString("Explanation"), "false");
+                if (!is_Missed) {
+                    if (is_first) {
+                        is_first = false;
+                        db.clearAllQuestion();
+                    }
+                    if (db.getAllQuestions().size() == 0) {
+                        JSONArray jsonArray = new JSONArray(bundle.getString("data"));
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
+                                if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
+                                    db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
+                                            jsonArray.getJSONObject(i).getString("Explanation"), "false");
+                                }
                             }
                         }
                     }
-                }
-                Log.e("dfdf all question ", db.getAllQuestions().size() + "");
-                arrayOption = new JSONArray(db.getAllQuestions());
-                Log.e("dffdgf f", arrayOption.length() + "");
-                adapterAllQuestion(arrayOption.getJSONObject(0));
-                ((TextView) rootView.findViewById(R.id.tv_question)).setText(arrayOption.getJSONObject(0).getJSONObject("questions").getString("Question"));
-                ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Question 1 of" + " " + arrayOption.length());
-            } else {
-                ((LinearLayout) rootView.findViewById(R.id.rl_missed_question)).setVisibility(View.VISIBLE);
-                rootView.findViewById(R.id.recyclerview_option).setVisibility(View.GONE);
-                if (db.getAllMissedQuestionsList().size() > 0) {
-                    lstMissedQuestion.addAll(db.getAllMissedQuestionsList());
-                    adapterMissedQuestion(0);
+                    Log.e("dfdf all question ", db.getAllQuestions().size() + "");
+                    arrayOption = new JSONArray(db.getAllQuestions());
+                    Log.e("dffdgf f", arrayOption.length() + "");
+                    adapterAllQuestion(arrayOption.getJSONObject(0));
+                    ((TextView) rootView.findViewById(R.id.tv_question)).setText(arrayOption.getJSONObject(0).getJSONObject("questions").getString("Question"));
+                    ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Question 1 of" + " " + arrayOption.length());
+                } else {
+                    ((LinearLayout) rootView.findViewById(R.id.rl_missed_question)).setVisibility(View.VISIBLE);
+                    rootView.findViewById(R.id.recyclerview_option).setVisibility(View.GONE);
+                    if (db.getAllMissedQuestionsList().size() > 0) {
+                        lstMissedQuestion.addAll(db.getAllMissedQuestionsList());
+                        adapterMissedQuestion(0);
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -283,7 +296,12 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                                 object.put("totla_currect", totalCurrectAns);
                                 object.put("totla_question", arrayOption.length());
                                 Log.e("go for result ", object + "");
-                                startActivity(new Intent(mContext, ResultFragment.class).putExtra("data", object + ""));
+                                ResultFragment resultFragment = new ResultFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("data", object + "");
+                                resultFragment.setArguments(bundle);
+                                loadFragment(resultFragment);
+                                // startActivity(new Intent(mContext, ResultFragment.class).putExtra("data", object + ""));
                                 //finish();
                                 loadFragment(new HomeFragment());
                             } else {
@@ -307,15 +325,11 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
         }
     }
 
-
-
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override

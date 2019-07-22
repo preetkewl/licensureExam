@@ -130,14 +130,23 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
     }
 */
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onItemClick(View view, int position, String response) {
         try {
             JSONObject object = new JSONObject(response);
+            Bundle bundle = new Bundle();
             if (object.getString("contentType").equalsIgnoreCase("FlipSet")) {
-                startActivity(new Intent(mContext, FlipSetSelectionFragment.class).putExtra("data", response));
+                FlipSetSelectionFragment flipSetSelectionFragment = new FlipSetSelectionFragment();
+                bundle.putString("data", response);
+                loadFragment(flipSetSelectionFragment);
+                // startActivity(new Intent(mContext, FlipSetSelectionFragment.class).putExtra("data", response));
             } else {
-                startActivity(new Intent(mContext, SelectionFragment.class).putExtra("data", response));
+                SelectionFragment selectionFragment = new SelectionFragment();
+                bundle.putString("data", response);
+                selectionFragment.setArguments(bundle);
+                loadFragment(selectionFragment);
+                //startActivity(new Intent(mContext, SelectionFragment.class).putExtra("data", response));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,32 +185,36 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                             if (response.code() == 200) {
                                 JSONArray array = new JSONArray(response.body().string());
                                 Log.e("array  ", array + "");
-                                if (Objects.requireNonNull(getActivity().getIntent().getExtras()).getString("contentType").equalsIgnoreCase("MultipleChoice"))
-                                    for (int i = 0; i < array.length(); i++) {
-                                        //homeArraylist.add(array.getJSONObject(i));
-                                        if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("MultipleChoice")) {
-                                            lstMultipleChoice.add(array.getJSONObject(i));
+                                Bundle bundle = MultipleSelectQstCountFragment.this.getArguments();
+                                if (bundle != null) {
+                                    if (bundle.getString("contentType").equalsIgnoreCase("MultipleChoice"))
+                                        for (int i = 0; i < array.length(); i++) {
+                                            //homeArraylist.add(array.getJSONObject(i));
+                                            if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("MultipleChoice")) {
+                                                lstMultipleChoice.add(array.getJSONObject(i));
+                                            }
                                         }
-                                    }
 
-                                if (Objects.requireNonNull(getActivity().getIntent().getExtras()).getString("contentType").equalsIgnoreCase("FlipSet"))
-                                    for (int i = 0; i < array.length(); i++) {
-                                        if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("FlipSet")) {
-                                            lstFlipSet.add(array.getJSONObject(i));
+                                    if (bundle.getString("contentType").equalsIgnoreCase("FlipSet"))
+                                        for (int i = 0; i < array.length(); i++) {
+                                            if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("FlipSet")) {
+                                                lstFlipSet.add(array.getJSONObject(i));
+                                            }
                                         }
+                                    PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstMultipleChoice.toString());
+
+                                    if (bundle.getString("contentType").equalsIgnoreCase("FlipSet")) {
+                                        homeAdapter = new ExamListAdapter(mContext, lstFlipSet, recyclerviewClickListner);
+
+                                    } else {
+                                        homeAdapter = new ExamListAdapter(mContext, lstMultipleChoice, recyclerviewClickListner);
                                     }
-                                PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstMultipleChoice.toString());
-
-                                if (Objects.requireNonNull(getActivity().getIntent().getExtras()).getString("contentType").equalsIgnoreCase("FlipSet")) {
-                                    homeAdapter = new ExamListAdapter(mContext, lstFlipSet, recyclerviewClickListner);
-
-                                } else {
-                                    homeAdapter = new ExamListAdapter(mContext, lstMultipleChoice, recyclerviewClickListner);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+                                    recyclerView.setLayoutManager(mLayoutManager);
+                                    recyclerView.setAdapter(homeAdapter);
+                                    recyclerView.setNestedScrollingEnabled(false);
                                 }
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-                                recyclerView.setLayoutManager(mLayoutManager);
-                                recyclerView.setAdapter(homeAdapter);
-                                recyclerView.setNestedScrollingEnabled(false);
+
                             } else {
                                 String error = response.errorBody().string();
                                 Log.e("error  ", error + "");
@@ -224,20 +237,22 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgback:
                 //finish();
-                loadFragment(new HomeFragment());
+                Objects.requireNonNull(getActivity()).onBackPressed();
+                //loadFragment(new HomeFragment());
                 break;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment).addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
-
 }

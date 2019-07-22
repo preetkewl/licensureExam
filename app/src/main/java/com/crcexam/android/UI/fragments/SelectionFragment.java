@@ -4,7 +4,9 @@ package com.crcexam.android.UI.fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -71,7 +74,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
     private void setActionBar() {
         try {
             mToolbar = rootView.findViewById(R.id.toolbar_dash);
-           // setSupportActionBar(mToolbar);
+            // setSupportActionBar(mToolbar);
 //            ActionBar actionBar = getSupportActionBar();
 //            actionBar.setDisplayShowTitleEnabled(false);
 //            actionBar.setDisplayHomeAsUpEnabled(false);
@@ -83,7 +86,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
 
     private void setFontStyle() {
         ((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
-        ((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
+        //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_three)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -92,18 +95,22 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
 
     private void init() {
         try {
-            String bundleStr = getActivity().getIntent().getExtras().getString("data");
-            JSONObject object = new JSONObject(bundleStr);
-            getAllExamList(object.getInt("id"));
-            listner();
-            ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+            Bundle bundle = SelectionFragment.this.getArguments();
+            if (bundle != null) {
+                String bundleStr = bundle.getString("data");
+                JSONObject object = new JSONObject(bundleStr);
+                getAllExamList(object.getInt("id"));
+                listner();
+                ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void listner() {
-       // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
+        // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setOnClickListener(this);
 
@@ -187,6 +194,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -195,14 +203,22 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 loadFragment(new HomeFragment());
                 break;*/
             case R.id.tv_selection_one:
+                MultiOptionQuestionListFragment multiOptionQuestionListFragment = new MultiOptionQuestionListFragment();
+                Bundle bundle = new Bundle();
                 if (SelectedPos == 0) {
                     if (lstQuestions.size() % 5 != 0) {
                         Log.e(" not 555 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
-                        startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
+                        bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()) + "");
+                        multiOptionQuestionListFragment.setArguments(bundle);
+                        loadFragment(multiOptionQuestionListFragment);
+                        //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
 
                     } else {
                         Log.e(" df", lstQuestions.subList(0, 5).size() + "");
-                        startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
+                        bundle.putString("data", lstQuestions.subList(0, 5) + "");
+                        multiOptionQuestionListFragment.setArguments(bundle);
+                        loadFragment(multiOptionQuestionListFragment);
+                        //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
 
                     }
                 } else {
@@ -210,16 +226,22 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                     if (lstQuestions.size() % 5 != 0) {
                         Log.e(" lstQuestions size ", lstQuestions.size() + "");
                         Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
-                        startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()).size() + ""));
+                        bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()).size() + "");
+                        multiOptionQuestionListFragment.setArguments(bundle);
+                        loadFragment(multiOptionQuestionListFragment);
+                        //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()).size() + ""));
 
                     } else {
                         Log.e(" df >0 ", lstQuestions.subList(0, 5 * (SelectedPos + 1)) + "");
-                        startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
+                        bundle.putString("data", lstQuestions.subList(0, 5) + "");
+                        multiOptionQuestionListFragment.setArguments(bundle);
+                        loadFragment(multiOptionQuestionListFragment);
+                        //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
                         //startActivity(new Intent(SelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
 
                     }
                 }
-
+                // already commented -
               /*  if (SelectedPos==0) {
                     if (lstQuestions.size()>=5){
                         startActivity(new Intent(SelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
@@ -235,8 +257,13 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 break;
 
             case R.id.tv_selection_two:
-                startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions + ""));
-
+                MultiOptionQuestionListFragment multiOptionQuestionListFragment1 = new MultiOptionQuestionListFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("data", lstQuestions + "");
+                multiOptionQuestionListFragment1.setArguments(bundle1);
+                loadFragment(multiOptionQuestionListFragment1);
+                //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions + ""));
+                // already commented -
                 /*if (SelectedPos == 0) {
                     if (lstQuestions.size() % 5 != 0&&lstQuestions.size()>5) {
                         Log.e(" not 555 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
@@ -282,9 +309,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment).addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 
@@ -296,7 +324,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
             ((TextView) rootView.findViewById(R.id.tv_selection_one)).setText("Start " + lstSpinner.get(position) + " random questions");
 
 
-
+//already commented -
 /*
             if (position == 0) {
                 if (lstQuestions.size() % 5 != 0) {

@@ -98,7 +98,7 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
 
     private void setFontStyle() {
         ((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
-        ((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
+        //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_selection_three)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -107,18 +107,22 @@ public class FlipSetSelectionFragment extends Fragment implements View.OnClickLi
 
     private void init() {
         try {
-            String bundleStr = getActivity().getIntent().getExtras().getString("data");
-            JSONObject object = new JSONObject(bundleStr);
-            getAllExamList(object.getInt("id"));
-            listner();
-            ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+            Bundle bundle = FlipSetSelectionFragment.this.getArguments();
+            if (bundle != null) {
+                String bundleStr = bundle.getString("data");
+                JSONObject object = new JSONObject(bundleStr);
+                getAllExamList(object.getInt("id"));
+                listner();
+                ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void listner() {
-       // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
+        // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setOnClickListener(this);
 

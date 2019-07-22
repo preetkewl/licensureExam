@@ -39,6 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.crcexam.android.UI.dashboard.DashboardActivity.bottomNav;
 import static com.crcexam.android.constants.Constant.UserData.EMAIL;
 import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
@@ -149,6 +150,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         ((Button) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
 
     }
 
@@ -238,13 +240,20 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSampleQuiz:
-                Log.e("contentType mul ", "MultipleChoice");
-                loadFragment(new MultipleSelectQstCountFragment());
+                MultipleSelectQstCountFragment fragment = new MultipleSelectQstCountFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("contentType", "MultipleChoice");
+                fragment.setArguments(bundle);
+                loadFragment(fragment);
                 //startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "MultipleChoice"));
                 break;
             case R.id.btnSampleFlip:
-                Log.e("contentType flip ", "Flipset");
-                loadFragment(new MultipleSelectQstCountFragment());
+                MultipleSelectQstCountFragment fragments = new MultipleSelectQstCountFragment();
+                Bundle bundles = new Bundle();
+                bundles.putString("contentType", "FlipSet");
+                fragments.setArguments(bundles);
+                loadFragment(fragments);
+                //loadFragment(new MultipleSelectQstCountFragment());
                 // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
                 break;
             case R.id.txtProfile:
@@ -252,12 +261,17 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 //  startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.btnExamPro:
+
+                bottomNav.setSelectedItemId(R.id.navigation_store);
                 loadFragment(new StoreFragment());
-                // navigation.setSelectedItemId(R.id.navigation_store);
                 break;
 
             case R.id.txtRef:
                 shareLink();
+                break;
+            case R.id.txtResult:
+                bottomNav.setSelectedItemId(R.id.navigation_history);
+                loadFragment(new HistoryFragment());
                 break;
         }
     }
@@ -267,7 +281,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         // load fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 
@@ -276,7 +290,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         share.putExtra(Intent.EXTRA_SUBJECT, "Share App");
-        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.crcexam.android");
+        share.putExtra(Intent.EXTRA_TEXT, "Download Licensure Exams from Play store now. https://play.google.com/store/apps/details?id=com.crcexam.android");
         startActivity(Intent.createChooser(share, "Share App"));
     }
 
