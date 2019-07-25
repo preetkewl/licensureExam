@@ -16,13 +16,13 @@
         <item
             android:id="@+id/menu_results"
             android:icon="@drawable/ic_result"
-            android:title="@string/result" />
+            android:title="@string/test_results" />
 
-        <item
-            android:id="@+id/menu_history"
-            android:icon="@drawable/ic_history"
-            android:title="@string/history" />
-
+        <!-- <item
+             android:id="@+id/menu_history"
+             android:icon="@drawable/ic_history"
+             android:title="@string/history" />
+ -->
         <item
             android:id="@+id/menu_refer"
             android:icon="@drawable/ic_share"
@@ -31,6 +31,11 @@
             android:id="@+id/menu_info"
             android:icon="@drawable/ic_info"
             android:title="@string/info" />
+
+        <item
+            android:id="@+id/menu_logout"
+            android:icon="@drawable/ic_keyboard_return"
+            android:title="@string/logout" />
     </group>
     <!--  <item android:title="Communicate">
           <menu>

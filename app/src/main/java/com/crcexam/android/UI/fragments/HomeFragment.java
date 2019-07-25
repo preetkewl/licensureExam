@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
+import com.crcexam.android.UI.TempActivity;
 import com.crcexam.android.adapters.ExamListAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
@@ -151,6 +152,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
     }
 
@@ -269,8 +271,14 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
             case R.id.txtRef:
                 shareLink();
                 break;
+
+            case R.id.txtDirMsgTitle:
+                Intent intent = new Intent(getActivity(), TempActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.txtResult:
-                bottomNav.setSelectedItemId(R.id.navigation_history);
+                bottomNav.setSelectedItemId(R.id.navigation_results);
                 loadFragment(new HistoryFragment());
                 break;
         }
@@ -290,7 +298,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         share.putExtra(Intent.EXTRA_SUBJECT, "Share App");
-        share.putExtra(Intent.EXTRA_TEXT, "Download Licensure Exams from Play store now. https://play.google.com/store/apps/details?id=com.crcexam.android");
+        share.putExtra(Intent.EXTRA_TEXT, "Download Licensure Exams from Play store now. https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
         startActivity(Intent.createChooser(share, "Share App"));
     }
 

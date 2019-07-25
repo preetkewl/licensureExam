@@ -33,11 +33,11 @@
         android:layout_margin="@dimen/margin_20"
         android:orientation="vertical">
 
-        <TextView
+  <!--      <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="SelectionFragment"/>
+            android:text="SelectionFragment"/>-->
 
         <TextView
             android:id="@+id/tv_selection_one"

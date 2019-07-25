@@ -12,7 +12,7 @@ android {
     defaultConfig {
         versionCode 1
         versionName project.version
-        minSdkVersion 8
+        minSdkVersion 19
         targetSdkVersion 28
         consumerProguardFiles 'progress-proguard.txt'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -1,7 +1,9 @@
 package com.crcexam.android.UI.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,8 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;
+/*import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;*/
+import com.crcexam.android.InAppBilling.IabHelper;
+import com.crcexam.android.InAppBilling.IabResult;
+import com.crcexam.android.InAppBilling.Inventory;
+import com.crcexam.android.InAppBilling.Purchase;
+import com.crcexam.android.MainActivity;
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.StoreAdapter;
 import com.crcexam.android.constants.Constant;
@@ -43,7 +50,10 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
     private static final String ACTIVITY_NUMBER = "activity_num";
     private static final String LOG_TAG = "iabv3";
     // PRODUCT & SUBSCRIPTION IDS
-    private static final String PRODUCT_ID = "com.anjlab.test.iab.s2.p5";
+    //private static final String PRODUCT_ID = "com.anjlab.test.iab.s2.p5";
+    //for testing -
+    private static final String PRODUCT_ID = "android.test.purchased";
+    private static final String PRODUCT_ID_SKU = "android.test.purchased";
     private static final String SUBSCRIPTION_ID = "com.anjlab.test.iab.subs1";
     private static final String LICENSE_KEY = null; // PUT YOUR MERCHANT KEY HERE;
     // put your Google merchant id here (as stated in public profile of your Payments Merchant Center)
@@ -56,8 +66,71 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
     StoreAdapter mAdapter;
     RecyclerviewClickListner recyclerviewClickListner;
     ProgressHUD progressHUD;
-    private BillingProcessor bp;
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+            = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+
+            Log.v(TAG, "IabCheck purchase finished result " + result + " purchase " + purchase);
+
+            if (purchase != null) {
+
+                if (purchase.getSku().equals(PRODUCT_ID_SKU)) {
+
+                    Toast.makeText(getActivity(), "Purchase successful!", Toast.LENGTH_SHORT).show();
+                    //consume();
+                 /*   premiumEditor.putBoolean("hasPremium", true);
+                    premiumEditor.commit();*/
+                }
+                if (result.getResponse() == 7) {
+                    Toast.makeText(mContext, "Item Already Owned", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if (result.getResponse() == 7) {
+                    Toast.makeText(mContext, "Item Already Owned", Toast.LENGTH_SHORT).show();
+                    // consume();
+                }
+                return;
+            }
+            if (result.isFailure()) {
+                return;
+            }
+        }
+    };
+    private Inventory mInventory;
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
+            = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result,
+                                             Inventory inventory) {
+
+            mInventory = inventory;
+
+            if (result.isFailure()) {
+                // handle error here
+
+                Log.v(TAG, "IabCheck failure in checking if user has purchases");
+            } else {
+                // does the user have the premium upgrade?
+                if (inventory.hasPurchase("premium_version")) {
+
+                /*    premiumEditor.putBoolean("hasPremium", true);
+                    premiumEditor.commit();*/
+
+                    Log.v(TAG, "IabCheck Has purchase, saving in storage");
+
+                } else {
+
+                   /* premiumEditor.putBoolean("hasPremium", false);
+                    premiumEditor.commit();*/
+
+                    Log.v(TAG, "IabCheck Doesn't have purchase, saving in storage");
+
+                }
+            }
+        }
+    };
+  //  private BillingProcessor bp;
     private boolean readyToPurchase = false;
+    private IabHelper mHelper;
 
     @Nullable
     @Override
@@ -68,11 +141,64 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
         //init();
         recyclerviewClickListner = StoreFragment.this;
         adapter();
+        //Previous code -
         getAllExamList();
-        initBillingLib();
+      //  initBillingLib();
+        //new Code -
+        initIab();
         return rootView;
     }
 
+    private void initIab() {
+        mHelper = new IabHelper(getActivity(), getResources().getString(R.string.base64_encoded_RSA_public_key));
+        mHelper.enableDebugLogging(false); //set to false in real app
+
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    // Oh no, there was a problem.
+
+                    if (result.getResponse() == 3) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("In app billing")
+                                .setMessage("This device is not compatible with In App Billing, so" +
+                                        " you may not be able to buy the premium version on your phone. ")
+                                .setPositiveButton("Okay", null)
+                                .show();
+                    }
+                    Log.v(TAG, "IabCheck Problem setting up In-app Billing: " + result);
+                } else {
+                    Log.v(TAG, "IabCheck YAY, in app billing set up! " + result);
+                    try {
+                        mHelper.queryInventoryAsync(mGotInventoryListener); //Getting inventory of purchases and assigning listener
+                    } catch (IabHelper.IabAsyncInProgressException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    public void buyPremium() {
+        Log.e(TAG, "IabCheck buyPremium: called");
+        try {
+
+            mHelper.flagEndAsync();//If any async is going, make sure we have it stop eventually
+            mHelper.launchPurchaseFlow(getActivity(), PRODUCT_ID_SKU, 9, mPurchaseFinishedListener, "SECURITYSTRING"); //Making purchase request and attaching listener
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            mHelper.flagEndAsync();//If any async is going, make sure we have it stop eventually
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Error")
+                    .setMessage("An error occurred in buying the premium version. Please try again.")
+                    .setPositiveButton("Okay", null)
+                    .show();
+        }
+    }
 
     private void adapter() {
         try {
@@ -86,7 +212,35 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
 
     }
 
-    private void initBillingLib() {
+
+    @Override
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d(TAG, "IabCheck onActivityResult(" + requestCode + "," + resultCode + "," + data);
+
+        // Pass on the activity result to the helper for handling
+
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+
+        } else
+            Log.d(TAG, "IabCheck onActivityResult handled by IABUtil.");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mHelper != null)
+            try {
+                mHelper.dispose();
+                mHelper = null;
+
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+    }
+
+   /* private void initBillingLib() {
         if (!BillingProcessor.isIabServiceAvailable(getActivity())) {
             Toast.makeText(mContext, "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16", Toast.LENGTH_SHORT).show();
         }
@@ -116,19 +270,19 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
                 //Toast.makeText(mContext,"onPurchaseHistoryRestored",Toast.LENGTH_SHORT).show();
                 for (String sku : bp.listOwnedProducts())
                     sku1 = sku;
-                Log.d(LOG_TAG, "Owned Managed Product: " + sku1);
+                Log.d(LOG_TAG, "IabCheck Owned Managed Product: " + sku1);
                 for (String sku : bp.listOwnedSubscriptions())
                     sku1 = sku;
-                Log.d(LOG_TAG, "Owned Subscription: " + sku1);
+                Log.d(LOG_TAG, "IabCheck Owned Subscription: " + sku1);
 
                 // Toast.makeText(mContext,"onProductPurchased: " + sku1,Toast.LENGTH_SHORT).show();
 
-                Log.d(LOG_TAG, "Owned Subscription: " + "fghffgh fh");
+                Log.d(LOG_TAG, "IabCheck Owned Subscription: " + "fghffgh fh");
                 // updateTextViews();
             }
         });
 
-    }
+    }*/
 
     public String loadJSONFromAsset() {
         String json = null;
@@ -168,12 +322,12 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
                             if (progressHUD.isShowing() && progressHUD != null) {
                                 progressHUD.dismiss();
                             }
-                            Log.e("onResponse  ", response.code() + "");
+                            Log.e("IabCheck onResponse  ", response.code() + "");
                             homeArraylist.clear();
                             ArrayList<JSONObject> lstMultipleChoice = new ArrayList<>();
                             if (response.code() == 200) {
                                 JSONArray array = new JSONArray(response.body().string());
-                                Log.e("array  ", array + "");
+                                Log.e("IabCheck array  ", array + "");
                                 for (int i = 0; i < array.length(); i++) {
                                     //homeArraylist.add(array.getJSONObject(i));
                                     if (!array.getJSONObject(i).getBoolean("isFree")) {
@@ -187,7 +341,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
                                 recyclerView.setAdapter(mAdapter);
                             } else {
                                 String error = response.errorBody().string();
-                                Log.e("error  ", error + "");
+                                Log.e("IabCheck error  ", error + "");
                                 JSONObject object = new JSONObject(error);
 
                             }
@@ -225,11 +379,55 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
 
     @Override
     public void onItemClick(View view, int position, String response) {
-        if (!readyToPurchase) {
+        /*if (!readyToPurchase) {
             Toast.makeText(mContext, "Billing not initialized.", Toast.LENGTH_SHORT).show();
             return;
+        }*/
+        if (mHelper != null) {
+            //consume();
+            /// mHelper.flagEndAsync();
+            buyPremium();
         }
-        bp.purchase(getActivity(), PRODUCT_ID);
+        //bp.purchase(getActivity(), PRODUCT_ID);
+    }
+
+    public void consume() {
+
+        //MAKING A QUERY TO GET AN ACCURATE INVENTORY
+        try {
+            mHelper.flagEndAsync(); //If any async is going, make sure we have it stop eventually
+
+            mHelper.queryInventoryAsync(mGotInventoryListener); //Getting inventory of purchases and assigning listener
+
+            if (mInventory.getPurchase(PRODUCT_ID_SKU) == null) {
+                Toast.makeText(getActivity(), "Already consumed!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "IabCheck consume: Already consumed! ");
+            }
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+            Log.e(TAG, "IabCheck consume: Error, try again ");
+
+            Toast.makeText(getActivity(), "Error, try again", Toast.LENGTH_SHORT).show();
+            mHelper.flagEndAsync();//If any async is going, make sure we have it stop eventually
+        }
+
+        //ACTUALLY CONSUMING
+        try {
+            mHelper.flagEndAsync();//If any async is going, make sure we have it stop eventually
+
+            this.mHelper.consumeAsync(mInventory.getPurchase(PRODUCT_ID_SKU), new IabHelper.OnConsumeFinishedListener() {
+                public void onConsumeFinished(Purchase paramAnonymousPurchase, IabResult paramAnonymousIabResult) {
+//resell the gas to them
+                }
+            });
+
+            return;
+        } catch (IabHelper.IabAsyncInProgressException localIabAsyncInProgressException) {
+            localIabAsyncInProgressException.printStackTrace();
+            Toast.makeText(getActivity(), "ASYNC IN PROGRESS ALREADY!!!!" + localIabAsyncInProgressException, Toast.LENGTH_LONG).show();
+            Log.v("myTag", "IabCheck ASYNC IN PROGRESS ALREADY!!!");
+            mHelper.flagEndAsync();
+        }
     }
 }
 

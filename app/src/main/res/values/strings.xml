@@ -93,5 +93,10 @@ your own home. It\'s in there.</string>
     <string name="profile">Profile</string>
     <string name="store">Store</string>
     <string name="info">Info</string>
+    <string name="test_results">Test Results</string>
+    <string name="logout">Log out</string>
+
+    <!-- In App Billing -> -->
+    <string name="base64_encoded_RSA_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkPk46CilJzGbSDP31Bylt2sjI2+nfqgNn61NSZF90KfkkzFE80czzEtXKImD+9YdY0uojdMm5/1KbwK5RWJBGN/GBhE+1dYMBfQOzo4dhrkK/WhsX/Uf8+WyRlPZl+mz5YIRY43wunI+UaaW51sV1WbqiBVlxcCr2XRLop/eH7mrpHo4uivP6NcQi4I3GMc8JElm5VeavdH6XLweCsh8p/VEMwg/Y292sRMicPNRdTQBKz3VaYxljIWdtOvQuaPITBhfm2Vj2FL5uow2C/01IBbKfZm2MVn44msVGNH4AuxpnuqSQsoBiMBBjql6WDAzZSGJ9gDeoKuR/Kd48iW52wIDAQAB</string>
 
 </resources>

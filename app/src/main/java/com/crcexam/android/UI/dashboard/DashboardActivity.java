@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
+import com.crcexam.android.UI.auth.LoginActivity;
 import com.crcexam.android.UI.fragments.HistoryFragment;
 import com.crcexam.android.UI.fragments.HomeFragment;
 import com.crcexam.android.UI.fragments.InfoFragment;
@@ -41,10 +42,10 @@ import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    private static final String TAG = "DashboardActivity";
     public static BottomNavigationView bottomNav;
     Context mContext;
     Toolbar mToolbar;
-    private static final String TAG = "DashboardActivity";
     private NavigationView navDrawer;
     private DrawerLayout mdrawer;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,7 +57,7 @@ public class DashboardActivity extends AppCompatActivity
                 case R.id.navigation_home:
                     openDashboard();
                     return true;
-                case R.id.navigation_history:
+                case R.id.navigation_results:
                     openHistory();
                     return true;
                 case R.id.navigation_store:
@@ -133,14 +134,13 @@ public class DashboardActivity extends AppCompatActivity
             bottomNav.setSelectedItemId(R.id.navigation_home);
             openDashboard();
         } else if (id == R.id.menu_results) {
-            bottomNav.setSelectedItemId(R.id.navigation_history);
+            bottomNav.setSelectedItemId(R.id.navigation_results);
             openHistory();
         } else if (id == R.id.menu_profile) {
             bottomNav.setSelected(false);
             openProfile();
-        } else if (id == R.id.menu_history) {
-            bottomNav.setSelectedItemId(R.id.navigation_history);
-            openHistory();
+        } else if (id == R.id.menu_logout) {
+            logout();
         } else if (id == R.id.menu_refer) {
             mdrawer.closeDrawer(Gravity.LEFT);
             shareLink();
@@ -152,6 +152,18 @@ public class DashboardActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        PreferenceClass.clearPreference(mContext);
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        //Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -198,7 +210,7 @@ public class DashboardActivity extends AppCompatActivity
         // Add data to the intent, the receiving app will decide
         // what to do with it.
         share.putExtra(Intent.EXTRA_SUBJECT, "Share App");
-        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.crcexam.android");
+        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + getApplication().getPackageName());
         startActivity(Intent.createChooser(share, "Share App"));
     }
 
@@ -235,7 +247,7 @@ public class DashboardActivity extends AppCompatActivity
         try {
             ((TextView) findViewById(R.id.tv_title)).setText(title);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -256,7 +268,7 @@ public class DashboardActivity extends AppCompatActivity
             switchDrawer();
         } else {
             setToolbarTitle(getResources().getString(R.string.history));
-            navDrawer.setCheckedItem(R.id.menu_history);
+            navDrawer.setCheckedItem(R.id.menu_results);
             loadFragment(new HistoryFragment());
         }
     }
