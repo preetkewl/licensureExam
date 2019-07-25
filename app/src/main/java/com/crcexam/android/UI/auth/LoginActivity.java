@@ -3,6 +3,8 @@ package com.crcexam.android.UI.auth;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.dashboard.DashboardActivity;
+import com.crcexam.android.UI.fragments.SignInFragment;
+import com.crcexam.android.UI.fragments.SignUpFragment;
+import com.crcexam.android.adapters.SignUpTabAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
 import com.crcexam.android.network.RetrofitService;
@@ -34,6 +39,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Context mContext;
     private ConnectionDetector cd;
     private ProgressHUD progressHUD;
+    private TabLayout tabLayout;
+    public static ViewPager viewPager;
+    private SignUpTabAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,34 +52,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cd = new ConnectionDetector(mContext);
         setFontStyle();
         setListener();
+        tabLayout=(TabLayout)findViewById(R.id.sliding_tabs);
+        viewPager=(ViewPager)findViewById(R.id.loginviewpager);
+
+
+
+        adapter = new SignUpTabAdapter(getSupportFragmentManager());
+        adapter.addFragment(new SignUpFragment(), "Sign Up");
+        adapter.addFragment(new SignInFragment(), "Sign In");
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
+    public int getItem(int i){
+        return viewPager.getCurrentItem()+1;
+    }
+
+
+
     private void setFontStyle() {
-        ((TextView) findViewById(R.id.txtApp)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
+       /* ((TextView) findViewById(R.id.txtApp)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
         ((TextView) findViewById(R.id.txtTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
         ((TextView) findViewById(R.id.txtSignup)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
         ((EditText) findViewById(R.id.edtEmail)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) findViewById(R.id.edtPassword)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) findViewById(R.id.btnLogin)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((Button) findViewById(R.id.btnLogin)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));*/
 
     }
 
     private void setListener() {
-        ((Button) findViewById(R.id.btnLogin)).setOnClickListener(this);
-        ((TextView) findViewById(R.id.txtSignup)).setOnClickListener(this);
+       /* ((Button) findViewById(R.id.btnLogin)).setOnClickListener(this);
+        ((TextView) findViewById(R.id.txtSignup)).setOnClickListener(this);*/
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnLogin:
+            /*case R.id.btnLogin:
                 validation();
                 break;
             case R.id.txtSignup:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
-                break;
+                break;*/
         }
     }
 

@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    android:background="@drawable/splashbackground">
 
-    <RelativeLayout
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/splash_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" />
 
 
+    <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dots_height"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dots_margin_bottom"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/startbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="35dp"
+        android:visibility="gone"
+        android:background="@drawable/rounded_btn"
+        android:text="@string/start" />
+    <!--
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
+
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/load"
-                android:layout_centerInParent="true"/>
-
-
-        </RelativeLayout>
-        <ImageView
-            android:id="@+id/spinnerImageView"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:background="@anim/spinner_new"
-            android:tint="@color/colorAccent"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:contentDescription="@null" />
-    </RelativeLayout>
+                android:id="@+id/spinnerImageView"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:background="@anim/spinner_new"
+                android:backgroundTint="@color/colorPrimary"
+                android:contentDescription="@null"
+                android:tint="@color/colorAccent" />
+        </RelativeLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>

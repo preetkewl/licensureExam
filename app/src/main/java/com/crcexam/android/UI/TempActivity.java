@@ -18,7 +18,7 @@ public class TempActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private DachshundTabLayout tabLayout;
-    private static final String DOG_BREEDS[] = {"Pug", "Beagle", "Bulldog", "Poodle"};
+    private static final String LOGIN_PAGES[] = {"Sign Up", "Sign In"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,12 @@ public class TempActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return DOG_BREEDS.length;
+            return LOGIN_PAGES.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return DOG_BREEDS[position];
+            return LOGIN_PAGES[position];
         }
     }
 

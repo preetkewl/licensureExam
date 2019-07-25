@@ -6,16 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_dashboard"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_dashboard"
             android:title="@string/dashboard" />
 
         <item
             android:id="@+id/menu_profile"
-            android:icon="@drawable/ic_profile"
+            android:icon="@drawable/ic_user"
             android:title="@string/profile" />
         <item
             android:id="@+id/menu_results"
-            android:icon="@drawable/ic_result"
+            android:icon="@drawable/ic_list"
             android:title="@string/test_results" />
 
         <!-- <item
@@ -29,12 +29,12 @@
             android:title="@string/refer" />
         <item
             android:id="@+id/menu_info"
-            android:icon="@drawable/ic_info"
+            android:icon="@drawable/ic_page"
             android:title="@string/info" />
 
         <item
             android:id="@+id/menu_logout"
-            android:icon="@drawable/ic_keyboard_return"
+            android:icon="@drawable/ic_logout"
             android:title="@string/logout" />
     </group>
     <!--  <item android:title="Communicate">
