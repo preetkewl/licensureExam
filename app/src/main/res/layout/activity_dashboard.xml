@@ -11,8 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical" >
 
         <include
             android:id="@+id/toolbar_dash"
@@ -39,7 +38,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
             android:foreground="?attr/selectableItemBackground"
-            app:itemBackground="@color/colorWhite"
+            app:itemBackground="@drawable/square_btn"
             app:elevation="@dimen/margin_10"
             app:itemTextColor="@drawable/buttom_view_text_color_selector"
             app:labelVisibilityMode="labeled"
@@ -56,8 +55,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/drawerbackgorund"
+        android:background="@drawable/splash_backgorund"
         android:fitsSystemWindows="true"
+        app:itemTextColor="@android:color/white"
         app:headerLayout="@layout/nav_header_main2"
         app:menu="@menu/activity_main2_drawer" />
 

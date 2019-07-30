@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-
 
 
         <LinearLayout
@@ -24,39 +23,37 @@
                 android:id="@+id/txtApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_smalllogo"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_innerlogo"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/title_heading_xxx"
-                android:layout_marginTop="50dp"/>
+                android:textSize="@dimen/title_heading_xxx" />
         </LinearLayout>
 
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            app:tabIndicatorAnimationDuration="10"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="5dp"
+            app:tabMode="fixed" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/sliding_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                app:tabMode="fixed"
-                app:tabIndicatorAnimationDuration="10"
-                app:tabIndicatorHeight="5dp"
-                app:tabIndicatorFullWidth="true"/>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/loginviewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white" />
-
+        <android.support.v4.view.ViewPager
+            android:id="@+id/loginviewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
 
 
     </LinearLayout>
 
-   <!-- <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp">
+    <!-- <android.support.design.widget.TabLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_marginTop="200dp">
 
-    </android.support.design.widget.TabLayout>-->
+     </android.support.design.widget.TabLayout>-->
 </LinearLayout>

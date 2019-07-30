@@ -133,26 +133,26 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     }
 
     private void setFontStyle() {
-        ((TextView) rootView.findViewById(R.id.txtDashboard)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //((TextView) rootView.findViewById(R.id.txtDashboard)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtResult)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtRef)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.txtDirMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //((TextView) rootView.findViewById(R.id.txtDirMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+      //  ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
     }
 
     private void setListener() {
-        ((Button) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
-        ((Button) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
-        ((Button) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
+     //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
     }
 
@@ -263,7 +263,6 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 //  startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.btnExamPro:
-
                 bottomNav.setSelectedItemId(R.id.navigation_store);
                 loadFragment(new StoreFragment());
                 break;
@@ -273,8 +272,8 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 break;
 
             case R.id.txtDirMsgTitle:
-                Intent intent = new Intent(getActivity(), TempActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getActivity(), TempActivity.class);
+                startActivity(intent);*/
                 break;
 
             case R.id.txtResult:

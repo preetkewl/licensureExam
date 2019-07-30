@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+/*public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
     private ConnectionDetector cd;
     private ProgressHUD progressHUD;
@@ -165,4 +165,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         }
     }
-}
+}*/

@@ -69,12 +69,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         ((EditText) rootView.findViewById(R.id.edtName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtMail)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtPassword)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) rootView.findViewById(R.id.signinbtn)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((Button) rootView.findViewById(R.id.btnRegister)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
     }
 
     private void setListener() {
-        ((Button) rootView.findViewById(R.id.signinbtn)).setOnClickListener(this);
+        ((Button) rootView.findViewById(R.id.btnRegister)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.textsignin)).setOnClickListener(this);
 
     }
@@ -94,9 +94,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
 
     private void validation() {
-        if (((EditText) rootView.findViewById(R.id.edtEmail)).getText().toString().trim().isEmpty()) {
+        if (((EditText) rootView.findViewById(R.id.edtMail)).getText().toString().trim().isEmpty()) {
             Utility.toastHelper(mContext.getString(R.string.Email_Alert), mContext);
-        } else if (!Utility.checkEmail(((EditText) rootView.findViewById(R.id.edtEmail)).getText().toString().trim())) {
+        } else if (!Utility.checkEmail(((EditText) rootView.findViewById(R.id.edtMail)).getText().toString().trim())) {
             Utility.toastHelper(mContext.getString(R.string.Email_Validation_Alert), mContext);
         } else if (((EditText) rootView.findViewById(R.id.edtPassword)).getText().toString().trim().isEmpty()) {
             Utility.toastHelper(mContext.getString(R.string.Password_Alert), mContext);
@@ -109,7 +109,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("apikey", Constant.API_KEY);
                 jsonObject.addProperty("siteid", Constant.SITE_ID);
-                jsonObject.addProperty("username", ((EditText) rootView.findViewById(R.id.edtEmail)).getText().toString().trim());
+                jsonObject.addProperty("username", ((EditText) rootView.findViewById(R.id.edtMail)).getText().toString().trim());
                 jsonObject.addProperty("password", ((EditText) rootView.findViewById(R.id.edtPassword)).getText().toString().trim());
                 progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                     @Override
@@ -117,7 +117,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                         // TODO Auto-generated method stub
                     }
                 });
-                register(Constant.API_KEY, Constant.SITE_ID, ((EditText) rootView.findViewById(R.id.edtEmail)).getText().toString().trim(), ((EditText) rootView.findViewById(R.id.edtPassword)).getText().toString().trim());
+                register(Constant.API_KEY, Constant.SITE_ID, ((EditText) rootView.findViewById(R.id.edtMail)).getText().toString().trim(), ((EditText) rootView.findViewById(R.id.edtPassword)).getText().toString().trim());
             } else {
                 Utility.toastHelper("No internet connection!", mContext);
             }

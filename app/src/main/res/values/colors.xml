@@ -9,7 +9,8 @@
     <color name="colorLight">#F0EFF5</color>
     <color name="colorGrayBg">#e1e1e1</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#000000</color>
+    <color name="colorBlack">#9AD5D2</color>
+    <color name="directortxtcolor">#323232</color>
     <color name="colorBlackHint">#464545</color>
     <color name="colorBlue">#012e87</color>
     <color name="colorTextGray">#737171</color>
@@ -17,6 +18,8 @@
     <color name="colorBorder">#dcdbdb</color>
     <color name="colorTrasparent">#0039c6f4</color>
     <color name="lecensuretxtcolor">#323232</color>
+    <color name="card_bg">#97D5D3</color>
+
 
 
 

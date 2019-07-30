@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
-import com.crcexam.android.UI.TempActivity;
 import com.crcexam.android.UI.auth.LoginActivity;
 import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.constants.Constant;
@@ -44,9 +43,9 @@ public class SplashActivity extends AppCompatActivity {
             Log.e(TAG, "onPageSelected: " + layouts.length);
             Log.e(TAG, "onPageSelected: " + position);
             if (position == layouts.length - 1) {
-                findViewById(R.id.startbtn).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.donetextView)).setVisibility(View.VISIBLE);
             } else {
-                findViewById(R.id.startbtn).setVisibility(View.GONE);
+                ((TextView) findViewById(R.id.donetextView)).setVisibility(View.GONE);
             }
         }
 
@@ -87,8 +86,7 @@ public class SplashActivity extends AppCompatActivity {
         // add few more layouts if you want
         layouts = new int[]{
                 R.layout.activity_welcome_screen1,
-                R.layout.activity_welcome_screen2,
-                R.layout.activity_welcome_screen3,};
+                R.layout.activity_welcome_screen2,};
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -98,14 +96,14 @@ public class SplashActivity extends AppCompatActivity {
         // adding bottom dots
         addBottomDots(0);
 
-        findViewById(R.id.startbtn).setOnClickListener(new View.OnClickListener() {
+
+        ((TextView) findViewById(R.id.donetextView)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(mContext, LoginActivity.class);
                 startActivity(in);
             }
         });
-
 
         //setFontsStyle();
         //initializeViews();

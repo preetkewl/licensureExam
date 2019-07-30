@@ -14,23 +14,23 @@
         android:roundIcon="@drawable/ic_applogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.auth.SignInActivity"></activity>
-        <activity android:name=".UI.auth.SignUpActivity" />
-        <activity android:name=".UI.auth.Login_Activity" />
-        <activity android:name=".UI.TempActivity" />
+
+        <activity android:name=".UI.splash.SplashActivity" />
         <activity
             android:name=".UI.dashboard.DashboardActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UI.splash.SplashActivity">
+        <activity android:name=".UI.TempActivity"
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".UI.auth.RegisterActivity" />
+      <!--  <activity android:name=".UI.auth.RegisterActivity" />-->
         <activity android:name=".UI.auth.LoginActivity" />
     </application>
 

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.auth.LoginActivity;
-import com.crcexam.android.UI.auth.RegisterActivity;
 import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
