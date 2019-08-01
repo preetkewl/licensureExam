@@ -63,6 +63,7 @@ your own home. It\'s in there.</string>
     <string name="Username">Username:</string>
     <string name="First_Name">First Name:</string>
     <string name="Last_Name">Last Name:</string>
+    <string name="change_password">Change Password</string>
     <string name="Telephone">Telephone:</string>
     <string name="Study_Goal">Study Goal:</string>
     <string name="Exam_Date">Exam Date:</string>
@@ -73,6 +74,7 @@ your own home. It\'s in there.</string>
     <string name="City">City:</string>
     <string name="State">State:</string>
     <string name="ZIP_Code">ZIP Code:</string>
+    <string name="Password_bullets">\u2022\u2022\u2022\u2022\u2022</string>
     <string name="directr_msg">Hi, I\'m Linton and guess what? I went through the same agony and anxiety that you might be experiencing right now. I personally look forward to taking tests as much as I look forward to a trip to the dentist. We were the first Certified Rehabilitation Counselor Exam test prep site online, and for 18 years we\'ve been providing a way to study for your exam so you can get on with your life and put this experience behind you as quickly and as painlessly as possible, right from your own home. It\'s in there.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -98,9 +100,11 @@ your own home. It\'s in there.</string>
     <string name="licensure_exam">Licensure Exams</string>
     <string name="directors_msg">Director\'s Message</string>
     <string name="start">Start</string>
+    <string name="invalid_password">Your password must contain 1 capital letter, 1 number and minimum 8 characters.</string>
 
 
     <!-- In App Billing -> -->
     <string name="base64_encoded_RSA_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkPk46CilJzGbSDP31Bylt2sjI2+nfqgNn61NSZF90KfkkzFE80czzEtXKImD+9YdY0uojdMm5/1KbwK5RWJBGN/GBhE+1dYMBfQOzo4dhrkK/WhsX/Uf8+WyRlPZl+mz5YIRY43wunI+UaaW51sV1WbqiBVlxcCr2XRLop/eH7mrpHo4uivP6NcQi4I3GMc8JElm5VeavdH6XLweCsh8p/VEMwg/Y292sRMicPNRdTQBKz3VaYxljIWdtOvQuaPITBhfm2Vj2FL5uow2C/01IBbKfZm2MVn44msVGNH4AuxpnuqSQsoBiMBBjql6WDAzZSGJ9gDeoKuR/Kd48iW52wIDAQAB</string>
+    <string name="update_password">Update</string>
 
 </resources>

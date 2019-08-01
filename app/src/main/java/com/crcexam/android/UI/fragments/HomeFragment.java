@@ -288,7 +288,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         // load fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
+        //transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 

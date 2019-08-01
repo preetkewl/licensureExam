@@ -253,7 +253,8 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment).addToBackStack(fragment.getClass().getName());
+        transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
+
     }
 }

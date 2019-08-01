@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,8 +18,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.auth.LoginActivity;
@@ -25,6 +28,7 @@ import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
 import com.crcexam.android.network.RetrofitService;
 import com.crcexam.android.utils.ConnectionDetector;
+import com.crcexam.android.utils.PasswordValidator;
 import com.crcexam.android.utils.PreferenceClass;
 import com.crcexam.android.utils.ProgressHUD;
 import com.crcexam.android.utils.Utility;
@@ -41,13 +45,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.crcexam.android.UI.dashboard.DashboardActivity.bottomNav;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private static final String TAG = "ProfileFragment";
+    BottomSheetBehavior sheetBehavior, sheetBehaviorEditDob;
+    RelativeLayout layoutBottomSheet, dobSheet;
     private View rootView;
     private Context mContext;
     private Toolbar mToolbar;
@@ -80,6 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         day_first = c.get(Calendar.DAY_OF_MONTH);
         setFontStyle();
         editProfile(false);
+        initBottomSheet();
         if (connectionDetector.isConnectingToInternet()) {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -98,9 +104,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setListener() {
-        ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setOnClickListener(this);
-        ((Button) rootView.findViewById(R.id.btnEditProfile)).setOnClickListener(this);
-        ((EditText) rootView.findViewById(R.id.edtExamDate)).setOnClickListener(this);
+        rootView.findViewById(R.id.btnUpdateProfile).setOnClickListener(this);
+        rootView.findViewById(R.id.btnEditProfile).setOnClickListener(this);
+        rootView.findViewById(R.id.btnChangePassword).setOnClickListener(this);
+        rootView.findViewById(R.id.edtExamDate).setOnClickListener(this);
 
     }
 
@@ -128,8 +135,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((Button) rootView.findViewById(R.id.btnEditProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
         //username and exam date should not be editable.
-        ((EditText) rootView.findViewById(R.id.edtUsername)).setEnabled(false);
-        ((EditText) rootView.findViewById(R.id.edtExamDate)).setEnabled(false);
+        rootView.findViewById(R.id.edtUsername).setEnabled(false);
+        rootView.findViewById(R.id.edtExamDate).setEnabled(false);
 
     }
 
@@ -140,6 +147,61 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             ((LinearLayout) mToolbar.findViewById(R.id.llLogOut)).setVisibility(View.GONE);
         }
     }*/
+
+
+    private void initBottomSheet() {
+        layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet_change_password);
+
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        layoutBottomSheet.findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "ChekcPassword onClick:Working ");
+                validatePassword();
+
+
+            }
+        });
+        layoutBottomSheet.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            }
+        });
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        rootView.findViewById(R.id.bg).setVisibility(View.GONE);
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        rootView.findViewById(R.id.bg).setVisibility(View.GONE);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                rootView.findViewById(R.id.bg).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.bg).setAlpha(slideOffset);
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -156,6 +218,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btnEditProfile:
                 editProfile(true);
                 break;
+            case R.id.btnChangePassword:
+                if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    //  btnBottomSheet.setText("Close sheet");
+                } else {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    // btnBottomSheet.setText("Expand sheet");
+                }
+                break;
 
            /* case R.id.llLogOut:
                 logout();
@@ -170,14 +241,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void editProfile(boolean isEnable) {
-        ((EditText) rootView.findViewById(R.id.edtFirstName)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtLastName)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtTelephone)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtAddress1)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtAddress2)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtCity)).setEnabled(isEnable);
-        ((EditText) rootView.findViewById(R.id.edtZIP)).setEnabled(isEnable);
-        ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtFirstName).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtLastName).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtTelephone).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtAddress1).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtAddress2).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtCity).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtZIP).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtChangePassword).setEnabled(isEnable);
+        rootView.findViewById(R.id.ChkReceiveEmails).setEnabled(isEnable);
 
     }
 
@@ -291,6 +363,101 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         getActivity().finish();
     }
 
+
+    private void validatePassword() {
+
+        PasswordValidator passwordValidator = new PasswordValidator();
+        String oldPass = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString();
+        String newPass = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString();
+        String newPassConfirm = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordConfirm)).getText().toString();
+        if (newPass.trim().length() > 0 && !passwordValidator.validate(newPass) && (newPass.trim().length() < 8)) {
+            Utility.toastHelper(getString(R.string.invalid_password),mContext);
+        } else if (oldPass.isEmpty() || newPass.isEmpty() || newPassConfirm.isEmpty()) {
+            Utility.toastHelper("Password cannot be empty",mContext);
+        }  else {
+
+
+/*        if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("old password is required", mContext);
+        } else if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("New Password is required", mContext);
+        } else if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordConfirm)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("Confirm Password is required", mContext);
+        } else {*/
+            if (connectionDetector.isConnectingToInternet()) {
+                updatePassword();
+            }
+        }
+    }
+
+    private void updatePassword() {
+        progressHUD.show();
+        try {
+            RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
+            Retrofit retrofit = retrofitLoggedIn.RetrofitClient(getActivity(), false);
+            RetrofitService home2hotel = null;
+            if (retrofit != null) {
+                home2hotel = retrofit.create(RetrofitService.class);
+            }
+            if (home2hotel != null) {
+                home2hotel.updatePassword(Constant.API_KEY, Constant.SITE_ID, PreferenceClass.getStringPreferences(mContext, Constant.UserData.AUTH_TOKEN),
+                        ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString(),
+                        ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString())
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    progressHUD.dismiss();
+
+                                    // hideLoader(indicatorView);
+
+                                    Log.e("res code", "CheckPasswrord " + response.code() + "");
+                                    if (response.isSuccessful() && response.code() == 200) {
+                                        Log.e(TAG, "onResponse: CheckPasswrord body " + response.body());
+                                        JSONObject object = new JSONObject(response.body().string());
+                                        Log.e(TAG, "CheckPasswrord onResponse: " + object);
+                                        Toast.makeText(mContext, object.getString("response"), Toast.LENGTH_SHORT).show();
+                                        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                                        Log.e("chechpasswordlog obj ", object + "");
+                                        if (object.getString("response").equalsIgnoreCase("success") && object.getInt("responsecode") == 0) {
+                                            Utility.toastHelper(object.getString("response"), mContext);
+                                        } else if (object.getInt("responsecode") == 201) {
+                                            Utility.toastHelper(object.getString("response"), mContext);
+                                        } else if (object.getInt("responsecode") == 301) {
+                                            // Utility.toastHelper(object.getString("response"), mContext);
+                                            resetData();
+                                        } else {
+                                            Utility.toastHelper(object.getString("response"), mContext);
+                                        }
+                                    } else {
+                                        String error = response.errorBody().string();
+                                        Log.e("errorr ", error);
+                                        JSONObject object = new JSONObject(error);
+                                        if (object.has("response")) {
+                                            Utility.toastHelper(object.getString("response"), mContext);
+                                        } else {
+                                            Utility.toastHelper(response.message(), mContext);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                progressHUD.hide();
+                                t.getLocalizedMessage();
+                            }
+                        });
+            }
+        } catch (Exception e) {
+            progressHUD.hide();
+            e.printStackTrace();
+        }
+    }
+
+
     private void validateProfile() {
         if (((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim().isEmpty()) {
             Utility.toastHelper("username is required", mContext);
@@ -313,7 +480,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 jsonObject.addProperty("City", ((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim());
                 jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
                 jsonObject.addProperty("StateAbbreviation", "FL");
-                jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked() ? true : false);
+                jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());
                 Log.e("dfdf g", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "");
                 if (!startDate.isEmpty())
                     jsonObject.addProperty("ExamDate", startDate);
@@ -334,7 +501,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateProfile(JsonObject jsonObject) {
-
+        Log.e(TAG, "jsonObject updateProfile: " + jsonObject);
         try {
             RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
             Retrofit retrofit = retrofitLoggedIn.RetrofitClient(getActivity(), false);

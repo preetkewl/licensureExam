@@ -277,7 +277,7 @@ public class DashboardActivity extends AppCompatActivity
         if (getCurrentFragment() instanceof HomeFragment) {
             switchDrawer();
         } else {
-            setToolbarTitle(getResources().getString(R.string.app_name));
+            setToolbarTitle(getResources().getString(R.string.crc_exam));
             navDrawer.setCheckedItem(R.id.menu_dashboard);
             loadFragment(new HomeFragment());
         }

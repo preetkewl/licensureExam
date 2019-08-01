@@ -56,10 +56,13 @@ public interface RetrofitService {
     Call<ResponseBody> updateProfile(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("authtoken") String authtoken,
                                      @Field("Body content type") String title, @Field("account") JsonObject account);
 
+    @POST("Mobile/Profile")
+    Call<ResponseBody> updatePassword(@Header("apikey") String apikey, @Header("siteid") String siteid,
+                                      @Header("authtoken") String authtoken, @Header("oldpassword") String oldpassword,@Header("newpassword") String newpassword);
+
 
     @POST("Mobile/History")
     Call<ResponseBody> saveHistory(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("authtoken") String authtoken, @Header("mchistory") JsonObject obj);
-
 
 
     @GET("IAPService?")

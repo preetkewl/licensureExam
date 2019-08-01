@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imgback"
             android:padding="@dimen/margin_10"
-            android:text="@string/app_name"
+            android:text="@string/crc_exam"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/font_size_heading"
             android:typeface="serif"

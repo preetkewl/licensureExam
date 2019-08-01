@@ -85,17 +85,41 @@
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnMissed"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_20"
-            android:background="@drawable/shape_navy_border"
-            android:paddingLeft="@dimen/margin_15"
-            android:paddingRight="@dimen/margin_15"
-            android:text="Review missed"
-            android:textAllCaps="false" />
+            android:layout_below="@+id/rl"
+            android:layout_marginTop="@dimen/margin_05"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnMissed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/square_btn"
+                android:paddingLeft="@dimen/margin_15"
+                android:paddingRight="@dimen/margin_15"
+                android:text="Review missed"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false" />
+
+
+
+
+            <Button
+                android:id="@+id/btnExamPro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/square_btn"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="@dimen/margin_15"
+                android:paddingRight="@dimen/margin_15"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_toRightOf="@+id/btnMissed"
+                android:text="Exam Pro"
+                android:textAllCaps="false" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.constants.Constant;
@@ -24,11 +23,7 @@ import com.crcexam.android.utils.Utility;
 import com.crcexam.android.utils.circleprogress.DonutProgress;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -60,6 +55,12 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
         db = new DatabaseHandler(mContext);
         // setActionBar();
         ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setShowText(false);
+        rootView.findViewById(R.id.btnExamPro).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new StoreFragment());
+            }
+        });
         return rootView;
     }
 
@@ -127,8 +128,9 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     }
 */
     private void setListener() {
-        ((ImageView) mToolbar.findViewById(R.id.imgRight)).setOnClickListener(this);
-        ((Button) rootView.findViewById(R.id.btnMissed)).setOnClickListener(this);
+        mToolbar.findViewById(R.id.imgRight).setOnClickListener(this);
+        rootView.findViewById(R.id.btnMissed).setOnClickListener(this);
+
     }
 
     @Override
@@ -171,8 +173,6 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
-
-
                             Log.e("res sh code ", response.code() + "");
                             if (response.code() == 200) {
                                 String res = response.body().string();
