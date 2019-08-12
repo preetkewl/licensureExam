@@ -371,10 +371,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String newPass = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString();
         String newPassConfirm = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordConfirm)).getText().toString();
         if (newPass.trim().length() > 0 && !passwordValidator.validate(newPass) && (newPass.trim().length() < 8)) {
-            Utility.toastHelper(getString(R.string.invalid_password),mContext);
+            Utility.toastHelper(getString(R.string.invalid_password), mContext);
         } else if (oldPass.isEmpty() || newPass.isEmpty() || newPassConfirm.isEmpty()) {
-            Utility.toastHelper("Password cannot be empty",mContext);
-        }  else {
+            Utility.toastHelper("Password cannot be empty", mContext);
+        } else {
 
 
 /*        if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString().trim().isEmpty()) {

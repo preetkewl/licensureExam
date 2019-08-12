@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
             android:foreground="?attr/selectableItemBackground"
-            app:itemBackground="@drawable/square_btn"
             app:elevation="@dimen/margin_10"
             app:itemTextColor="@drawable/buttom_view_text_color_selector"
             app:labelVisibilityMode="labeled"

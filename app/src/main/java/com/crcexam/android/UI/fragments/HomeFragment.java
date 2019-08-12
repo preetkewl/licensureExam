@@ -14,11 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
-import com.crcexam.android.UI.TempActivity;
 import com.crcexam.android.adapters.ExamListAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
@@ -46,6 +44,8 @@ import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class HomeFragment extends Fragment implements RecyclerviewClickListner, View.OnClickListener {
 
+    public static final String mypreference = "mypref";
+    private static final String TAG = "HomeFragment";
     View rootView;
     Context mContext;
     RecyclerView recyclerView;
@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         setListener();
         connectionDetector = new ConnectionDetector(mContext);
         if (connectionDetector.isConnectingToInternet()) {
-            if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
+            /*if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {*/
                 progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                     }
                 });
                 getProfile();
-            }
+            //}
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }
@@ -104,8 +104,16 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                 JSONObject object = new JSONObject(res);
                                 Log.e("log obj ", object + "");
                                 String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
+                                String useremail = object.getJSONObject("account").getString("Username");
+
+                                Log.e(TAG, "username onResponse: " + useremail );
+                                ((TextView) getActivity().findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
+                                ((TextView) getActivity().findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
+
                                 PreferenceClass.setStringPreference(mContext, USER_NAME, username);
-                                PreferenceClass.setStringPreference(mContext, EMAIL, object.getJSONObject("account").getString("Username"));
+                                PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
+                                Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
+
                             } else {
                                 String error = response.errorBody().string();
                                 Log.e("errorr ", error);
@@ -138,7 +146,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         ((TextView) rootView.findViewById(R.id.txtProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtRef)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         //((TextView) rootView.findViewById(R.id.txtDirMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-      //  ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //  ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -152,7 +160,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
-     //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
+        //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
     }
 

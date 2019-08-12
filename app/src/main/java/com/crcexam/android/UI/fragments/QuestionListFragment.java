@@ -1,6 +1,7 @@
 package com.crcexam.android.UI.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import com.crcexam.android.R;
  */
 public class QuestionListFragment extends Fragment {
 
+    private Context mContext;
+    private View rootView;
+
 
     public QuestionListFragment() {
         // Required empty public constructor
@@ -24,7 +28,9 @@ public class QuestionListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question_list, container, false);
+        mContext = getContext();
+        rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
+        return rootView;
     }
 
 }

@@ -3,9 +3,26 @@ package com.crcexam.android.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
+
 public class PreferenceClass {
     public static Context appContext;
     private static String HOME2HOTEL_PREFERENCE="crcExam_preference";
+
+
+
+    public static void setUserName(Context context, String userName) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(HOME2HOTEL_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USER_NAME, userName);
+        editor.commit();
+        editor.apply();
+    }
+
+    public static String getUserName(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(HOME2HOTEL_PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(USER_NAME, "");
+    }
 
     public static void setStringPreference(Context context, String name, String value) {
         appContext = context;

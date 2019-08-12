@@ -58,8 +58,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         adapter = new SignUpTabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SignUpFragment(), "Sign Up");
-        adapter.addFragment(new SignInFragment(), "Sign In");
+        adapter.addFragment(new SignUpFragment(), "Sign In");
+        adapter.addFragment(new SignInFragment(), "Sign Up");
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         viewPager.setAdapter(adapter);

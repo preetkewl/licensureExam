@@ -90,20 +90,20 @@ public class DashboardActivity extends AppCompatActivity
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
         setClickListeners();
-        setDrawerData();
+      // setDrawerData();
+       // setNameandEmail();
     }
 
+
+
     private void setDrawerData() {
-       /* if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("")) {
-            ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
-            ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
-        } else if (!PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
+        if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("") && !PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("") ) {
             ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
         } else {
             ((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
-        }*/
+        }
 
     }
 

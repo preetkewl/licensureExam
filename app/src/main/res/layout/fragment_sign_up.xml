@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:background="@drawable/rounded_btn"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@+id/edtPassword"
             app:layout_constraintStart_toStartOf="@+id/edtPassword"

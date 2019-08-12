@@ -54,7 +54,7 @@ public class TempActivity extends Activity {
                     startActivity(new Intent(TempActivity.this, DashboardActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(TempActivity.this, LoginActivity.class));
+                    startActivity(new Intent(TempActivity.this, SplashActivity.class));
                     finish();
                 }
             }
