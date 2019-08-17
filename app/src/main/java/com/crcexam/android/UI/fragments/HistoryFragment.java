@@ -56,11 +56,11 @@ public class HistoryFragment extends Fragment {
             }
             Log.e("historyArraylist",historyArraylist.size()+"");
             recyclerView = rootView.findViewById(R.id.rv_historylist);
-           /* JSONObject obj = new JSONObject(loadJSONFromAsset());
-            JSONArray jsonArray = obj.getJSONArray("history");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                historyArraylist.add(jsonArray.getJSONObject(i));
-            }*/
+//            JSONObject obj = new JSONObject(loadJSONFromAsset());
+//            JSONArray jsonArray = obj.getJSONArray("history");
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                historyArraylist.add(jsonArray.getJSONObject(i));
+//            }
             historyAdapter = new HistoryAdapter(getActivity(), historyArraylist);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

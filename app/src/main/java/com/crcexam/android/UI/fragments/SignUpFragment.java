@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +45,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private ConnectionDetector cd;
 
 
-
     public SignUpFragment() {
         // Required empty public constructor
     }
@@ -74,7 +71,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             case R.id.txtSignup:
                 //startActivity(new Intent(mContext, RegisterActivity.class));
 
-                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem()+1,true);
+                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() + 1, true);
                 break;
         }
     }

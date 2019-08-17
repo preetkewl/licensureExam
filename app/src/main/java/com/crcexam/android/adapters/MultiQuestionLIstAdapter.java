@@ -14,7 +14,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 
 public class MultiQuestionLIstAdapter extends FragmentStatePagerAdapter {
 
-    private ArrayList<Integer> page_indexes;
     private static final String TAG = "MultiOptionQuestionList";
     public static int totalCurrectAns = 0;
     RecyclerView recyclerView;
@@ -45,6 +43,7 @@ public class MultiQuestionLIstAdapter extends FragmentStatePagerAdapter {
     ArrayList<JSONObject> lstAnswers = new ArrayList<>();
     ArrayList<JSONObject> lstMissedQuestion = new ArrayList<>();
     DatabaseHandler db;
+    private ArrayList<Integer> page_indexes;
     private Context mContext;
     private View rootView;
     private boolean is_SelectedAns = false, is_Missed = false;
@@ -52,11 +51,9 @@ public class MultiQuestionLIstAdapter extends FragmentStatePagerAdapter {
     private boolean is_first = true;
 
 
-
     public MultiQuestionLIstAdapter(FragmentManager fm) {
         super(fm);
     }
-
 
 
     @Override
@@ -77,11 +74,11 @@ public class MultiQuestionLIstAdapter extends FragmentStatePagerAdapter {
                 adapterAllQuestion(arrayOption.getJSONObject(position));
                 ((TextView) rootView.findViewById(R.id.tv_question)).setText(arrayOption.getJSONObject(position).getJSONObject("questions").getString("Question"));
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Question" + " " + (position + 1) + " of " + arrayOption.length());
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             }
             if (position == arrayOption.length() - 1) {
-                ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_next).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             }
 
         } catch (JSONException e) {

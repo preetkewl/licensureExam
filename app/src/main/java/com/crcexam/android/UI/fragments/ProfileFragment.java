@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -118,6 +119,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((TextView) rootView.findViewById(R.id.txtAddress1)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtAddress2)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtCity)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.txtState)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtZIP)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -128,6 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((EditText) rootView.findViewById(R.id.edtAddress1)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtAddress2)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtCity)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((EditText) rootView.findViewById(R.id.edtState)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtZIP)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -241,12 +244,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void editProfile(boolean isEnable) {
+        rootView.findViewById(R.id.edtUsername).setEnabled(isEnable);
         rootView.findViewById(R.id.edtFirstName).setEnabled(isEnable);
         rootView.findViewById(R.id.edtLastName).setEnabled(isEnable);
         rootView.findViewById(R.id.edtTelephone).setEnabled(isEnable);
         rootView.findViewById(R.id.edtAddress1).setEnabled(isEnable);
         rootView.findViewById(R.id.edtAddress2).setEnabled(isEnable);
         rootView.findViewById(R.id.edtCity).setEnabled(isEnable);
+        rootView.findViewById(R.id.edtState).setEnabled(isEnable);
         rootView.findViewById(R.id.edtZIP).setEnabled(isEnable);
         rootView.findViewById(R.id.edtChangePassword).setEnabled(isEnable);
         rootView.findViewById(R.id.ChkReceiveEmails).setEnabled(isEnable);
@@ -408,9 +413,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 try {
                                     progressHUD.dismiss();
-
                                     // hideLoader(indicatorView);
-
                                     Log.e("res code", "CheckPasswrord " + response.code() + "");
                                     if (response.isSuccessful() && response.code() == 200) {
                                         Log.e(TAG, "onResponse: CheckPasswrord body " + response.body());
@@ -478,6 +481,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 jsonObject.addProperty("Address1", ((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim());
                 jsonObject.addProperty("Address2", ((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim());
                 jsonObject.addProperty("City", ((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim());
+                jsonObject.addProperty("State", ((EditText) rootView.findViewById(R.id.edtState)).getText().toString().trim());
                 jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
                 jsonObject.addProperty("StateAbbreviation", "FL");
                 jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());
@@ -495,9 +499,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }
                 });
                 updateProfile(jsonObject);
+
             }
         }
 
+    }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        //transaction.addToBackStack(fragment.getClass().getName());
+        transaction.commit();
     }
 
     private void updateProfile(JsonObject jsonObject) {
@@ -518,7 +531,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 progressHUD.dismiss();
                             }
                             // hideLoader(indicatorView);
-
                             Log.e("res code ", response.code() + "");
                             if (response.code() == 200) {
                                 String res = response.body().string();
@@ -527,6 +539,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 Log.e("log obj ", object + "");
                                 if (object.getString("response").equalsIgnoreCase("success") && object.getInt("responsecode") == 0) {
                                     Utility.toastHelper(object.getString("response"), mContext);
+                                    loadFragment(new HomeFragment());
                                 } else if (object.getInt("responsecode") == 201) {
                                     Utility.toastHelper(object.getString("response"), mContext);
                                 } else if (object.getInt("responsecode") == 301) {

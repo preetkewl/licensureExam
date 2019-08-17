@@ -40,7 +40,10 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-            Log.e(TAG, "onPageSelected: " + layouts.length);
+            Log.e(TAG, "onPageSelected: " + layouts. /*layouts = new int[]{
+                R.layout.activity_welcome_screen1,
+                R.layout.activity_welcome_screen2
+        };*/length);
             Log.e(TAG, "onPageSelected: " + position);
             if (position == layouts.length - 1) {
                 ((TextView) findViewById(R.id.donetextView)).setVisibility(View.VISIBLE);
@@ -86,7 +89,8 @@ public class SplashActivity extends AppCompatActivity {
         // add few more layouts if you want
         layouts = new int[]{
                 R.layout.activity_welcome_screen1,
-                R.layout.activity_welcome_screen2,};
+                R.layout.activity_welcome_screen2
+        };
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -97,20 +101,22 @@ public class SplashActivity extends AppCompatActivity {
         addBottomDots(0);
 
 
-        ((TextView) findViewById(R.id.donetextView)).setOnClickListener(new View.OnClickListener() {
+
+        /*((TextView) findViewById(R.id.donetextView)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(mContext, LoginActivity.class);
                 startActivity(in);
             }
-        });
+        });*/
 
         //setFontsStyle();
-        //initializeViews();
+        initializeViews();
     }
 
     private void initializeViews() {
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(
+                new Runnable() {
 
             /*
              * Showing splash screen with a timer. This will be useful when you

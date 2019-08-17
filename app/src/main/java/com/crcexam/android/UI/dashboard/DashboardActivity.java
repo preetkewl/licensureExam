@@ -5,25 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.widget.ImageView;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
@@ -33,14 +26,14 @@ import com.crcexam.android.UI.fragments.HomeFragment;
 import com.crcexam.android.UI.fragments.InfoFragment;
 import com.crcexam.android.UI.fragments.ProfileFragment;
 import com.crcexam.android.UI.fragments.StoreFragment;
-import com.crcexam.android.helper.BottomNavigationBehavior;
 import com.crcexam.android.utils.PreferenceClass;
 
 import static com.crcexam.android.constants.Constant.UserData.EMAIL;
 import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener {
 
     private static final String TAG = "DashboardActivity";
     public static BottomNavigationView bottomNav;
@@ -50,7 +43,6 @@ public class DashboardActivity extends AppCompatActivity
     private DrawerLayout mdrawer;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -86,18 +78,17 @@ public class DashboardActivity extends AppCompatActivity
         mdrawer.addDrawerListener(toggle);
         toggle.syncState();
         navDrawer.setNavigationItemSelectedListener(this);
-        bottomNav = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNav = findViewById(R.id.navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
         setClickListeners();
-      // setDrawerData();
-       // setNameandEmail();
+        // setDrawerData();
+        // setNameandEmail();
     }
 
 
-
     private void setDrawerData() {
-        if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("") && !PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("") ) {
+        if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("") && !PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
             ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
         } else {
@@ -108,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void setClickListeners() {
-        ((ImageView) findViewById(R.id.imgMenu)).setOnClickListener(this);
+        findViewById(R.id.imgMenu).setOnClickListener(this);
     }
 
     private void setActionBar() {
@@ -267,7 +258,7 @@ public class DashboardActivity extends AppCompatActivity
         if (getCurrentFragment() instanceof HistoryFragment) {
             switchDrawer();
         } else {
-            setToolbarTitle(getResources().getString(R.string.history));
+            setToolbarTitle(getResources().getString(R.string.result));
             navDrawer.setCheckedItem(R.id.menu_results);
             loadFragment(new HistoryFragment());
         }

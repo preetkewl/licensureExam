@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -65,13 +66,13 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         connectionDetector = new ConnectionDetector(mContext);
         if (connectionDetector.isConnectingToInternet()) {
             /*if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {*/
-                progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-                getProfile();
+            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            getProfile();
             //}
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
@@ -106,7 +107,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                 String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
                                 String useremail = object.getJSONObject("account").getString("Username");
 
-                                Log.e(TAG, "username onResponse: " + useremail );
+                                Log.e(TAG, "username onResponse: " + useremail);
                                 ((TextView) getActivity().findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
                                 ((TextView) getActivity().findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
 
@@ -154,12 +155,16 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     }
 
     private void setListener() {
-        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
+//        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
+//        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
+//        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
+        ((CardView) rootView.findViewById(R.id.cardView_sample_quiz)).setOnClickListener(this);
+        ((CardView) rootView.findViewById(R.id.cardView_sample_flipCard)).setOnClickListener(this);
+        ((CardView) rootView.findViewById(R.id.cardView_exam_pro)).setOnClickListener(this);
+
         //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
     }
@@ -249,7 +254,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSampleQuiz:
+            case R.id.cardView_sample_quiz:
                 MultipleSelectQstCountFragment fragment = new MultipleSelectQstCountFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("contentType", "MultipleChoice");
@@ -257,7 +262,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 loadFragment(fragment);
                 //startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "MultipleChoice"));
                 break;
-            case R.id.btnSampleFlip:
+            case R.id.cardView_sample_flipCard:
                 MultipleSelectQstCountFragment fragments = new MultipleSelectQstCountFragment();
                 Bundle bundles = new Bundle();
                 bundles.putString("contentType", "FlipSet");
@@ -270,7 +275,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 loadFragment(new ProfileFragment());
                 //  startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
-            case R.id.btnExamPro:
+            case R.id.cardView_exam_pro:
                 bottomNav.setSelectedItemId(R.id.navigation_store);
                 loadFragment(new StoreFragment());
                 break;

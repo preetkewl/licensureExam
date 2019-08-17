@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar_dash"
@@ -56,8 +56,9 @@
         android:layout_gravity="start"
         android:background="@drawable/splash_backgorund"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@android:color/white"
         app:headerLayout="@layout/nav_header_main2"
+        app:itemIconTint="@color/colorWhite"
+        app:itemTextColor="@android:color/white"
         app:menu="@menu/activity_main2_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

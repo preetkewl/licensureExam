@@ -19,6 +19,12 @@
     <color name="colorTrasparent">#0039c6f4</color>
     <color name="lecensuretxtcolor">#323232</color>
     <color name="card_bg">#97D5D3</color>
+    <color name="home_background">#FFEAEAEC</color>
+    <color name="social_work_exam_txtcolor">#A7B0C8</color>
+    <color name="background">#70C8D2</color>
+    <color name="btn_background">#949BC3</color>
+    <color name="text_background">#50BB91</color>
+
 
 
 
