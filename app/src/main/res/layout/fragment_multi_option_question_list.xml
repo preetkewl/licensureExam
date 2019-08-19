@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tool="http://schemas.android.com/tools"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
@@ -25,21 +25,20 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:layout_above="@+id/v1"
-        android:layout_below="@+id/tv_questnNumber">
+        android:layout_below="@+id/tv_questnNumber"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
-        <!--    <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="MultiOptionQuestionListFragment"/>-->
+            <!--    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="MultiOptionQuestionListFragment"/>-->
 
             <TextView
                 android:id="@+id/tv_question"
@@ -57,10 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_question"
-                android:padding="@dimen/margin_10"
                 android:orientation="vertical"
+                android:padding="@dimen/margin_10"
                 android:visibility="gone">
-
 
 
                 <TextView
@@ -97,10 +95,10 @@
                 android:id="@+id/recyclerview_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tool:listitem="@layout/row_radio_button"
                 android:layout_below="@+id/tv_question"
                 android:layout_marginTop="@dimen/margin_20"
-                android:nestedScrollingEnabled="false">
+                android:nestedScrollingEnabled="false"
+                tool:listitem="@layout/row_radio_button">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -135,8 +133,8 @@
 
         <ImageView
             android:id="@+id/imv_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_gravity="start"
             android:padding="@dimen/padding_10"
@@ -146,8 +144,8 @@
 
         <ImageView
             android:id="@+id/imv_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_alignParentRight="true"
             android:layout_gravity="end"
             android:padding="@dimen/padding_10"

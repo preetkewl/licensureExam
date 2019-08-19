@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }
+        //getAllExamList();
         return rootView;
     }
 
@@ -224,7 +225,6 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                 }
                                 PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
                                 homeAdapter = new ExamListAdapter(getActivity(), homeArraylist, recyclerviewClickListner);
-
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recyclerView.setLayoutManager(mLayoutManager);
                                 recyclerView.setAdapter(homeAdapter);

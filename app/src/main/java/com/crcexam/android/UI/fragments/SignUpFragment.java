@@ -151,7 +151,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                     PreferenceClass.setStringPreference(mContext, Constant.UserData.AUTH_TOKEN, object.getString("authtoken"));
                                     PreferenceClass.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                                     startActivity(new Intent(mContext, DashboardActivity.class));
-                                    // finish();
+                                    getActivity().finish();
                                 } else if (object.getInt("responsecode") == 201) {
                                     Utility.toastHelper(object.getString("response"), mContext);
                                 } else {
