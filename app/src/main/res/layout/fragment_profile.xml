@@ -160,10 +160,16 @@
                     android:paddingLeft="2dp"
                     android:text="@string/State" />
 
-                <EditText
-                    android:id="@+id/edtState"
+                <Spinner
+                    android:id="@+id/spinner_state"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="45dp"
+                    android:layout_marginTop="16dp"
+                    android:dropDownWidth="295dp"
+                    android:overlapAnchor="false"
+                    android:textSize="14sp"
+                    />
 
 
 

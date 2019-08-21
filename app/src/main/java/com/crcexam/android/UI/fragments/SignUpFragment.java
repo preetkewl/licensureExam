@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +75,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             case R.id.txtSignup:
                 //startActivity(new Intent(mContext, RegisterActivity.class));
 
-                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() + 1, true);
+                //LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() + 1, true);
                 break;
         }
     }
@@ -84,12 +88,56 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         ((EditText) rootview.findViewById(R.id.edtEmail)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootview.findViewById(R.id.edtPassword)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((Button) rootview.findViewById(R.id.signinbtn)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        String fourth = "Sign Up";
+
+        TextView textView = rootview.findViewById(R.id.txtSignup);
+
+        singleTextView(textView, fourth);
 
     }
 
+    private void singleTextView(TextView textView, final String strSignIn) {
+
+        SpannableStringBuilder spanText = new SpannableStringBuilder();
+        spanText.append("Don't Have An Account? ");
+        spanText.append(strSignIn);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() + 1, true);
+
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // On Click Action
+
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(spanText, TextView.BufferType.SPANNABLE);
+
+    }
+
+
     private void setClickListener() {
-        ((Button) rootview.findViewById(R.id.signinbtn)).setOnClickListener(this);
-        ((TextView) rootview.findViewById(R.id.txtSignup)).setOnClickListener(this);
+        rootview.findViewById(R.id.signinbtn).setOnClickListener(this);
+        //rootview.findViewById(R.id.txtSignup).setOnClickListener(this);
 
     }
 

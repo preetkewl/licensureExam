@@ -15,16 +15,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.auth.LoginActivity;
+import com.crcexam.android.adapters.SpinnerAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
 import com.crcexam.android.network.RetrofitService;
@@ -54,6 +57,58 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ProfileFragment";
     BottomSheetBehavior sheetBehavior, sheetBehaviorEditDob;
     RelativeLayout layoutBottomSheet, dobSheet;
+    String[] spinnerValueOccupationType = {
+            "AL",
+            "AK",
+            "AZ",
+            "AR",
+            "CA",
+            "CO",
+            "CT",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "ID",
+            "IL",
+            "IN",
+            "IA",
+            "KS",
+            "KY",
+            "LA",
+            "ME",
+            "MD",
+            "MA",
+            "MI",
+            "MN",
+            "MS",
+            "MO",
+            "MT",
+            "NE",
+            "NV",
+            "NH",
+            "NJ",
+            "NM",
+            "NY",
+            "NC",
+            "ND",
+            "OH",
+            "OK",
+            "OR",
+            "PA",
+            "RI",
+            "SC",
+            "SD",
+            "TN",
+            "TX",
+            "UT",
+            "VT",
+            "VA",
+            "WA",
+            "WV",
+            "WI",
+            "WY"
+    };
     private View rootView;
     private Context mContext;
     private Toolbar mToolbar;
@@ -87,6 +142,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         setFontStyle();
         editProfile(false);
         initBottomSheet();
+        setStateSpinner();
         if (connectionDetector.isConnectingToInternet()) {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -130,7 +186,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((EditText) rootView.findViewById(R.id.edtAddress1)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtAddress2)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtCity)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((EditText) rootView.findViewById(R.id.edtState)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+//        ((Spinner) rootView.findViewById(R.id.spinner_state)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtZIP)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -151,6 +207,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }*/
 
+
+    private void setStateSpinner() {
+        final Spinner spinnerOcc = (Spinner) rootView.findViewById(R.id.spinner_state);
+
+        SpinnerAdapter adapter = new SpinnerAdapter(mContext, R.layout.spinner_layout);
+        adapter.addAll(spinnerValueOccupationType);
+        adapter.add(getString(R.string.select_state));
+        spinnerOcc.setAdapter(adapter);
+        spinnerOcc.setSelection(adapter.getCount());
+        spinnerOcc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                // TODO Auto-generated method stub
+                if (spinnerOcc.getSelectedItem() == getString(R.string.select_state)) {
+                    //Do nothing.
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+    }
 
     private void initBottomSheet() {
         layoutBottomSheet = rootView.findViewById(R.id.bottom_sheet_change_password);
@@ -251,7 +335,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         rootView.findViewById(R.id.edtAddress1).setEnabled(isEnable);
         rootView.findViewById(R.id.edtAddress2).setEnabled(isEnable);
         rootView.findViewById(R.id.edtCity).setEnabled(isEnable);
-        rootView.findViewById(R.id.edtState).setEnabled(isEnable);
+        rootView.findViewById(R.id.spinner_state).setEnabled(isEnable);
         rootView.findViewById(R.id.edtZIP).setEnabled(isEnable);
         rootView.findViewById(R.id.edtChangePassword).setEnabled(isEnable);
         rootView.findViewById(R.id.ChkReceiveEmails).setEnabled(isEnable);
@@ -470,6 +554,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Utility.toastHelper("Last name is required", mContext);
         } else if (((EditText) rootView.findViewById(R.id.edtTelephone)).getText().toString().trim().isEmpty()) {
             Utility.toastHelper("Telephone is required", mContext);
+        } else if (((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("PLease Enter Your First Address", mContext);
+        } else if (((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("PLease Enter Your Second Address", mContext);
+        } else if (((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("PLease Enter Your City", mContext);
+        } else if (((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString().trim().equalsIgnoreCase("Please Select Your State.")) {
+            Utility.toastHelper("PLease Select Your State", mContext);
+        } else if (((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim().isEmpty()) {
+            Utility.toastHelper("PLease Enter Your ZIP Code", mContext);
         } else {
 
             if (connectionDetector.isConnectingToInternet()) {
@@ -481,7 +575,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 jsonObject.addProperty("Address1", ((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim());
                 jsonObject.addProperty("Address2", ((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim());
                 jsonObject.addProperty("City", ((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim());
-                jsonObject.addProperty("State", ((EditText) rootView.findViewById(R.id.edtState)).getText().toString().trim());
+                jsonObject.addProperty("State", ((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString());
                 jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
                 jsonObject.addProperty("StateAbbreviation", "FL");
                 jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());

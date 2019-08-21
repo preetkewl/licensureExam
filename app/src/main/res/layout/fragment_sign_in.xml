@@ -78,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="24dp"
-            android:text="ALREADY HAVE AN ACCOUNT? SIGN UP"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnRegister"
             app:layout_constraintStart_toStartOf="@+id/btnRegister"

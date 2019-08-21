@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -152,6 +151,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.btnPurchasedItem)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
     }
 
@@ -159,12 +159,13 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 //        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
 //        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
 //        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.txtProfile)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.txtRef)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.txtResult)).setOnClickListener(this);
-        ((CardView) rootView.findViewById(R.id.cardView_sample_quiz)).setOnClickListener(this);
-        ((CardView) rootView.findViewById(R.id.cardView_sample_flipCard)).setOnClickListener(this);
-        ((CardView) rootView.findViewById(R.id.cardView_exam_pro)).setOnClickListener(this);
+        rootView.findViewById(R.id.txtProfile).setOnClickListener(this);
+        rootView.findViewById(R.id.txtRef).setOnClickListener(this);
+        rootView.findViewById(R.id.txtResult).setOnClickListener(this);
+        rootView.findViewById(R.id.cardView_sample_quiz).setOnClickListener(this);
+        rootView.findViewById(R.id.cardView_sample_flipCard).setOnClickListener(this);
+        rootView.findViewById(R.id.cardView_exam_pro).setOnClickListener(this);
+        rootView.findViewById(R.id.cardView_Prchased_item).setOnClickListener(this);
 
         //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
@@ -271,14 +272,18 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 //loadFragment(new MultipleSelectQstCountFragment());
                 // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
                 break;
-            case R.id.txtProfile:
-                loadFragment(new ProfileFragment());
-                //  startActivity(new Intent(getActivity(), ProfileActivity.class));
-                break;
             case R.id.cardView_exam_pro:
                 bottomNav.setSelectedItemId(R.id.navigation_store);
                 loadFragment(new StoreFragment());
                 break;
+            case R.id.cardView_Prchased_item:
+                loadFragment(new PurchasedItemsFragment());
+                break;
+            case R.id.txtProfile:
+                loadFragment(new ProfileFragment());
+                //  startActivity(new Intent(getActivity(), ProfileActivity.class));
+                break;
+
 
             case R.id.txtRef:
                 shareLink();

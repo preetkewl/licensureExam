@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,18 +68,63 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private void setFontStyle() {
 //        ((TextView) rootView.findViewById(R.id.txtApp)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
-     //   ((TextView) rootView.findViewById(R.id.txtTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
-       // ((TextView) rootView.findViewById(R.id.txtLogin)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
+        //   ((TextView) rootView.findViewById(R.id.txtTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
+        // ((TextView) rootView.findViewById(R.id.txtLogin)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Italic));
         ((EditText) rootView.findViewById(R.id.edtName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtMail)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtPassword)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((Button) rootView.findViewById(R.id.btnRegister)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
+
+        String fourth = "Sign In";
+
+        TextView textView = rootView.findViewById(R.id.textsignin);
+
+        singleTextView(textView, fourth);
+
+    }
+
+    private void singleTextView(TextView textView, final String strSignIn) {
+
+        SpannableStringBuilder spanText = new SpannableStringBuilder();
+        spanText.append("Already Have An Account? ");
+        spanText.append(strSignIn);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // openWebViewActivity(getResources().getString(R.string.policy_link));
+                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() - 1, true);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+
+                // On Click Action
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(spanText, TextView.BufferType.SPANNABLE);
+
     }
 
     private void setListener() {
-        ((Button) rootView.findViewById(R.id.btnRegister)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.textsignin)).setOnClickListener(this);
+        rootView.findViewById(R.id.btnRegister).setOnClickListener(this);
+        //rootView.findViewById(R.id.textsignin).setOnClickListener(this);
 
     }
 
@@ -87,7 +136,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.textsignin:
                 //finish();
-                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem()-1,true);
+                LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() - 1, true);
                 break;
         }
     }
