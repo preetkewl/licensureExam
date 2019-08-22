@@ -25,8 +25,8 @@ import com.crcexam.android.constants.Constant;
 import com.crcexam.android.utils.PreferenceClass;
 
 
-public class SplashActivity extends AppCompatActivity {
-    private static final String TAG = "SplashActivity";
+public class Splash_Activity extends AppCompatActivity {
+    private static final String TAG = "Splash_Activity";
 
     private Context mContext;
     private ViewPager viewPager;
@@ -128,10 +128,10 @@ public class SplashActivity extends AppCompatActivity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 if (PreferenceClass.getBooleanPreferences(mContext, Constant.IS_LOGIN)) {
-                    startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
+                    startActivity(new Intent(Splash_Activity.this, DashboardActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(Splash_Activity.this, LoginActivity.class));
                     finish();
                 }
             }

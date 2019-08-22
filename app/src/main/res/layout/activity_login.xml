@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +25,7 @@
                 android:id="@+id/txtApp"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:src="@drawable/load"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
@@ -35,7 +37,6 @@
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
             app:tabIndicatorAnimationDuration="10"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorHeight="5dp"
@@ -56,4 +57,5 @@
          android:layout_marginTop="200dp">
 
      </android.support.design.widget.TabLayout>-->
+
 </LinearLayout>

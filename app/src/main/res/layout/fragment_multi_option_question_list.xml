@@ -48,6 +48,7 @@
                 android:background="@color/colorWhite"
                 android:gravity="start"
                 android:padding="@dimen/padding_10"
+                android:textSize="20sp"
                 android:textColor="@color/colorBlack"
                 android:typeface="serif" />
 

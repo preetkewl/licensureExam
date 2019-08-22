@@ -11,15 +11,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_15">
 
-        <RadioButton
-            android:id="@+id/radio_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
-            android:text="Active, fostering self-determination
-and client-desired outcome"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/imgEmoji"
             android:layout_width="wrap_content"
@@ -29,6 +20,37 @@ and client-desired outcome"
             android:src="@drawable/ic_smile"
             android:tint="@color/colorAccent"
             android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgRightMark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15"
+            android:src="@drawable/ic_check"
+            android:tint="@color/colorAccent"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="Active, fostering self-determination
+and client-desired outcome"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imgRightMark"
+            android:layout_toRightOf="@+id/imgNumber"
+            android:paddingLeft="@dimen/margin_10"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/imgNumber"
@@ -46,27 +68,6 @@ and client-desired outcome"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/font_size_18"
             android:tint="@color/colorAccent" />
-
-        <TextView
-            android:id="@+id/txtAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/imgRightMark"
-            android:layout_toRightOf="@+id/imgNumber"
-            android:paddingLeft="@dimen/margin_10"
-            android:textColor="@color/colorBlack" />
-
-        <ImageView
-            android:id="@+id/imgRightMark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_15"
-            android:src="@drawable/ic_check"
-            android:tint="@color/colorAccent"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <View

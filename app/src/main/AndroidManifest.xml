@@ -15,12 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".UI.splash.SplashActivity" />
+        <activity android:name=".UI.splash.Splash_Activity" />
         <activity
             android:name=".UI.dashboard.DashboardActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UI.TempActivity"
+        <activity android:name=".UI.SplashScreenActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -72,5 +72,9 @@ public interface RetrofitService {
     @GET("IAPService?siteid=6")
     Call<ResponseBody> getAllExamList();
 
+    @FormUrlEncoded
+    @GET("Mobile/History")
+    Call<ResponseBody> getHistoryResult(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("authtoken") String authtoken ,  @Field("Body content type") String title, @Header("mchistory") JsonObject obj);
+
 
 }

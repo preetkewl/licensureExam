@@ -65,12 +65,12 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         connectionDetector = new ConnectionDetector(mContext);
         if (connectionDetector.isConnectingToInternet()) {
             /*if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {*/
-            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    // TODO Auto-generated method stub
-                }
-            });
+//            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
+//                @Override
+//                public void onCancel(DialogInterface dialog) {
+//                    // TODO Auto-generated method stub
+//                }
+//            });
             getProfile();
             //}
         } else {
@@ -93,9 +93,9 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
-                            if (progressHUD != null && progressHUD.isShowing()) {
-                                progressHUD.dismiss();
-                            }
+//                            if (progressHUD != null && progressHUD.isShowing()) {
+//                                progressHUD.dismiss();
+//                            }
                             // hideLoader(indicatorView);
 
                             Log.e("res code ", response.code() + "");
@@ -103,17 +103,23 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                 String res = response.body().string();
                                 Log.e("log object ", res + "");
                                 JSONObject object = new JSONObject(res);
-                                Log.e("log obj ", object + "");
-                                String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
-                                String useremail = object.getJSONObject("account").getString("Username");
+                                if (object.getString("responsecode").equalsIgnoreCase("200")){
+                                    Log.e("log obj ", object + "");
+                                    String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
+                                    String useremail = object.getJSONObject("account").getString("Username");
 
-                                Log.e(TAG, "username onResponse: " + useremail);
-                                ((TextView) getActivity().findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
-                                ((TextView) getActivity().findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
+                                    Log.e(TAG, "username onResponse: " + useremail);
+                                    ((TextView) getActivity().findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
+                                    ((TextView) getActivity().findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
 
-                                PreferenceClass.setStringPreference(mContext, USER_NAME, username);
-                                PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
-                                Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
+                                    PreferenceClass.setStringPreference(mContext, USER_NAME, username);
+                                    PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
+                                    Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
+                                }else {
+                                    //Do nothing
+                                }
+
+
 
                             } else {
                                 String error = response.errorBody().string();
@@ -290,7 +296,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 break;
 
             case R.id.txtDirMsgTitle:
-                /*Intent intent = new Intent(getActivity(), TempActivity.class);
+                /*Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
                 startActivity(intent);*/
                 break;
 

@@ -53,7 +53,7 @@
             android:padding="@dimen/padding_10"
             android:text="Start 5 random Questions"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_size_regular"
+            android:textSize="20sp"
             android:typeface="serif" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:padding="@dimen/padding_10"
             android:text="Start all 5 Questions"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_size_regular"
+            android:textSize="20sp"
             android:typeface="serif" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:padding="@dimen/padding_10"
             android:text="Start marked Question quiz"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_size_regular"
+            android:textSize="20sp"
             android:typeface="serif" />
 
         <LinearLayout
