@@ -134,7 +134,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                                     }
                                 }
                                 Log.e("lstFlipSet  ", lstFlipSet + "");
-                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner);
+                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner,"FQL");
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                                 recyclerView.setLayoutManager(mLayoutManager);
                                 recyclerView.setAdapter(homeAdapter);

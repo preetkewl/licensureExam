@@ -119,8 +119,6 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                     //Do nothing
                                 }
 
-
-
                             } else {
                                 String error = response.errorBody().string();
                                 Log.e("errorr ", error);
@@ -231,7 +229,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                                     }
                                 }
                                 PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
-                                homeAdapter = new ExamListAdapter(getActivity(), homeArraylist, recyclerviewClickListner);
+                                homeAdapter = new ExamListAdapter(getActivity(), homeArraylist, recyclerviewClickListner,"");
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recyclerView.setLayoutManager(mLayoutManager);
                                 recyclerView.setAdapter(homeAdapter);

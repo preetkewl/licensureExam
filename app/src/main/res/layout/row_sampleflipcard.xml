@@ -46,7 +46,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/group1"
+                app:srcCompat="@drawable/group2"
                 tools:ignore="VectorDrawableCompat" />
 
             <TextView
@@ -71,7 +71,6 @@
                 android:layout_margin="@dimen/margin_10"
                 android:layout_marginTop="8dp"
                 android:text="This is Test exam"
-                android:ellipsize="end"
                 android:textColor="@color/colorTextGray"
                 android:textSize="@dimen/font_size_regular"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"

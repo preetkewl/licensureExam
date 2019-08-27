@@ -168,7 +168,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                                     }
                                 }
                                 PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
-                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner);
+                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner,"");
 
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                                 recyclerView.setLayoutManager(mLayoutManager);

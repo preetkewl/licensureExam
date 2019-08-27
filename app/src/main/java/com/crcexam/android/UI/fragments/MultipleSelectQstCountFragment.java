@@ -205,10 +205,10 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                                     PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstMultipleChoice.toString());
 
                                     if (bundle.getString("contentType").equalsIgnoreCase("FlipSet")) {
-                                        homeAdapter = new ExamListAdapter(mContext, lstFlipSet, recyclerviewClickListner);
+                                        homeAdapter = new ExamListAdapter(mContext, lstFlipSet, recyclerviewClickListner,"FQL");
 
                                     } else {
-                                        homeAdapter = new ExamListAdapter(mContext, lstMultipleChoice, recyclerviewClickListner);
+                                        homeAdapter = new ExamListAdapter(mContext, lstMultipleChoice, recyclerviewClickListner,"SQ");
                                     }
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                                     recyclerView.setLayoutManager(mLayoutManager);
