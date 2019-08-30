@@ -127,7 +127,11 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.menu_results) {
             bottomNav.setSelectedItemId(R.id.navigation_results);
             openHistory();
-        } else if (id == R.id.menu_profile) {
+        }else if (id== R.id.menu_store){
+            bottomNav.setSelectedItemId(R.id.navigation_store);
+            openStore();
+        }
+        else if (id == R.id.menu_profile) {
             bottomNav.setSelected(false);
             openProfile();
         } else if (id == R.id.menu_logout) {
@@ -248,6 +252,7 @@ public class DashboardActivity extends AppCompatActivity
             switchDrawer();
         } else {
             setToolbarTitle(getResources().getString(R.string.store));
+            navDrawer.setCheckedItem(R.id.menu_store);
             loadFragment(new StoreFragment());
         }
 

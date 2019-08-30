@@ -49,7 +49,7 @@
                 android:gravity="start"
                 android:padding="@dimen/padding_10"
                 android:textSize="20sp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@android:color/black"
                 android:typeface="serif" />
 
             <LinearLayout
@@ -113,7 +113,7 @@
                 android:background="@color/colorWhite"
                 android:gravity="start"
                 android:padding="@dimen/padding_10"
-                android:textColor="@color/colorBlack"
+                android:textColor="@android:color/black"
                 android:typeface="serif" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

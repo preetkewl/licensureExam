@@ -18,11 +18,10 @@
             android:icon="@drawable/ic_list"
             android:title="@string/test_results" />
 
-        <!-- <item
-             android:id="@+id/menu_history"
-             android:icon="@drawable/ic_history"
-             android:title="@string/history" />
- -->
+         <item
+             android:id="@+id/menu_store"
+             android:icon="@drawable/ic_shopping"
+             android:title="@string/store" />
         <item
             android:id="@+id/menu_refer"
             android:icon="@drawable/ic_share"

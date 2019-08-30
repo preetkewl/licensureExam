@@ -154,8 +154,8 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         //  ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.btnPurchasedItem)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+//        ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //((TextView) rootView.findViewById(R.id.btnPurchasedItem)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
     }
 
@@ -168,8 +168,8 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         rootView.findViewById(R.id.txtResult).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_quiz).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_flipCard).setOnClickListener(this);
-        rootView.findViewById(R.id.cardView_exam_pro).setOnClickListener(this);
-        rootView.findViewById(R.id.cardView_Prchased_item).setOnClickListener(this);
+        //rootView.findViewById(R.id.cardView_exam_pro).setOnClickListener(this);
+       // rootView.findViewById(R.id.cardView_Prchased_item).setOnClickListener(this);
 
         //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
 
@@ -276,13 +276,13 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 //loadFragment(new MultipleSelectQstCountFragment());
                 // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
                 break;
-            case R.id.cardView_exam_pro:
+            /*case R.id.cardView_exam_pro:
                 bottomNav.setSelectedItemId(R.id.navigation_store);
                 loadFragment(new StoreFragment());
-                break;
-            case R.id.cardView_Prchased_item:
+                break;*/
+            /*case R.id.cardView_Prchased_item:
                 loadFragment(new PurchasedItemsFragment());
-                break;
+                break;*/
             case R.id.txtProfile:
                 loadFragment(new ProfileFragment());
                 //  startActivity(new Intent(getActivity(), ProfileActivity.class));

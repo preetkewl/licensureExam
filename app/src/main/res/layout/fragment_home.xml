@@ -41,9 +41,10 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:background="@color/background"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -52,12 +53,14 @@
                 android:id="@+id/cardView_sample_quiz"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="40dp"
                 android:foreground="?android:selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="@+id/cardView_sample_flipCard"
-                app:layout_constraintStart_toStartOf="@+id/cardView_sample_flipCard"
+                app:cardCornerRadius="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.constraint.ConstraintLayout
@@ -100,12 +103,12 @@
                 android:id="@+id/cardView_sample_flipCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:elevation="3dp"
                 android:foreground="?android:selectableItemBackground"
                 app:cardCornerRadius="40dp"
-                app:layout_constraintEnd_toEndOf="@+id/cardView_exam_pro"
-                app:layout_constraintStart_toStartOf="@+id/cardView_exam_pro"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/cardView_sample_quiz"
+                app:layout_constraintStart_toStartOf="@+id/cardView_sample_quiz"
                 app:layout_constraintTop_toBottomOf="@+id/cardView_sample_quiz">
 
                 <android.support.constraint.ConstraintLayout
@@ -142,56 +145,56 @@
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView_exam_pro"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:foreground="?android:selectableItemBackground"
-                android:layout_marginBottom="32dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView_sample_flipCard">
+            <!-- <android.support.v7.widget.CardView
+                 android:id="@+id/cardView_exam_pro"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="16dp"
+                 android:layout_marginTop="24dp"
+                 android:layout_marginEnd="16dp"
+                 android:foreground="?android:selectableItemBackground"
+                 android:layout_marginBottom="32dp"
+                 android:elevation="3dp"
+                 app:cardCornerRadius="40dp"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/cardView_sample_flipCard">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="true">
+                 <android.support.constraint.ConstraintLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:fillViewport="true">
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/group3" />
+                     <ImageView
+                         android:id="@+id/imageView5"
+                         android:layout_width="50dp"
+                         android:layout_height="50dp"
+                         android:layout_marginStart="15dp"
+                         android:layout_marginTop="15dp"
+                         android:layout_marginBottom="15dp"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:srcCompat="@drawable/group3" />
 
-                    <TextView
-                        android:id="@+id/btnExamPro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="Exam Pro"
-                        android:textAllCaps="true"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView5"
-                        app:layout_constraintTop_toTopOf="parent" />
+                     <TextView
+                         android:id="@+id/btnExamPro"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginEnd="8dp"
+                         android:text="Exam Pro"
+                         android:textAllCaps="true"
+                         android:textSize="20sp"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintStart_toEndOf="@+id/imageView5"
+                         app:layout_constraintTop_toTopOf="parent" />
 
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
+                 </android.support.constraint.ConstraintLayout>
+             </android.support.v7.widget.CardView>-->
 
 
-            <android.support.v7.widget.CardView
+            <!--<android.support.v7.widget.CardView
                 android:id="@+id/cardView_Prchased_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -236,19 +239,21 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>-->
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout3"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:background="@color/btn_background"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout">
 
             <TextView
                 android:id="@+id/txtResult"
+                style="@style/ButtonBorder.Accent"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_btn"
@@ -258,7 +263,6 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/font_size_16"
-                style="@style/ButtonBorder.Accent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txtProfile"
                 app:layout_constraintStart_toStartOf="parent"
@@ -312,7 +316,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
-
 
     </android.support.constraint.ConstraintLayout>
 

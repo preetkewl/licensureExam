@@ -11,6 +11,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,9 +56,13 @@ import retrofit2.Retrofit;
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+
     private static final String TAG = "ProfileFragment";
     BottomSheetBehavior sheetBehavior, sheetBehaviorEditDob;
     RelativeLayout layoutBottomSheet, dobSheet;
+    String fnameProfile, lnameProfile, moNumberProfile, address1Profile,
+            address2Profile, cityProfile,
+            zip_codeProfile;
     String[] spinnerValueOccupationType = {
             "AL",
             "AK",
@@ -109,6 +115,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             "WI",
             "WY"
     };
+    private boolean runTextChange = false;
     private View rootView;
     private Context mContext;
     private Toolbar mToolbar;
@@ -120,12 +127,64 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String startDate, endDate, chkInDate, chkOutDate;
     private String strExamDate = "";
     private ConnectionDetector connectionDetector;
+    private EditText editText_firstName, editText_lastName, editText_mobileNum, editText_addressone, editText_addresstwo, editText_City, editText_zipCode;
 
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            Log.e(TAG, "onTextChanged: " + s);
+            Log.e(TAG, "setDataOnView onTextChanged: runTextChange is = " + runTextChange);
+            if (runTextChange) {
+                enableProfileUpdate();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
+
+    private void enableProfileUpdate() {
+
+        String firstname = editText_firstName.getText().toString();
+        String lastname = editText_lastName.getText().toString();
+        String mNumber = editText_mobileNum.getText().toString();
+        String address1 = editText_addressone.getText().toString();
+        String address2 = editText_addresstwo.getText().toString();
+        String city = editText_City.getText().toString();
+        String zip_code = editText_zipCode.getText().toString();
+
+        if (firstname.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (lastname.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (mNumber.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (address1.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (address2.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (city.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (zip_code.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
+        }
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,8 +198,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         year_first = c.get(Calendar.YEAR);
         month_first = c.get(Calendar.MONTH);
         day_first = c.get(Calendar.DAY_OF_MONTH);
+        ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        editText_firstName = rootView.findViewById(R.id.edtFirstName);
+        editText_lastName = rootView.findViewById(R.id.edtLastName);
+        editText_addressone = rootView.findViewById(R.id.edtAddress1);
+        editText_addresstwo = rootView.findViewById(R.id.edtAddress2);
+        editText_mobileNum = rootView.findViewById(R.id.edtTelephone);
+        editText_City = rootView.findViewById(R.id.edtCity);
+        editText_zipCode = rootView.findViewById(R.id.edtZIP);
+        ((EditText) rootView.findViewById(R.id.edtFirstName)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtLastName)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtAddress1)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtAddress2)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtTelephone)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtCity)).addTextChangedListener(mTextWatcher);
+        ((EditText) rootView.findViewById(R.id.edtZIP)).addTextChangedListener(mTextWatcher);
         setFontStyle();
-        editProfile(false);
+        //editProfile(false);
         initBottomSheet();
         setStateSpinner();
         if (connectionDetector.isConnectingToInternet()) {
@@ -157,12 +231,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         /*int id =bottomNav.getMenu().;
         bottomNav.setC*/
 
+
         return rootView;
     }
 
+
     private void setListener() {
         rootView.findViewById(R.id.btnUpdateProfile).setOnClickListener(this);
-        rootView.findViewById(R.id.btnEditProfile).setOnClickListener(this);
+        // rootView.findViewById(R.id.btnEditProfile).setOnClickListener(this);
         rootView.findViewById(R.id.btnChangePassword).setOnClickListener(this);
         rootView.findViewById(R.id.edtExamDate).setOnClickListener(this);
 
@@ -191,7 +267,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((EditText) rootView.findViewById(R.id.edtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((Button) rootView.findViewById(R.id.btnEditProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //((Button) rootView.findViewById(R.id.btnEditProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
         //username and exam date should not be editable.
         rootView.findViewById(R.id.edtUsername).setEnabled(false);
@@ -302,9 +378,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.edtExamDate:
                 showDate();
                 break;
-            case R.id.btnEditProfile:
-                editProfile(true);
-                break;
+           /* case R.id.btnEditProfile:
+               // editProfile(true);
+                break;*/
             case R.id.btnChangePassword:
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -369,6 +445,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 if (object.getString("response").equalsIgnoreCase("success") && object.getInt("responsecode") == 0) {
                                     Log.e("account ", object.getJSONObject("account").toString());
                                     setDataOnView(object.getJSONObject("account"));
+
                                 } else if (object.getInt("responsecode") == 201) {
                                     Utility.toastHelper(object.getString("response"), mContext);
                                 } else if (object.getInt("responsecode") == 301) {
@@ -410,18 +487,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 ((EditText) rootView.findViewById(R.id.edtUsername)).setText(objUser.getString("Username"));
             if (!objUser.isNull("FirstName"))
                 ((EditText) rootView.findViewById(R.id.edtFirstName)).setText(objUser.getString("FirstName"));
+            //fnameProfile = objUser.getString("FirstName");
             if (!objUser.isNull("LastName"))
                 ((EditText) rootView.findViewById(R.id.edtLastName)).setText(objUser.getString("LastName"));
+            // lnameProfile = objUser.getString("LastName");
             if (!objUser.isNull("Address1"))
                 ((EditText) rootView.findViewById(R.id.edtAddress1)).setText(objUser.getString("Address1"));
+            //  address1Profile = objUser.getString("Address1");
             if (!objUser.isNull("Address2"))
                 ((EditText) rootView.findViewById(R.id.edtAddress2)).setText(objUser.getString("Address2"));
+            //address2Profile = objUser.getString("Address2");
             if (!objUser.isNull("City"))
                 ((EditText) rootView.findViewById(R.id.edtCity)).setText(objUser.getString("City"));
+            // cityProfile = objUser.getString("City");
             if (!objUser.isNull("ZIP"))
                 ((EditText) rootView.findViewById(R.id.edtZIP)).setText(objUser.getString("ZIP"));
+            //  zip_codeProfile = objUser.getString("ZIP");
             if (!objUser.isNull("Telephone"))
                 ((EditText) rootView.findViewById(R.id.edtTelephone)).setText(objUser.getString("Telephone"));
+            // moNumberProfile = objUser.getString("Telephone");
             if (!objUser.isNull("ReceiveEmails"))
                 ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).setChecked(objUser.getBoolean("ReceiveEmails"));
             if (!objUser.isNull("ExamDate")) {
@@ -434,6 +518,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 startDate = objUser.getString("ExamDate");
                 // ((EditText) rootView.findViewById(R.id.edtTelephone)).setText(objUser.getString("ExamDate"));
             }
+
+            Log.e(TAG, "setDataOnView: runTextChange is = " + runTextChange);
+
+            runTextChange = true;
+
+            Log.e(TAG, "setDataOnView: runTextChange is = " + runTextChange);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -702,4 +792,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
+
+
 }

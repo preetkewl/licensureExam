@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -111,7 +112,8 @@
                     android:id="@+id/edtTelephone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="10"/>
 
                 <TextView
                     android:id="@+id/txtAddress1"
@@ -217,9 +219,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2">
+                    android:layout_weight="1">
 
-                    <Button
+                    <!--<Button
                         android:id="@+id/btnEditProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -228,15 +230,16 @@
                         android:background="@drawable/rounded_btn"
                         android:text="Edit Profile"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorWhite" />
+                        android:textColor="@color/colorWhite" />-->
 
                     <Button
                         android:id="@+id/btnUpdateProfile"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_margin="@dimen/margin_10"
-                        android:layout_weight="1"
                         android:background="@drawable/rounded_btn"
+                        android:gravity="center"
                         android:text="Update Profile"
                         android:textAllCaps="false"
                         android:textColor="@color/colorWhite" />

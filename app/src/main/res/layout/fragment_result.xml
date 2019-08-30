@@ -51,7 +51,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/font_size_16"
                 android:layout_toRightOf="@+id/imgTrue"
-                android:text="Corrrect answer 50%" />
+                android:text="Correct answer 50%" />
 
         </RelativeLayout>
 
@@ -81,7 +81,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/font_size_16"
                 android:layout_toRightOf="@+id/imgFalse"
-                android:text="Incorrrect answer 40%" />
+                android:text="Incorrect answer 40%" />
 
         </RelativeLayout>
 
