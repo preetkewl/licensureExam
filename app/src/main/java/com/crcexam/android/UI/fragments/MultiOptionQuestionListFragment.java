@@ -337,7 +337,6 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     public void onItemClick(View view, int position, String response) {
         try {
             DatabaseHandler db = new DatabaseHandler(mContext);
-
             is_SelectedAns = true;
             if (!lstAnswers.toString().contains("is_refresh")) {
                 ((TextView) rootView.findViewById(R.id.tv_answerDescription)).setText(arrayOption.getJSONObject(questionPostion - 1).getJSONObject("questions").getString("Explanation"));

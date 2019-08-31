@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.constants.Constant;
@@ -23,7 +23,11 @@ import com.crcexam.android.utils.Utility;
 import com.crcexam.android.utils.circleprogress.DonutProgress;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,6 +44,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     DatabaseHandler db;
     private Context mContext;
     private View rootView;
+    private static final String TAG = "ResultFragment";
 
     public ResultFragment() {
         // Required empty public constructor
@@ -53,7 +58,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
         mContext = getContext();
         rootView = inflater.inflate(R.layout.fragment_result, container, false);
         db = new DatabaseHandler(mContext);
-        // setActionBar();
+        setActionBar();
         ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setShowText(false);
         rootView.findViewById(R.id.btnExamPro).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +66,11 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                 loadFragment(new StoreFragment());
             }
         });
+        //setListener();
         return rootView;
     }
 
-    /*private void setActionBar() {
+    private void setActionBar() {
         try {
             Log.e("alll  ", db.getAllQuestions().toString());
             JSONObject object = new JSONObject(getActivity().getIntent().getStringExtra("data"));
@@ -79,10 +85,10 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
             //  Log.e("fggff ",(totalCurrectAns/totalQuestion)*100+"");
             Log.e("fggff ", (totalCurrectAns / totalQuestion) * 100 + "");
             mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
-            //setSupportActionBar(mToolbar);
+           // setSupportActionBar(mToolbar);
             ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
-            ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
-            ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Test Results");
+            // ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
+            //   ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Test Results");
             ((ImageView) mToolbar.findViewById(R.id.imgRight)).setVisibility(View.VISIBLE);
             setListener();
             if (totalCurrectAns == totalQuestion) {
@@ -103,7 +109,6 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     object1.put("percentage", Utility.twoDecimal(per + ""));
                     lstHistory.add(object1);
                     PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
-
                 } else {
                     JSONObject object1 = new JSONObject();
                     object1.put("date", Calendar.getInstance().getTimeInMillis());
@@ -114,11 +119,9 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
                 }
                 Log.e("HISTORY   ", PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
-
-
                 Log.e("MISSED_QUESTIONS  ", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
-               *//* JSONArray jsonArray = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
-                Log.e("MISSED_QUESTIONS len ", jsonArray.length() + "");*//*
+                JSONArray jsonArray = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
+                Log.e("MISSED_QUESTIONS len ", jsonArray.length() + "");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -126,10 +129,12 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-*/
+
+
     private void setListener() {
-        mToolbar.findViewById(R.id.imgRight).setOnClickListener(this);
+        //  rootView.findViewById(R.id.imgRight).setOnClickListener(this);
         rootView.findViewById(R.id.btnMissed).setOnClickListener(this);
+        Log.e(TAG, "setListener:btnMissed " + rootView );
 
     }
 
@@ -137,19 +142,30 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgRight:
-                //finish();
+                getActivity().finish();
                 loadFragment(new HomeFragment());
                 break;
             case R.id.btnMissed:
                 if (db.getAllMissedQuestionsList().size() > 0) {
-                    //startActivity(new Intent(mContext, MultiOptionQuestionListActivity.class).putExtra("data", db.getAllMissedQuestionsList().toString()).putExtra("is_misssed", true));
-                    //finish();
-                    loadFragment(new HomeFragment());
-                }/*if (PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS).length() > 20) {
-                    startActivity(new Intent(ResultActivity.this, MultiOptionQuestionListActivity.class).putExtra("data", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS)
-                    ).putExtra("is_misssed", true));
-                    finish();
-                }*/
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", db.getAllMissedQuestionsList().toString());
+                    bundle.putBoolean("is_misssed", true);
+                    //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", db.getAllMissedQuestionsList().toString()).putExtra("is_misssed", true));
+                    //getActivity().finish();
+                    MultiOptionQuestionListFragment multiOptionQuestionListFragment = new MultiOptionQuestionListFragment();
+                    multiOptionQuestionListFragment.setArguments(bundle);
+                    loadFragment(multiOptionQuestionListFragment);
+                }
+                if (PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS).length() > 20) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
+                    bundle.putBoolean("is_misssed", true);
+                    // startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS)
+                    //).putExtra("is_misssed", true));
+                    MultiOptionQuestionListFragment multiOptionQuestionListFragment = new MultiOptionQuestionListFragment();
+                    multiOptionQuestionListFragment.setArguments(bundle);
+                    //getActivity().finish();
+                }
                 break;
         }
     }
@@ -200,7 +216,6 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                             e.printStackTrace();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.getLocalizedMessage();

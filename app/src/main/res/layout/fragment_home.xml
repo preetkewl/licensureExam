@@ -251,28 +251,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout">
 
-            <TextView
-                android:id="@+id/txtResult"
-                style="@style/ButtonBorder.Accent"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:background="@drawable/rounded_btn"
-                android:backgroundTint="@color/text_background"
-                android:gravity="center"
-                android:text="@string/result"
-                android:textAllCaps="true"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/font_size_16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtProfile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <!--  <TextView
+                  android:id="@+id/txtResult"
+                  style="@style/ButtonBorder.Accent"
+                  android:layout_width="100dp"
+                  android:layout_height="50dp"
+                  android:background="@drawable/rounded_btn"
+                  android:backgroundTint="@color/text_background"
+                  android:gravity="center"
+                  android:text="@string/result"
+                  android:textAllCaps="true"
+                  android:textColor="@color/colorWhite"
+                  android:textSize="@dimen/font_size_16"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintEnd_toStartOf="@+id/txtProfile"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />-->
 
 
             <TextView
                 android:id="@+id/txtProfile"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/rounded_btn"
                 android:backgroundTint="@color/text_background"
                 android:gravity="center"
@@ -280,10 +281,10 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/font_size_16"
-                app:layout_constraintBottom_toBottomOf="@+id/txtResult"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/txtResult" />
+                app:layout_constraintHorizontal_bias="0.481"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtRef"
@@ -296,9 +297,8 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/font_size_16"
-                app:layout_constraintBottom_toBottomOf="@+id/txtProfile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtProfile"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/txtProfile" />
 
             <android.support.constraint.Guideline

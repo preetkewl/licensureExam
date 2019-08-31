@@ -163,7 +163,7 @@
                     android:text="@string/State" />
 
                 <Spinner
-                    android:id="@+id/spinner_state"
+                        android:id="@+id/spinner_state"
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"

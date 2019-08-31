@@ -127,8 +127,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String startDate, endDate, chkInDate, chkOutDate;
     private String strExamDate = "";
     private ConnectionDetector connectionDetector;
-    private EditText editText_firstName, editText_lastName, editText_mobileNum, editText_addressone, editText_addresstwo, editText_City, editText_zipCode;
-
+    private EditText editText_userName, editText_firstName, editText_lastName, editText_mobileNum, editText_addressone, editText_addresstwo, editText_City, editText_zipCode;
+private Spinner stateSpinner ;
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,15 +157,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void enableProfileUpdate() {
 
+        String username = editText_userName.getText().toString();
         String firstname = editText_firstName.getText().toString();
         String lastname = editText_lastName.getText().toString();
         String mNumber = editText_mobileNum.getText().toString();
         String address1 = editText_addressone.getText().toString();
         String address2 = editText_addresstwo.getText().toString();
         String city = editText_City.getText().toString();
+//        String state = stateSpinner.getSelectedView().toString();
         String zip_code = editText_zipCode.getText().toString();
 
-        if (firstname.equals("")) {
+        if (username.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        } else if (firstname.equals("")) {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
         } else if (lastname.equals("")) {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
@@ -177,13 +181,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
         } else if (city.equals("")) {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
-        } else if (zip_code.equals("")) {
+        }/*else if (state.equals("")){
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        }*/
+        else if (zip_code.equals("")) {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
         } else {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         }
-
-
     }
 
     @Override
@@ -199,13 +204,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         month_first = c.get(Calendar.MONTH);
         day_first = c.get(Calendar.DAY_OF_MONTH);
         ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        editText_userName = rootView.findViewById(R.id.edtUsername);
         editText_firstName = rootView.findViewById(R.id.edtFirstName);
         editText_lastName = rootView.findViewById(R.id.edtLastName);
         editText_addressone = rootView.findViewById(R.id.edtAddress1);
         editText_addresstwo = rootView.findViewById(R.id.edtAddress2);
         editText_mobileNum = rootView.findViewById(R.id.edtTelephone);
         editText_City = rootView.findViewById(R.id.edtCity);
+
         editText_zipCode = rootView.findViewById(R.id.edtZIP);
+        ((EditText) rootView.findViewById(R.id.edtUsername)).addTextChangedListener(mTextWatcher);
         ((EditText) rootView.findViewById(R.id.edtFirstName)).addTextChangedListener(mTextWatcher);
         ((EditText) rootView.findViewById(R.id.edtLastName)).addTextChangedListener(mTextWatcher);
         ((EditText) rootView.findViewById(R.id.edtAddress1)).addTextChangedListener(mTextWatcher);
@@ -270,7 +278,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //((Button) rootView.findViewById(R.id.btnEditProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
         //username and exam date should not be editable.
-        rootView.findViewById(R.id.edtUsername).setEnabled(false);
+        rootView.findViewById(R.id.edtUsername).setEnabled(true);
         rootView.findViewById(R.id.edtExamDate).setEnabled(false);
 
     }
@@ -480,9 +488,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //Set Data on Profile Page/Screen
     private void setDataOnView(JSONObject objUser) {
-
         try {
+            int position = 0;
             if (!objUser.isNull("Username"))
                 ((EditText) rootView.findViewById(R.id.edtUsername)).setText(objUser.getString("Username"));
             if (!objUser.isNull("FirstName"))
@@ -500,6 +509,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             if (!objUser.isNull("City"))
                 ((EditText) rootView.findViewById(R.id.edtCity)).setText(objUser.getString("City"));
             // cityProfile = objUser.getString("City");
+
+            if (!objUser.isNull("StateAbbreviation"))
+                for (int a = 0; a < spinnerValueOccupationType.length; a++) {
+                    if (spinnerValueOccupationType[a].equalsIgnoreCase(objUser.getString("StateAbbreviation"))) {
+                        position = a;
+                    }
+                }
+            ((Spinner) rootView.findViewById(R.id.spinner_state)).setSelection(position);
             if (!objUser.isNull("ZIP"))
                 ((EditText) rootView.findViewById(R.id.edtZIP)).setText(objUser.getString("ZIP"));
             //  zip_codeProfile = objUser.getString("ZIP");

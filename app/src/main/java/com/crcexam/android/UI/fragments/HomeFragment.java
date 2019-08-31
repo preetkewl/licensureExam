@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 
     private void setFontStyle() {
         //((TextView) rootView.findViewById(R.id.txtDashboard)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.txtResult)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+       // ((TextView) rootView.findViewById(R.id.txtResult)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtRef)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         //((TextView) rootView.findViewById(R.id.txtDirMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 //        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
         rootView.findViewById(R.id.txtProfile).setOnClickListener(this);
         rootView.findViewById(R.id.txtRef).setOnClickListener(this);
-        rootView.findViewById(R.id.txtResult).setOnClickListener(this);
+        //rootView.findViewById(R.id.txtResult).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_quiz).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_flipCard).setOnClickListener(this);
         //rootView.findViewById(R.id.cardView_exam_pro).setOnClickListener(this);
@@ -298,10 +298,10 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 startActivity(intent);*/
                 break;
 
-            case R.id.txtResult:
+          /*  case R.id.txtResult:
                 bottomNav.setSelectedItemId(R.id.navigation_results);
                 loadFragment(new HistoryFragment());
-                break;
+                break;*/
         }
     }
 
