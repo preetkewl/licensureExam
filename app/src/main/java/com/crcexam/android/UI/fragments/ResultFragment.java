@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.constants.Constant;
@@ -40,11 +41,11 @@ import retrofit2.Retrofit;
  */
 public class ResultFragment extends Fragment implements View.OnClickListener {
 
+    private static final String TAG = "ResultFragment";
     Toolbar mToolbar;
     DatabaseHandler db;
     private Context mContext;
     private View rootView;
-    private static final String TAG = "ResultFragment";
 
     public ResultFragment() {
         // Required empty public constructor
@@ -73,57 +74,67 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     private void setActionBar() {
         try {
             Log.e("alll  ", db.getAllQuestions().toString());
-            JSONObject object = new JSONObject(getActivity().getIntent().getStringExtra("data"));
-            double totalQuestion = object.getInt("totla_question");
-            double totalCurrectAns = object.getInt("totla_currect");
-            double per = (totalCurrectAns / totalQuestion) * 100;
-            ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setProgress((float) per);
-            Log.e("totalQuestion ", totalQuestion + "  totalCurrectAns  " + totalCurrectAns + " per " + per);
-            ((TextView) rootView.findViewById(R.id.txtCurrect)).setText("Corrrect answer " + Utility.twoDecimal(per + "") + "%");
-            ((TextView) rootView.findViewById(R.id.txtIncorrect)).setText("Incorrrect answer " + Utility.twoDecimal((100 - per) + "") + "%");
-            Log.e("fggff ", totalCurrectAns / totalQuestion + "");
-            //  Log.e("fggff ",(totalCurrectAns/totalQuestion)*100+"");
-            Log.e("fggff ", (totalCurrectAns / totalQuestion) * 100 + "");
-            mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
-           // setSupportActionBar(mToolbar);
-            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
-            // ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
-            //   ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Test Results");
-            ((ImageView) mToolbar.findViewById(R.id.imgRight)).setVisibility(View.VISIBLE);
-            setListener();
-            if (totalCurrectAns == totalQuestion) {
-                PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, "");
-            }
-
-            try {
-                ArrayList<JSONObject> lstHistory = new ArrayList<>();
-                if (PreferenceClass.getStringPreferences(mContext, Constant.HISTORY).length() > 20) {
-                    JSONArray array = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
-                    for (int i = 0; i < array.length(); i++) {
-                        lstHistory.add(array.getJSONObject(i));
-                    }
-                    JSONObject object1 = new JSONObject();
-                    object1.put("date", Calendar.getInstance().getTimeInMillis());
-                    object1.put("currect_answer", totalCurrectAns);
-                    object1.put("total_question", totalQuestion);
-                    object1.put("percentage", Utility.twoDecimal(per + ""));
-                    lstHistory.add(object1);
-                    PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
-                } else {
-                    JSONObject object1 = new JSONObject();
-                    object1.put("date", Calendar.getInstance().getTimeInMillis());
-                    object1.put("currect_answer", totalCurrectAns);
-                    object1.put("total_question", totalQuestion);
-                    object1.put("percentage", Utility.twoDecimal(per + ""));
-                    lstHistory.add(object1);
-                    PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
+            Bundle bundle = getArguments();
+            //bundle.getString("data");
+            JSONObject object = new JSONObject(bundle.getString("data"));
+            if (object != null) {
+                Log.e(TAG, "setActionBar:object " + object);
+                double totalQuestion = object.getInt("totla_question");
+                double totalCurrectAns = object.getInt("totla_currect");
+                double per = (totalCurrectAns / totalQuestion) * 100;
+                ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setProgress((float) per);
+                Log.e(TAG, totalQuestion + "  totalCurrectAns  " + totalCurrectAns + " per " + per);
+                ((TextView) rootView.findViewById(R.id.txtCurrect)).setText("Corrrect answer " + Utility.twoDecimal(per + "") + "%");
+                ((TextView) rootView.findViewById(R.id.txtIncorrect)).setText("Incorrrect answer " + Utility.twoDecimal((100 - per) + "") + "%");
+                Log.e(TAG, totalCurrectAns / totalQuestion + "");
+                //  Log.e("fggff ",(totalCurrectAns/totalQuestion)*100+"");
+                Log.e(TAG, (totalCurrectAns / totalQuestion) * 100 + "");
+                mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
+                //setSupportActionBar(mToolbar);
+                ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+                // ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
+                //   ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Test Results");
+                ((ImageView) mToolbar.findViewById(R.id.imgRight)).setVisibility(View.VISIBLE);
+                setListener();
+                if (totalCurrectAns == totalQuestion) {
+                    PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, "");
                 }
-                Log.e("HISTORY   ", PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
-                Log.e("MISSED_QUESTIONS  ", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
-                JSONArray jsonArray = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
-                Log.e("MISSED_QUESTIONS len ", jsonArray.length() + "");
-            } catch (Exception e) {
-                e.printStackTrace();
+
+                try {
+                    ArrayList<JSONObject> lstHistory = new ArrayList<>();
+                    if (PreferenceClass.getStringPreferences(mContext, Constant.HISTORY).length() > 20) {
+                        JSONArray array = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
+                        for (int i = 0; i < array.length(); i++) {
+                            lstHistory.add(array.getJSONObject(i));
+                        }
+                        JSONObject object1 = new JSONObject();
+                        object1.put("date", Calendar.getInstance().getTimeInMillis());
+                        object1.put("currect_answer", totalCurrectAns);
+                        object1.put("total_question", totalQuestion);
+                        object1.put("percentage", Utility.twoDecimal(per + ""));
+                        lstHistory.add(object1);
+                        PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
+                    } else {
+                        JSONObject object1 = new JSONObject();
+                        object1.put("date", Calendar.getInstance().getTimeInMillis());
+                        object1.put("currect_answer", totalCurrectAns);
+                        object1.put("total_question", totalQuestion);
+                        object1.put("percentage", Utility.twoDecimal(per + ""));
+                        lstHistory.add(object1);
+                        PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
+                    }
+                    Log.e("HISTORY   ", PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
+                    Log.e("MISSED_QUESTIONS  ", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
+                    JSONArray jsonArray = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
+                    Log.e("MISSED_QUESTIONS len ", jsonArray.length() + "");
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e(TAG, "setActionBar: " + object);
+                Toast.makeText(mContext, "Json Object Null", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,7 +145,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     private void setListener() {
         //  rootView.findViewById(R.id.imgRight).setOnClickListener(this);
         rootView.findViewById(R.id.btnMissed).setOnClickListener(this);
-        Log.e(TAG, "setListener:btnMissed " + rootView );
+        Log.e(TAG, "setListener:btnMissed " + rootView);
 
     }
 
@@ -216,6 +227,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.getLocalizedMessage();

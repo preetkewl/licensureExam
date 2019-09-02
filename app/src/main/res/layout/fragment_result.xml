@@ -2,22 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.crcexam.android.utils.circleprogress.DonutProgress
-        android:id="@+id/donut_progress"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="50dp"
-        app:donut_finished_color="@color/colorAccent"
-        app:donut_finished_stroke_width="25dp"
-        app:donut_show_text="false"
-        app:donut_unfinished_color="@color/colorGray"
-        app:donut_unfinished_stroke_width="25dp"
-        custom:donut_progress="50" />
 
     <RelativeLayout
         android:layout_width="250dp"
@@ -48,10 +34,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_05"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/font_size_16"
                 android:layout_toRightOf="@+id/imgTrue"
-                android:text="Correct answer 50%" />
+                android:text="Correct answer 50%"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/font_size_16" />
 
         </RelativeLayout>
 
@@ -78,10 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_05"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/font_size_16"
                 android:layout_toRightOf="@+id/imgFalse"
-                android:text="Incorrect answer 40%" />
+                android:text="Incorrect answer 40%"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/font_size_16" />
 
         </RelativeLayout>
 
@@ -96,30 +82,41 @@
                 android:id="@+id/btnMissed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/square_btn"
                 android:paddingLeft="@dimen/margin_15"
                 android:paddingRight="@dimen/margin_15"
                 android:text="Review missed"
-                android:layout_alignParentLeft="true"
                 android:textAllCaps="false" />
-
-
 
 
             <Button
                 android:id="@+id/btnExamPro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/square_btn"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginTop="40dp"
+                android:layout_toRightOf="@+id/btnMissed"
+                android:background="@drawable/square_btn"
                 android:paddingLeft="@dimen/margin_15"
                 android:paddingRight="@dimen/margin_15"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_toRightOf="@+id/btnMissed"
                 android:text="Exam Pro"
                 android:textAllCaps="false" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <com.crcexam.android.utils.circleprogress.DonutProgress
+        android:id="@+id/donut_progress"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="50dp"
+        app:donut_finished_color="@color/colorAccent"
+        app:donut_finished_stroke_width="25dp"
+        app:donut_show_text="false"
+        app:donut_unfinished_color="@color/colorGray"
+        app:donut_unfinished_stroke_width="25dp"
+        custom:donut_progress="50" />
 </RelativeLayout>
