@@ -1,8 +1,12 @@
 package com.crcexam.android.UI.fragments;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -63,6 +67,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
     int isBack = 0;
     boolean isFirstForFinish = false;
     private View rootView;
+    private AnimatorSet set;
 
 
     public FlipQuestionListFragment() {
@@ -88,19 +93,20 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
 
     }
 
-    private void setFontStyle() {
 
+    private void setFontStyle() {
         ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.tv_question)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
     }
 
     private void listner() {
         ((ImageView) rootView.findViewById(R.id.imv_previous)).setOnClickListener(this);
-        ((ImageView) rootView.findViewById(R.id.imv_next)).setOnClickListener(this);
+        rootView.findViewById(R.id.imv_next).setOnClickListener(this);
+        rootView.findViewById(R.id.imageView_flipanimation).setOnClickListener(this);
     }
 
 
-    private void getAllExamList() {
+    private void getAimv_nextllExamList() {
         try {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -134,7 +140,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                                     }
                                 }
                                 Log.e("lstFlipSet  ", lstFlipSet + "");
-                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner,"FQL");
+                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner, "FQL");
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                                 recyclerView.setLayoutManager(mLayoutManager);
                                 recyclerView.setAdapter(homeAdapter);
@@ -166,7 +172,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         try {
             // JSONArray jsonArray = obj.getJSONArray("questions");
             Bundle bundle = FlipQuestionListFragment.this.getArguments();
-            if (bundle!= null){
+            if (bundle != null) {
                 JSONArray jsonArray = new JSONArray(bundle.getString("data"));
                 Log.e(" setCheck length  ", jsonArray.length() + "");
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -185,7 +191,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
     private void RunAnimation() {
         Animation a = AnimationUtils.loadAnimation(mContext, R.anim.xml);
         a.reset();
-        TextView tv = (TextView) rootView.findViewById(R.id.tv_question);
+        TextView tv = rootView.findViewById(R.id.tv_question);
         tv.clearAnimation();
         tv.startAnimation(a);
     }
@@ -199,20 +205,19 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
     private void setNextQuestnFromList() {
         try {
             if (position <= questionArraylist.size() - 1) {
-                ((TextView) rootView.findViewById(R.id.tv_question)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.tv_question).setVisibility(View.VISIBLE);
                 position++;
                 questionArraylist.get(position);
                 //RunAnimation();
                 ((TextView) rootView.findViewById(R.id.tv_question)).setText(questionArraylist.get(position).getString("Front"));
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card" + " " + (position + 1) + " of " + questionArraylist.size());
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             } else {
                 Log.d("TAG", "Reached Last Record");
-
             }
             if (position == questionArraylist.size() - 1) {
-                ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_next).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -222,17 +227,17 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
     private void showBackAnswer() {
         try {
             if (position <= questionArraylist.size()) {
-                ((TextView) rootView.findViewById(R.id.tvAnsBack)).setVisibility(View.VISIBLE);
-                ((TextView) rootView.findViewById(R.id.tv_question)).setVisibility(View.GONE);
+                rootView.findViewById(R.id.tvAnsBack).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.tv_question).setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.tvAnsBack)).setText(Html.fromHtml(questionArraylist.get(position).getString("Back")));
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Answer" + " " + (position + 1) + " of " + questionArraylist.size());
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             } else {
                 Log.d("TAG", "Reached Last Record");
             }
             if (position == questionArraylist.size() - 1) {
-                ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_next).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -244,23 +249,21 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         try {
             Log.e("position previuos", position + "");
             Log.e("questionArray previous", questionArraylist.size() - 1 + "");
-
             if (position <= questionArraylist.size() - 1) {
                 position--;
                 questionArraylist.get(position);
                 //RunAnimation();
                 Log.e("position previuos 1", position + "");
-                ((TextView) rootView.findViewById(R.id.tvAnsBack)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.tvAnsBack).setVisibility(View.VISIBLE);
                 ((TextView) rootView.findViewById(R.id.tvAnsBack)).setText(questionArraylist.get(position).getString("Back"));
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card" + " " + (position + 1) + " of " + questionArraylist.size());
-                ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_next).setVisibility(View.VISIBLE);
             } else {
                 Log.d("TAG", "Reached Last Record");
-
             }
             if (position == 0) {
-                ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.GONE);
-                ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.imv_previous).setVisibility(View.GONE);
+                rootView.findViewById(R.id.imv_next).setVisibility(View.VISIBLE);
             }
 
         } catch (JSONException e) {
@@ -280,28 +283,41 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                 //setPreviousQuestnFromList();
                 break;
             case R.id.imv_next:
-                ((TextView) rootView.findViewById(R.id.tvAnsBack)).setVisibility(View.GONE);
+                imageFlipAnimation();
+                rootView.findViewById(R.id.tvAnsBack).setVisibility(View.GONE);
                 Log.e(TAG, "onClick: " + position);
                 if (position == questionArraylist.size() - 1) {
                     // startActivity(new Intent(this,ResultActivity.class));
+                    loadFragment(new HomeFragment());
                     if (!isFirstForFinish) {
-                        showBackAnswer();
+                        // showBackAnswer();
                         isFirstForFinish = true;
                     } else {
                         // getActivity().finish();
                         Objects.requireNonNull(getActivity()).onBackPressed();
-                        //loadFragment(new HomeFragment());
 
                     }
                 } else {
-                    isBack++;
+                    //isBack++;
                     if (isBack % 2 == 0) {
                         setNextQuestnFromList();
                     } else {
-                        showBackAnswer();
+                        // showBackAnswer();
                     }
                 }
                 break;
+            case R.id.imageView_flipanimation:
+                imageFlipAnimation();
+                break;
         }
+    }
+
+    private void imageFlipAnimation() {
+        ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.image_flip);
+        anim.setTarget(imgView);
+        anim.setDuration(1000);
+        anim.start();
+        showBackAnswer();
     }
 }

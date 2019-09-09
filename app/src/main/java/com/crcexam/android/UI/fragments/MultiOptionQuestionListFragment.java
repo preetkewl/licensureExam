@@ -313,6 +313,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                         e.printStackTrace();
                     }
                 } else {
+
                     if (missed_qst_pos == lstMissedQuestion.size() - 1) {
                         //finish();
                         Utility.clearBackStack(mContext);

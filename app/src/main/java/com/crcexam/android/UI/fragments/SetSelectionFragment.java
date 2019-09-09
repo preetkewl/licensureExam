@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.ExamListAdapter;
@@ -74,7 +73,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
         cd = new ConnectionDetector(mContext);
         //setActionBar();
         setFontStyle();
-        Log.e(TAG, "onCreateView: setCheck " );
+        Log.e(TAG, "onCreateView: setCheck ");
         init();
         listner();
         return rootView;
@@ -117,8 +116,8 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 getAllExamList(object.getInt("id"));
 
                 // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
-            }else {
-                Log.e(TAG, "setCheck init: else bundle null" );
+            } else {
+                Log.e(TAG, "setCheck init: else bundle null");
             }
 
         } catch (Exception e) {
@@ -128,8 +127,8 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
 
     private void listner() {
         // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.tv_selection_one)).setOnClickListener(this);
-        ((TextView) rootView.findViewById(R.id.tv_selection_two)).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_selection_one).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_selection_two).setOnClickListener(this);
 
     }
 
@@ -168,7 +167,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                                     }
                                 }
                                 PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
-                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner,"");
+                                homeAdapter = new ExamListAdapter(mContext, homeArraylist, recyclerviewClickListner, "");
 
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
                                 recyclerView.setLayoutManager(mLayoutManager);
@@ -197,7 +196,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
     }
 
     private void getAllExamList(int id) {
-        Log.e(TAG, "getAllExamList: setCheck "+id );
+        Log.e(TAG, "getAllExamList: setCheck " + id);
         try {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -221,7 +220,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                             }
                             if (response.code() == 200) {
                                 JSONObject obj = new JSONObject(response.body().string());
-                                Log.e(TAG, "setCheck onResponse: obj "+obj );
+                                Log.e(TAG, "setCheck onResponse: obj " + obj);
                                 setData(obj);
                             } else {
                                 String error = response.errorBody().string();
@@ -267,7 +266,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 lstSpinner.add("All " + array.length() + " Card");
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spiiner_text, lstSpinner);
-            Spinner spinner = (Spinner) rootView.findViewById(R.id.spinnerQuestion);
+            Spinner spinner = rootView.findViewById(R.id.spinnerQuestion);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setOnItemSelectedListener(this);
             spinner.setAdapter(adapter);
@@ -284,8 +283,8 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 loadFragment(new HomeFragment());
                 break;*/
             case R.id.tv_selection_one:
-                Toast.makeText(mContext, "clicked", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onClick:tv_selection_one setCheck "+lstQuestions);
+                // Toast.makeText(mContext, "clicked", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onClick:tv_selection_one setCheck " + lstQuestions);
                 if (SelectedPos == 0) {
                     FlipQuestionListFragment flipQuestionListFragment = new FlipQuestionListFragment();
                     Bundle bundle = new Bundle();
@@ -334,52 +333,54 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 break;
 
             case R.id.tv_selection_two:
-               /* if (lstQuestions.size() % 5 != 0) {
+                Bundle bundle = new Bundle();
+                FlipQuestionListFragment flipQuestionListFragment = new FlipQuestionListFragment();
+                if (lstQuestions.size() % 5 != 0) {
                     Log.e(" lstQuestions size ", lstQuestions.size() + "");
                     Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
-               */
-                //  startActivity(new Intent(FlipSetSelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
+                    bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()) + "");
+                    flipQuestionListFragment.setArguments(bundle);
+                    loadFragment(flipQuestionListFragment);
+                    //startActivity(new Intent(mContext, FlipQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
 
-              /*  } else {
+                } else {
                     Log.e(" df >0 ", lstQuestions.subList(0, 5 * (SelectedPos + 1)) + "");
-                    startActivity(new Intent(FlipSetSelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions + ""));
+                    bundle.putString("data", lstQuestions + "");
+                    flipQuestionListFragment.setArguments(bundle);
+                    loadFragment(flipQuestionListFragment);
+                    //  startActivity(new Intent(SetSelectionFragment.this, FlipQuestionListFragment.class).putExtra("data", lstQuestions + ""));
                     //startActivity(new Intent(FlipSetSelectionActivity.this, FlipQuestionListActivity.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
-
-                }*/
-                // }
+                }
                 break;
         }
+
     }
 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent.getId() == R.id.spinnerQuestion) {
-            SelectedPos = position;
-            ((TextView) rootView.findViewById(R.id.tv_selection_one)).setText("Start " + lstSpinner.get(position) + " random cards");
-
-
-
-/*
-            if (position == 0) {
-                if (lstQuestions.size() % 5 != 0) {
-                    Log.e(" not 555 ", lstQuestions.subList(0, lstQuestions.size()-1).size() + "");
-                }else {
-                    Log.e(" df", lstQuestions.subList(0, 5).size() + "");
-                }
-            } else {
-
-                if (lstQuestions.size() % 5 != 0) {
-                    Log.e(" lstQuestions size ", lstQuestions.size() + "");
-                    Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
-                }else {
-
-                    Log.e(" df >0 ", lstQuestions.subList(0, 5*(position+1)) + "");
-                }
-                Log.e("ddfgfddfgdfg df", lstQuestions.subList(0, 5 * position).size() + "");
-            }*/
-
-        }
+//        if (parent.getId() == R.id.spinnerQuestion) {
+//            SelectedPos = position;
+//            ((TextView) rootView.findViewById(R.id.tv_selection_one)).setText("Start " + lstSpinner.get(position) + " random cards");
+//            if (position == 0) {
+//                if (lstQuestions.size() % 5 != 0) {
+//                    Log.e(" not 555 ", lstQuestions.subList(0, lstQuestions.size()-1).size() + "");
+//                }else {
+//                    Log.e(" df", lstQuestions.subList(0, 5).size() + "");
+//                }
+//            } else {
+//
+//                if (lstQuestions.size() % 5 != 0) {
+//                    Log.e(" lstQuestions size ", lstQuestions.size() + "");
+//                    Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
+//                }else {
+//
+//                    Log.e(" df >0 ", lstQuestions.subList(0, 5*(position+1)) + "");
+//                }
+//                Log.e("ddfgfddfgdfg df", lstQuestions.subList(0, 5 * position).size() + "");
+//            }
+//
+//        }
     }
 
 

@@ -178,12 +178,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 if (i % 5 == 0) {
                     lstSpinner.add(i + " Questions");
                 }
-
             }
             if (array.length() % 5 != 0) {
                 lstSpinner.add("All " + array.length() + " Questions");
             }
-
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.spiiner_text, lstSpinner);
             Spinner spinner = (Spinner) rootView.findViewById(R.id.spinnerQuestion);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

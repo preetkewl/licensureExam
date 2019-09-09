@@ -53,8 +53,6 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.MyView
             } else if (type.equalsIgnoreCase("SQ")) {
                 holder.imgIcon.setImageResource(R.drawable.group1);
             }
-
-
             holder.tvTitle.setText(testList.get(position).getString("contentType"));
             holder.tvTestName.setText(testList.get(position).getString("displayName"));
             holder.tvDescriptn.setText(testList.get(position).getString("shortDescription"));

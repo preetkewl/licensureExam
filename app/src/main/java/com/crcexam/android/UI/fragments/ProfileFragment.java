@@ -211,7 +211,6 @@ private Spinner stateSpinner ;
         editText_addresstwo = rootView.findViewById(R.id.edtAddress2);
         editText_mobileNum = rootView.findViewById(R.id.edtTelephone);
         editText_City = rootView.findViewById(R.id.edtCity);
-
         editText_zipCode = rootView.findViewById(R.id.edtZIP);
         ((EditText) rootView.findViewById(R.id.edtUsername)).addTextChangedListener(mTextWatcher);
         ((EditText) rootView.findViewById(R.id.edtFirstName)).addTextChangedListener(mTextWatcher);
