@@ -43,6 +43,7 @@ import retrofit2.Retrofit;
  */
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
+    private static final String TAG = "SignUpFragment";
     private Context mContext;
     private View rootview;
     private ProgressHUD progressHUD;
@@ -164,6 +165,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     }
                 });
                 login(Constant.API_KEY, Constant.SITE_ID, ((EditText) rootview.findViewById(R.id.edtEmail)).getText().toString().trim(), ((EditText) rootview.findViewById(R.id.edtPassword)).getText().toString().trim());
+                Log.e(TAG, "validation: EditPAssword"  + ((EditText) rootview.findViewById(R.id.edtPassword)).getText().toString().trim());
+                //PreferenceClass.setStringPreference(mContext,Constant.PASSWORD,jsonObject.addProperty("password",Constant.PASSWORD));
             } else {
                 Utility.toastHelper("No internet connection!", mContext);
             }

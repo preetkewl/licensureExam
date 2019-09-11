@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -195,6 +197,9 @@ private Spinner stateSpinner ;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mContext = getContext();
         connectionDetector = new ConnectionDetector(mContext);
@@ -228,7 +233,6 @@ private Spinner stateSpinner ;
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    // TODO Auto-generated method stub
                 }
             });
             getProfile();
@@ -329,8 +333,6 @@ private Spinner stateSpinner ;
             public void onClick(View v) {
                 Log.e(TAG, "ChekcPassword onClick:Working ");
                 validatePassword();
-
-
             }
         });
         layoutBottomSheet.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
@@ -364,7 +366,6 @@ private Spinner stateSpinner ;
                         break;
                 }
             }
-
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 rootView.findViewById(R.id.bg).setVisibility(View.VISIBLE);
@@ -442,7 +443,6 @@ private Spinner stateSpinner ;
                                 progressHUD.dismiss();
                             }
                             // hideLoader(indicatorView);
-
                             Log.e("res code ", response.code() + "");
                             if (response.code() == 200) {
                                 String res = response.body().string();
@@ -495,20 +495,14 @@ private Spinner stateSpinner ;
                 ((EditText) rootView.findViewById(R.id.edtUsername)).setText(objUser.getString("Username"));
             if (!objUser.isNull("FirstName"))
                 ((EditText) rootView.findViewById(R.id.edtFirstName)).setText(objUser.getString("FirstName"));
-            //fnameProfile = objUser.getString("FirstName");
             if (!objUser.isNull("LastName"))
                 ((EditText) rootView.findViewById(R.id.edtLastName)).setText(objUser.getString("LastName"));
-            // lnameProfile = objUser.getString("LastName");
             if (!objUser.isNull("Address1"))
                 ((EditText) rootView.findViewById(R.id.edtAddress1)).setText(objUser.getString("Address1"));
-            //  address1Profile = objUser.getString("Address1");
             if (!objUser.isNull("Address2"))
                 ((EditText) rootView.findViewById(R.id.edtAddress2)).setText(objUser.getString("Address2"));
-            //address2Profile = objUser.getString("Address2");
             if (!objUser.isNull("City"))
                 ((EditText) rootView.findViewById(R.id.edtCity)).setText(objUser.getString("City"));
-            // cityProfile = objUser.getString("City");
-
             if (!objUser.isNull("StateAbbreviation"))
                 for (int a = 0; a < spinnerValueOccupationType.length; a++) {
                     if (spinnerValueOccupationType[a].equalsIgnoreCase(objUser.getString("StateAbbreviation"))) {
@@ -518,10 +512,8 @@ private Spinner stateSpinner ;
             ((Spinner) rootView.findViewById(R.id.spinner_state)).setSelection(position);
             if (!objUser.isNull("ZIP"))
                 ((EditText) rootView.findViewById(R.id.edtZIP)).setText(objUser.getString("ZIP"));
-            //  zip_codeProfile = objUser.getString("ZIP");
             if (!objUser.isNull("Telephone"))
                 ((EditText) rootView.findViewById(R.id.edtTelephone)).setText(objUser.getString("Telephone"));
-            // moNumberProfile = objUser.getString("Telephone");
             if (!objUser.isNull("ReceiveEmails"))
                 ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).setChecked(objUser.getBoolean("ReceiveEmails"));
             if (!objUser.isNull("ExamDate")) {
@@ -560,11 +552,11 @@ private Spinner stateSpinner ;
 
 
     private void validatePassword() {
-
         PasswordValidator passwordValidator = new PasswordValidator();
         String oldPass = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString();
         String newPass = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString();
         String newPassConfirm = ((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordConfirm)).getText().toString();
+
         if (newPass.trim().length() > 0 && !passwordValidator.validate(newPass) && (newPass.trim().length() < 8)) {
             Utility.toastHelper(getString(R.string.invalid_password), mContext);
         } else if (oldPass.isEmpty() || newPass.isEmpty() || newPassConfirm.isEmpty()) {

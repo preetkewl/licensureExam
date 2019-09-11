@@ -99,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void setClickListeners() {
-        findViewById(R.id.imgMenu).setOnClickListener(this);
+       findViewById(R.id.imgMenu).setOnClickListener(this);
     }
 
     private void setActionBar() {

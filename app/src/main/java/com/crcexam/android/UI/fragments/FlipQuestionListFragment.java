@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -17,7 +16,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -84,6 +85,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         cd = new ConnectionDetector(mContext);
         setFontStyle();
         init();
+
         return rootView;
     }
 
@@ -320,4 +322,16 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         anim.start();
         showBackAnswer();
     }
+
+    private void reverseImageFlipAnimation() {
+        ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.image_flip);
+        anim.setTarget(imgView);
+        anim.setDuration(1000);
+        anim.start();
+        showBackAnswer();
+    }
+
+
+
 }

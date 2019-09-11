@@ -194,13 +194,15 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     if (db.getAllQuestions().size() == 0) {
                         JSONArray jsonArray = new JSONArray(bundle.getString("data"));
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
-                                if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
-                                    db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
-                                            jsonArray.getJSONObject(i).getString("Explanation"), "false");
+                                for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
+                                    if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
+                                        db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
+                                                jsonArray.getJSONObject(i).getString("Explanation"), "false");
+                                    }
                                 }
                             }
-                        }
+
+
                     }
                     Log.e("dfdf all question ", db.getAllQuestions().size() + "");
                     arrayOption = new JSONArray(db.getAllQuestions());

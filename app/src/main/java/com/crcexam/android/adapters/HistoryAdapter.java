@@ -2,6 +2,7 @@ package com.crcexam.android.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
+    private static final String TAG = "HistoryAdapter";
     private Context mContext;
     private ArrayList<JSONObject> testList;
 
@@ -38,6 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
         try {
             holder.tvDate.setText(Utility.getCurrentDate(testList.get(position).getLong("date")));
+            Log.e(TAG, "onBindViewHolder: " + holder.tvDate );
             holder.tvCorrectAns.setText(testList.get(position).getString("percentage")+"%");
             holder.tvNumbr.setText(testList.get(position).getString("currect_answer")+" out of "+testList.get(position).getString("total_question"));
         } catch (JSONException e) {

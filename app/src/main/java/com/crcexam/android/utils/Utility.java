@@ -23,11 +23,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class Utility {
     public static String twoDecimal(String rate) {
+
         DecimalFormat df = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
-
-
         return df.format(Float.parseFloat(rate));
 
 
@@ -35,7 +36,7 @@ public class Utility {
 
     public static String getCurrentDate(long date) {
         try {
-            return new SimpleDateFormat("yyyy-dd-mm HH:mm:ss a", Locale.getDefault()).format(date);
+            return new SimpleDateFormat("yyyy-dd-MM hh:mm:ss aa ", Locale.getDefault()).format(date);
         } catch (Exception e) {
             e.printStackTrace();
         }

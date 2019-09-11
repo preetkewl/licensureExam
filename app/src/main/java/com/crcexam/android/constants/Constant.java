@@ -48,6 +48,7 @@ public class Constant {
         public static final String REFRESH_TOKEN = "refreshtoken";
         public static final String USER_NAME = "user_name";
         public static final String EMAIL = "email";
+        public static final String PASSWORD = "password";
     }
 
     public static class BroadcastString {

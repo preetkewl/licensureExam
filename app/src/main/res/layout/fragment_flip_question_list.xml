@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toTopOf="@+id/imv_previous"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_questnNumber">
+        app:layout_constraintTop_toBottomOf="@+id/tv_questnNumber"
+        app:layout_constraintVertical_bias="0.16000003">
 
     </ImageView>
 
@@ -52,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:lineSpacingExtra="10dp"
+        android:lineSpacingExtra="20dp"
         android:padding="@dimen/padding_10"
         android:text="What are some ways that an experiential therapist may try to assist
 a family in creating change?"
@@ -62,9 +63,10 @@ a family in creating change?"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/imv_previous"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_questnNumber"
-        app:layout_constraintVertical_bias="0.110000014" />
+        app:layout_constraintVertical_bias="0.099" />
 
     <TextView
         android:id="@+id/tvAnsBack"
@@ -73,7 +75,6 @@ a family in creating change?"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
         android:lineSpacingExtra="10dp"
         android:padding="@dimen/padding_10"
@@ -86,7 +87,7 @@ a family in creating change?"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_questnNumber"
-        app:layout_constraintVertical_bias="0.13"
+        app:layout_constraintVertical_bias="0.13999999"
         tools:text="adfgdagf" />
 
     <TextView
