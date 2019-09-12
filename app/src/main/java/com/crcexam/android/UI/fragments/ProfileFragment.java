@@ -561,7 +561,11 @@ private Spinner stateSpinner ;
             Utility.toastHelper(getString(R.string.invalid_password), mContext);
         } else if (oldPass.isEmpty() || newPass.isEmpty() || newPassConfirm.isEmpty()) {
             Utility.toastHelper("Password cannot be empty", mContext);
-        } else {
+
+        }else if (!oldPass.equalsIgnoreCase(PreferenceClass.getStringPreferences(mContext,Constant.PASSWORD))){
+            Utility.toastHelper("Old Password do not match", mContext);
+        }
+        else {
 
 
 /*        if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString().trim().isEmpty()) {

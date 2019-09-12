@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -87,6 +88,7 @@ public class HistoryFragment extends Fragment {
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                historyArraylist.add(jsonArray.getJSONObject(i));
 //            }
+            Collections.reverse(historyArraylist);
             historyAdapter = new HistoryAdapter(getActivity(), historyArraylist);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

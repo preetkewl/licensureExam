@@ -333,7 +333,6 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
                                     if (!array.getJSONObject(i).getBoolean("isFree")) {
                                         lstMultipleChoice.add(array.getJSONObject(i));
                                     }
-
                                 }
                                 PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstMultipleChoice.toString());
 

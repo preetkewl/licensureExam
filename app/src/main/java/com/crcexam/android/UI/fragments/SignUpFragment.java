@@ -199,6 +199,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                 JSONObject object = new JSONObject(res);
                                 Log.e("log obj ", object + "");
                                 if (object.getString("response").equalsIgnoreCase("success") && object.getInt("responsecode") == 0) {
+                                    PreferenceClass.setStringPreference(mContext,Constant.PASSWORD,((EditText) rootview.findViewById(R.id.edtPassword)).getText().toString().trim());
                                     PreferenceClass.setStringPreference(mContext, Constant.UserData.AUTH_TOKEN, object.getString("authtoken"));
                                     PreferenceClass.setBooleanPreference(mContext, Constant.IS_LOGIN, true);
                                     startActivity(new Intent(mContext, DashboardActivity.class));

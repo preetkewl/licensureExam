@@ -26,8 +26,10 @@ import android.widget.Toast;
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.AnswerListAdapter;
 import com.crcexam.android.adapters.MissedQuestionAdapter;
+import com.crcexam.android.constants.Constant;
 import com.crcexam.android.database.DatabaseHandler;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
+import com.crcexam.android.utils.PreferenceClass;
 import com.crcexam.android.utils.Utility;
 
 import org.json.JSONArray;
@@ -181,8 +183,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             Bundle bundle = MultiOptionQuestionListFragment.this.getArguments();
             if (bundle != null) {
                 totalCurrectAns = 0;
-                // if (bundle.getString("data").)
-                if (getActivity().getIntent().hasExtra("is_misssed")) {
+                //if (getActivity().getIntent().hasExtra("is_misssed"))
+                if (bundle.containsKey("is_misssed")){
                     Log.e("hasExtra  ", " ismissedddd");
                     is_Missed = true;
                 }
@@ -192,17 +194,16 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                         db.clearAllQuestion();
                     }
                     if (db.getAllQuestions().size() == 0) {
+                        Log.e(TAG, "getList: " +  bundle.getString("data") );
                         JSONArray jsonArray = new JSONArray(bundle.getString("data"));
                         for (int i = 0; i < jsonArray.length(); i++) {
-                                for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
-                                    if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
-                                        db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
-                                                jsonArray.getJSONObject(i).getString("Explanation"), "false");
-                                    }
+                            for (int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("Answers").length(); j++) {
+                                if (jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getBoolean("IsCorrect")) {
+                                    db.addQuestions("false", "Sample_Quiz", jsonArray.getJSONObject(i) + "", "", jsonArray.getJSONObject(i).getJSONArray("Answers").getJSONObject(j).getString("Answer"),
+                                            jsonArray.getJSONObject(i).getString("Explanation"), "false");
                                 }
                             }
-
-
+                        }
                     }
                     Log.e("dfdf all question ", db.getAllQuestions().size() + "");
                     arrayOption = new JSONArray(db.getAllQuestions());
@@ -369,11 +370,11 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 } else {
                     db.updateQuestionData((arrayOption.getJSONObject(questionPostion - 1).getString("id")), "true", object.getJSONObject(position).getString("Answer"), "true");
 
-                    /*try {
+                   /* try {
                         lstMissedQuestion.clear();
                         JSONArray array = null;
-                       *//* if (!db.getAllMissedQuestions().toString().contains(currentObj.getString("Id")))
-                            db.addMissedQuestions(currentObj.toString());*//*
+                        if (!db.getAllMissedQuestions().toString().contains(currentObj.getString("Id")))
+                            db.addMissedQuestions(currentObj.toString());
 
 
                         if (PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS).length() > 20) {
@@ -401,6 +402,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     }*/
                     ((TextView) view.findViewById(R.id.imgNumber)).setText("");
                     ((TextView) view.findViewById(R.id.imgNumber)).setBackground(mContext.getResources().getDrawable(R.drawable.ic_cross_mark));
+
                     for (int i = 0; i < object.length(); i++) {
                         if (object.getJSONObject(i).getBoolean("IsCorrect")) {
                             JSONObject object1 = object.getJSONObject(i);
