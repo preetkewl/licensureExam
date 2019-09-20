@@ -177,7 +177,6 @@ public class DashboardActivity extends AppCompatActivity
         }
     }
 
-
     public Fragment getCurrentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.frame_container);
     }

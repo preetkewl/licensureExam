@@ -39,7 +39,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,10 +126,12 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             Log.e("jsonObject qq2 ", jsonObject.getJSONObject("questions").getString("Question") + "");
             JSONArray jsonArray = jsonObject.getJSONObject("questions").getJSONArray("Answers");
             Log.e("jsonArray ans ", jsonArray + "");
+            shuffleJsonArray(jsonArray);
             //JSONArray jsonArray = jsonObject.getJSONArray("Answers");
             for (int i = 0; i < jsonArray.length(); i++) {
                 lstAnswers.add(jsonArray.getJSONObject(i));
             }
+
             multiOptionAdapter.addList(lstAnswers);
             recyclerView.setAdapter(multiOptionAdapter);
             recyclerView.setNestedScrollingEnabled(false);
@@ -136,6 +140,20 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             e.printStackTrace();
         }
 
+    }
+
+    public static JSONArray shuffleJsonArray (JSONArray array) throws JSONException {
+        // Implementing Fisher–Yates shuffle
+        Random rnd = new Random();
+        for (int i = array.length() - 1; i >= 0; i--)
+        {
+            int j = rnd.nextInt(i + 1);
+            // Simple swap
+            Object object = array.get(j);
+            array.put(j, array.get(i));
+            array.put(i, object);
+        }
+        return array;
     }
 
     private void adapterMissedQuestion(int pos) {

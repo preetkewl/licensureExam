@@ -16,13 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-/*import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;*/
 import com.crcexam.android.InAppBilling.IabHelper;
 import com.crcexam.android.InAppBilling.IabResult;
 import com.crcexam.android.InAppBilling.Inventory;
 import com.crcexam.android.InAppBilling.Purchase;
-import com.crcexam.android.MainActivity;
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.StoreAdapter;
 import com.crcexam.android.constants.Constant;
@@ -44,6 +41,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+/*import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;*/
 
 public class StoreFragment extends Fragment implements View.OnClickListener, RecyclerviewClickListner {
     static final String TAG = "StoreFragment";
@@ -97,8 +97,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
         }
     };
     private Inventory mInventory;
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener
-            = new IabHelper.QueryInventoryFinishedListener() {
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result,
                                              Inventory inventory) {
 
@@ -128,7 +127,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
             }
         }
     };
-  //  private BillingProcessor bp;
+    //  private BillingProcessor bp;
     private boolean readyToPurchase = false;
     private IabHelper mHelper;
 
@@ -143,7 +142,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
         adapter();
         //Previous code -
         getAllExamList();
-      //  initBillingLib();
+        //  initBillingLib();
         //new Code -
         initIab();
         return rootView;
