@@ -198,7 +198,6 @@ private Spinner stateSpinner ;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mContext = getContext();
@@ -493,8 +492,11 @@ private Spinner stateSpinner ;
             int position = 0;
             if (!objUser.isNull("Username"))
                 ((EditText) rootView.findViewById(R.id.edtUsername)).setText(objUser.getString("Username"));
+            PreferenceClass.setStringPreference(mContext,Constant.EMAIL,((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString());
+            Log.e(TAG, "setDataOnView: PreferenceClass "  + PreferenceClass.getStringPreferences(mContext,Constant.EMAIL) );
             if (!objUser.isNull("FirstName"))
                 ((EditText) rootView.findViewById(R.id.edtFirstName)).setText(objUser.getString("FirstName"));
+            //PreferenceClass.setStringPreference(mContext,Constant.,((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString());
             if (!objUser.isNull("LastName"))
                 ((EditText) rootView.findViewById(R.id.edtLastName)).setText(objUser.getString("LastName"));
             if (!objUser.isNull("Address1"))

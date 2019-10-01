@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 //                    // TODO Auto-generated method stub
 //                }
 //            });
-            getProfile();
+            //getProfile();
             //}
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
@@ -86,70 +86,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         return rootView;
     }
 
-    private void getProfile() {
-        try {
-            RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
-            Retrofit retrofit = retrofitLoggedIn.RetrofitClient(getActivity(), false);
-            RetrofitService home2hotel = null;
-            if (retrofit != null) {
-                home2hotel = retrofit.create(RetrofitService.class);
-            }
-            if (home2hotel != null) {
-                home2hotel.getProfile(Constant.API_KEY, Constant.SITE_ID, PreferenceClass.getStringPreferences(mContext, Constant.UserData.AUTH_TOKEN)).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-//                            if (progressHUD != null && progressHUD.isShowing()) {
-//                                progressHUD.dismiss();
-//                            }
-                            // hideLoader(indicatorView);
 
-                            Log.e("res code ", response.code() + "");
-                            if (response.code() == 200) {
-                                String res = response.body().string();
-                                Log.e("log object ", res + "");
-                                JSONObject object = new JSONObject(res);
-                                if (object.getString("responsecode").equalsIgnoreCase("200")){
-                                    Log.e("log obj ", object + "");
-                                    String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
-                                    String useremail = object.getJSONObject("account").getString("Username");
-
-                                    Log.e(TAG, "username onResponse: " + useremail);
-                                    ((TextView) getActivity().findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
-                                    ((TextView) getActivity().findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
-
-                                    PreferenceClass.setStringPreference(mContext, USER_NAME, username);
-                                    PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
-                                    Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
-                                }else {
-                                    //Do nothing
-                                }
-
-                            } else {
-                                String error = response.errorBody().string();
-                                Log.e("errorr ", error);
-                                JSONObject object = new JSONObject(error);
-                                if (object.has("response")) {
-                                    Utility.toastHelper(object.getString("response"), mContext);
-                                } else {
-                                    Utility.toastHelper(response.message(), mContext);
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        t.getLocalizedMessage();
-                    }
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void setFontStyle() {
         //((TextView) rootView.findViewById(R.id.txtDashboard)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
