@@ -102,6 +102,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         rootView.findViewById(R.id.imv_next).setOnClickListener(this);
         rootView.findViewById(R.id.imageView_flipanimation).setOnClickListener(this);
         rootView.findViewById(R.id.questionanswer_cardview).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_question).setOnClickListener(this);
     }
 
 
@@ -275,6 +276,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                 break;
             case R.id.imv_next:
                 imageFlipAnimation();
+                textFlipAnimation();
                 rootView.findViewById(R.id.tvAnsBack).setVisibility(View.GONE);
                 Log.e(TAG, "onClick: " + position);
                 if (position == questionArraylist.size() - 1) {
@@ -302,10 +304,12 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                     isFlipped = false;
                     Log.e(TAG, "onClick: else " + isFlipped);
                     reverseImageFlipAnimation();
+                    reverseTextFlipAnimation();
                 } else {
                     isFlipped = true;
                     Log.e(TAG, "onClick: if" + isFlipped);
                     imageFlipAnimation();
+                    textFlipAnimation();
                 }
 
                 break;
@@ -315,10 +319,12 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                     isFlipped = false;
                     Log.e(TAG, "onClick: else " + isFlipped);
                     reverseImageFlipAnimation();
+                    reverseTextFlipAnimation();
                 } else {
                     isFlipped = true;
                     Log.e(TAG, "onClick: if" + isFlipped);
                     imageFlipAnimation();
+                    textFlipAnimation();
                 }
 
                 break;
@@ -339,6 +345,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Answer" + " " + (position + 1) + " of " + questionArraylist.size());
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.image_flip);
         anim.setTarget(imgView);
+       // anim.setTarget(rootView.findViewById(R.id.tvAnsBack));
         anim.setDuration(1000);
         anim.start();
         showBackAnswer();
@@ -358,6 +365,46 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card "+ (position + 1) + " of "+ questionArraylist.size());
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.reverse_image_flip);
         anim.setTarget(imgView);
+        //anim.setTarget(rootView.findViewById(R.id.tv_question));
+        anim.setDuration(1000);
+        anim.start();
+    }
+
+    private void textFlipAnimation() {
+        ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+        rootView.findViewById(R.id.tvAnsBack).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.tv_question).setVisibility(View.GONE);
+        try {
+            if (position == questionArraylist.size() - 1) {
+                ((TextView) rootView.findViewById(R.id.tvAnsBack)).setText(Html.fromHtml(questionArraylist.get(position).getString("Back")));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Answer" + " " + (position + 1) + " of " + questionArraylist.size());
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.text_flip);
+      //  anim.setTarget(imgView);
+         anim.setTarget(rootView.findViewById(R.id.tvAnsBack));
+        anim.setDuration(1000);
+        anim.start();
+        showBackAnswer();
+    }
+
+    private void reverseTextFlipAnimation() {
+        ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+        rootView.findViewById(R.id.tvAnsBack).setVisibility(View.GONE);
+        rootView.findViewById(R.id.tv_question).setVisibility(View.VISIBLE);
+        try {
+            if (position == questionArraylist.size() + 1) {
+                ((TextView) rootView.findViewById(R.id.tv_question)).setText(questionArraylist.get(0).getString("Front"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card "+ (position + 1) + " of "+ questionArraylist.size());
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.reverse_text_image_flip);
+        //anim.setTarget(imgView);
+        anim.setTarget(rootView.findViewById(R.id.tv_question));
         anim.setDuration(1000);
         anim.start();
     }

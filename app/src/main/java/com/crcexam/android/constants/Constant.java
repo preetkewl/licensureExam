@@ -16,6 +16,10 @@ public class Constant {
     public static final String IS_REMEMBER = "is_remember";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String WRONGQUESTION = "wrong_question";
+    public static final String FINISH_ACTIVITY = "finish_activity";
+    public static final String IS_FIRST = "is_first";
+    public static final String IS_LOGIN = "is_login";
     public static Boolean IS_SHOW_DOTS = false;
 
     public static class FontStyle {
@@ -33,10 +37,10 @@ public class Constant {
         public static final String OpenSans_Semibold = "openSans_semibold";
         public static final String OpenSans_Italic = "openSans_italic";
         public static final String OpenSans_BoldItalic = "OpenSans_BoldItalic";
-        public static final String Roboto_Bold= "Roboto_Bold";
-        public static final String Roboto_Regular= "Roboto_Regular";
-        public static final String Roboto_Light= "Roboto_Light";
-        public static final String Roboto_Italic= "Roboto_Italic";
+        public static final String Roboto_Bold = "Roboto_Bold";
+        public static final String Roboto_Regular = "Roboto_Regular";
+        public static final String Roboto_Light = "Roboto_Light";
+        public static final String Roboto_Italic = "Roboto_Italic";
     }
 
     public static class ApiUrl {
@@ -55,8 +59,4 @@ public class Constant {
         public static final String SHOW_BACK_BUTTON = "back_button";
         public static final String ACCOUNT = "account";
     }
-
-    public static final String FINISH_ACTIVITY = "finish_activity";
-    public static final String IS_FIRST = "is_first";
-    public static final String IS_LOGIN = "is_login";
 }

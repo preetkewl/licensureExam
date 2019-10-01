@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     private boolean is_SelectedAns = false, is_Missed = false;
     private int questionPostion = 0, missed_qst_pos = 0;
     private boolean is_first = true;
+    private JSONObject jsonObject ;
 
     public MultiOptionQuestionListFragment() {
         // Required empty public constructor
@@ -108,6 +110,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     private void listner() {
         ((ImageView) rootView.findViewById(R.id.imv_previous)).setOnClickListener(this);
         ((ImageView) rootView.findViewById(R.id.imv_next)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setOnClickListener(this);
+
     }
 
     private void adapterAllQuestion(JSONObject jsonObject) {
@@ -142,6 +146,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
     }
 
+    //This method shuffle the the answers.
     public static JSONArray shuffleJsonArray (JSONArray array) throws JSONException {
         // Implementing Fisher–Yates shuffle
         Random rnd = new Random();
@@ -260,6 +265,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 ((TextView) rootView.findViewById(R.id.tv_question)).setText(arrayOption.getJSONObject(position).getJSONObject("questions").getString("Question"));
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Question" + " " + (position + 1) + " of " + arrayOption.length());
                 ((ImageView) rootView.findViewById(R.id.imv_previous)).setVisibility(View.VISIBLE);
+                ((RelativeLayout) rootView.findViewById(R.id.retest_relativelayout)).setVisibility(View.GONE);
             }
             if (position == arrayOption.length() - 1) {
                 ((ImageView) rootView.findViewById(R.id.imv_next)).setVisibility(View.VISIBLE);
@@ -338,13 +344,18 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     if (missed_qst_pos == lstMissedQuestion.size() - 1) {
                         //finish();
                         Utility.clearBackStack(mContext);
-                        loadFragment(new HomeFragment());
+                        loadFragment(new ResultFragment());
                     } else {
                         missed_qst_pos++;
                         adapterMissedQuestion(missed_qst_pos);
 
                     }
                 }
+                break;
+            case R.id.imgMarkedQuestion:
+                //Toast.makeText(mContext, "Text View Clicked", Toast.LENGTH_SHORT).show();
+                ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setBackground(getResources().getDrawable(R.drawable.ic_retest_blck));
+                setRetestExamQuestions(jsonObject);
                 break;
         }
     }
@@ -354,6 +365,9 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
+
+
+
 
     @Override
     public void onItemClick(View view, int position, String response) {
@@ -367,17 +381,20 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 Log.e("object array ", object + "");
                 if (object.getJSONObject(position).getBoolean("IsCorrect")) {
                     // totalCurrectAns++;
+                    Log.e(TAG, "onItemClick:object " + object );
                     totalCurrectAns = totalCurrectAns + 1;
                     ((TextView) view.findViewById(R.id.imgNumber)).setText("");
                     ((TextView) view.findViewById(R.id.imgNumber)).setBackground(mContext.getResources().getDrawable(R.drawable.ic_checked_mark));
                     try {
                         db.updateQuestionData((arrayOption.getJSONObject(questionPostion - 1).getString("id")), "true", object.getJSONObject(position).getString("Answer"), "false");
+                        Log.e(TAG, "onItemClick: db " + db );
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     for (int i = 0; i < object.length(); i++) {
                         if (object.getJSONObject(i).getBoolean("IsCorrect")) {
                             JSONObject object1 = object.getJSONObject(i);
+                            Log.e(TAG, "onItemClick:object1 " + object1 );
                             object1.put("is_refresh", true);
                             lstAnswers.set(i, object1);
                             // multiOptionAdapter.notifyItemChanged(i);
@@ -387,8 +404,13 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     }
                 } else {
                     db.updateQuestionData((arrayOption.getJSONObject(questionPostion - 1).getString("id")), "true", object.getJSONObject(position).getString("Answer"), "true");
+                    Log.e(TAG, "---------------------------------------------------------------------------------" );
+                    jsonObject = new JSONObject();
+                    jsonObject = arrayOption.getJSONObject(questionPostion - 1);
+                    Log.e(TAG, "wrongAnsCheck - onItemClick: arrayOption - "+arrayOption.getJSONObject(questionPostion - 1));
 
-                   /* try {
+                    Log.e(TAG, "---------------------------------------------------------------------------------" );
+/* try {
                         lstMissedQuestion.clear();
                         JSONArray array = null;
                         if (!db.getAllMissedQuestions().toString().contains(currentObj.getString("Id")))
@@ -421,6 +443,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     ((TextView) view.findViewById(R.id.imgNumber)).setText("");
                     ((TextView) view.findViewById(R.id.imgNumber)).setBackground(mContext.getResources().getDrawable(R.drawable.ic_cross_mark));
 
+
                     for (int i = 0; i < object.length(); i++) {
                         if (object.getJSONObject(i).getBoolean("IsCorrect")) {
                             JSONObject object1 = object.getJSONObject(i);
@@ -431,6 +454,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                             break;
                         }
                     }
+                    ((RelativeLayout)rootView.findViewById(R.id.retest_relativelayout)).setVisibility(View.VISIBLE);
+                    ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setBackground(getResources().getDrawable(R.drawable.ic_retest));
                 }
                 // }
             } else {
@@ -438,6 +463,30 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             }
             Log.e("sdfdsf ", db.getAllQuestions().toString());
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setRetestExamQuestions(JSONObject jsonObject) {
+
+        Log.e(TAG, "wrongAnsCheck : jsonObject " + jsonObject);
+        Log.e(TAG, "wrongAnsCheck : CART_JSON_ARRAY_LIST " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
+
+        try {
+            String questionSte = PreferenceClass.getStringPreferences(mContext,"");
+            if (questionSte.isEmpty()) {
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.put(jsonObject);
+                PreferenceClass.setStringPreference(mContext, Constant.WRONGQUESTION, jsonArray.toString());
+
+                Log.e(TAG, " wrongAnsCheck CART_JSON_ARRAY_LIST SECOND - " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
+            } else {
+                JSONArray jsonArray = new JSONArray(questionSte);
+                jsonArray.put(jsonObject);
+                PreferenceClass.setStringPreference(mContext, Constant.WRONGQUESTION, jsonArray.toString());
+                Log.e(TAG, "setRetestExamQuestions wrongAnsCheck CART_JSON_ARRAY_LIST THIRD - " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

@@ -28,7 +28,7 @@ import static android.support.constraint.Constraints.TAG;
 public class Utility {
     public static String twoDecimal(String rate) {
 
-        DecimalFormat df = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
+        DecimalFormat df = new DecimalFormat("00", new DecimalFormatSymbols(Locale.ENGLISH));
         return df.format(Float.parseFloat(rate));
 
 

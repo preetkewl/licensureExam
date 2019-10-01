@@ -102,7 +102,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 getAllExamList(object.getInt("id"));
                 listner();
                 ((TextView) getActivity().findViewById(R.id.tv_title)).setText(object.getString("displayName"));
-               // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
+                // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
             }
 
         } catch (Exception e) {
@@ -114,6 +114,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
         // ((ImageView) rootView.findViewById(R.id.imv_back)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_one)).setOnClickListener(this);
         ((TextView) rootView.findViewById(R.id.tv_selection_two)).setOnClickListener(this);
+        ((TextView) rootView.findViewById(R.id.tv_selection_three)).setOnClickListener(this);
 
     }
 
@@ -221,7 +222,6 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
 
                     }
                 } else {
-
                     if (lstQuestions.size() % 5 != 0) {
                         Log.e(" lstQuestions size ", lstQuestions.size() + "");
                         Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");

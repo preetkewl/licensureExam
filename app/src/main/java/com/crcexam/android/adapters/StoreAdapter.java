@@ -41,7 +41,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder
         try {
             holder.tvTitle.setText(testList.get(position).getString("displayName"));
             holder.tvDescriptn.setText(testList.get(position).getString("longDescription"));
-            holder.tvAmount.setText("Buy $"+testList.get(position).getString("price"));
+            holder.tvAmount.setText("Buy $0"+testList.get(position).getString("price"));
             holder.tvAmount.setTag(testList.get(position));
             holder.tvAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
