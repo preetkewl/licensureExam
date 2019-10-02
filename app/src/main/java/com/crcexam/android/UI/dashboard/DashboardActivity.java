@@ -95,7 +95,7 @@ public class DashboardActivity extends AppCompatActivity
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
         setClickListeners();
-        setDrawerData();
+        //setDrawerData();
         getProfile();
 
     }
