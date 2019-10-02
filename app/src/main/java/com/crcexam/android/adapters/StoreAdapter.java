@@ -2,6 +2,7 @@ package com.crcexam.android.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder> {
+    private static final String TAG = "StoreAdapter";
     private Context mContext;
     private ArrayList<JSONObject> testList;
     private RecyclerviewClickListner listener;
@@ -41,7 +43,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder
         try {
             holder.tvTitle.setText(testList.get(position).getString("displayName"));
             holder.tvDescriptn.setText(testList.get(position).getString("longDescription"));
-            holder.tvAmount.setText("Buy $0"+testList.get(position).getString("price"));
+            holder.tvAmount.setText("Buy $"+testList.get(position).getString("price"));
+            Log.e(TAG, "onBindViewHolder: price " + "Buy $"+testList.get(position).getString("price"));
             holder.tvAmount.setTag(testList.get(position));
             holder.tvAmount.setOnClickListener(new View.OnClickListener() {
                 @Override

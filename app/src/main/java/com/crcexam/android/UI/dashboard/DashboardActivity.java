@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,19 @@ import com.crcexam.android.UI.fragments.HomeFragment;
 import com.crcexam.android.UI.fragments.InfoFragment;
 import com.crcexam.android.UI.fragments.ProfileFragment;
 import com.crcexam.android.UI.fragments.StoreFragment;
+import com.crcexam.android.constants.Constant;
+import com.crcexam.android.network.RetrofitLoggedIn;
+import com.crcexam.android.network.RetrofitService;
 import com.crcexam.android.utils.PreferenceClass;
+import com.crcexam.android.utils.Utility;
+
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static com.crcexam.android.constants.Constant.UserData.EMAIL;
 import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
@@ -82,18 +95,86 @@ public class DashboardActivity extends AppCompatActivity
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
         setClickListeners();
-        // setDrawerData();
-        // setNameandEmail();
+         setDrawerData();
+        getProfile();
+
     }
 
+
+    private void getProfile() {
+        Log.e(TAG, "getProfile:vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv "  );
+        try {
+            RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
+            Retrofit retrofit = retrofitLoggedIn.RetrofitClient(this, false);
+            RetrofitService home2hotel = null;
+            if (retrofit != null) {
+                home2hotel = retrofit.create(RetrofitService.class);
+            }
+            if (home2hotel != null) {
+                home2hotel.getProfile(Constant.API_KEY, Constant.SITE_ID, PreferenceClass.getStringPreferences(mContext, Constant.UserData.AUTH_TOKEN)).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+//                            if (progressHUD != null && progressHUD.isShowing()) {
+//                                progressHUD.dismiss();
+//                            }
+                            // hideLoader(indicatorView);
+
+                            Log.e("res code ", response.code() + "");
+                            if (response.code() == 200) {
+                                String res = response.body().string();
+                                Log.e("log object ", res + "");
+                                JSONObject object = new JSONObject(res);
+                                if (object.getString("responsecode").equalsIgnoreCase("200")){
+                                    Log.e("log obj ", object + "");
+                                    String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
+                                    String useremail = object.getJSONObject("account").getString("Username");
+
+                                    Log.e(TAG, "username onResponse: " + useremail);
+                                    ((TextView) findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
+                                    ((TextView) findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
+
+                                    PreferenceClass.setStringPreference(mContext, USER_NAME, username);
+                                    PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
+
+                                    Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
+                                }else {
+                                    //Do nothing
+                                }
+
+                            } else {
+                                String error = response.errorBody().string();
+                                Log.e("errorr ", error);
+                                JSONObject object = new JSONObject(error);
+                                if (object.has("response")) {
+                                    Utility.toastHelper(object.getString("response"), mContext);
+                                } else {
+                                    Utility.toastHelper(response.message(), mContext);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        t.getLocalizedMessage();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void setDrawerData() {
         if (!PreferenceClass.getStringPreferences(mContext, USER_NAME).equalsIgnoreCase("") && !PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {
             ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
         } else {
-            ((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
-            ((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
+            //((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
+            //((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
         }
 
     }
