@@ -130,7 +130,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String strExamDate = "";
     private ConnectionDetector connectionDetector;
     private EditText editText_userName, editText_firstName, editText_lastName, editText_mobileNum, editText_addressone, editText_addresstwo, editText_City, editText_zipCode;
-private Spinner stateSpinner ;
+    private Spinner stateSpinner;
+    private boolean isButtonEnabled = false;
+
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -142,6 +144,7 @@ private Spinner stateSpinner ;
             Log.e(TAG, "onTextChanged: " + s);
             Log.e(TAG, "setDataOnView onTextChanged: runTextChange is = " + runTextChange);
             if (runTextChange) {
+                ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setActivated(true);
                 enableProfileUpdate();
             }
         }
@@ -170,24 +173,23 @@ private Spinner stateSpinner ;
         String zip_code = editText_zipCode.getText().toString();
 
         if (username.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (firstname.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (lastname.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (mNumber.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (address1.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (address2.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else if (city.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         }/*else if (state.equals("")){
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
-        }*/
-        else if (zip_code.equals("")) {
-            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
+        } */else if (zip_code.equals("")) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         } else {
             ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         }
@@ -199,7 +201,7 @@ private Spinner stateSpinner ;
         // Inflate the layout for this fragment
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mContext = getContext();
         connectionDetector = new ConnectionDetector(mContext);
@@ -208,7 +210,7 @@ private Spinner stateSpinner ;
         year_first = c.get(Calendar.YEAR);
         month_first = c.get(Calendar.MONTH);
         day_first = c.get(Calendar.DAY_OF_MONTH);
-        ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(false);
+        ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
         editText_userName = rootView.findViewById(R.id.edtUsername);
         editText_firstName = rootView.findViewById(R.id.edtFirstName);
         editText_lastName = rootView.findViewById(R.id.edtLastName);
@@ -366,6 +368,7 @@ private Spinner stateSpinner ;
                         break;
                 }
             }
+
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 rootView.findViewById(R.id.bg).setVisibility(View.VISIBLE);
@@ -562,10 +565,9 @@ private Spinner stateSpinner ;
         } else if (oldPass.isEmpty() || newPass.isEmpty() || newPassConfirm.isEmpty()) {
             Utility.toastHelper("Password cannot be empty", mContext);
 
-        }else if (!oldPass.equalsIgnoreCase(PreferenceClass.getStringPreferences(mContext,Constant.PASSWORD))){
+        } else if (!oldPass.equalsIgnoreCase(PreferenceClass.getStringPreferences(mContext, Constant.PASSWORD))) {
             Utility.toastHelper("Old Password do not match", mContext);
-        }
-        else {
+        } else {
 
 
 /*        if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString().trim().isEmpty()) {
@@ -648,56 +650,63 @@ private Spinner stateSpinner ;
 
 
     private void validateProfile() {
-        if (((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("username is required", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtFirstName)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("First name is required", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtLastName)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("Last name is required", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtTelephone)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("Telephone is required", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("PLease Enter Your First Address", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("PLease Enter Your Second Address", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("PLease Enter Your City", mContext);
-        } else if (((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString().trim().equalsIgnoreCase("Please Select Your State.")) {
-            Utility.toastHelper("PLease Select Your State", mContext);
-        } else if (((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim().isEmpty()) {
-            Utility.toastHelper("PLease Enter Your ZIP Code", mContext);
+        if (!((Button) rootView.findViewById(R.id.btnUpdateProfile)).isActivated()) {
+            ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setEnabled(true);
+            Toast.makeText(mContext, "Button is Disabled Please Edit Some fields", Toast.LENGTH_LONG).show();
         } else {
+            Log.e(TAG, "validateProfile: vvvvvvvvvvvvvvvvvvvvv"  );
+            if (((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("username is required", mContext);
+            }/* else if (((EditText) rootView.findViewById(R.id.edtFirstName)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("First name is required", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtLastName)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("Last name is required", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtTelephone)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("Telephone is required", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("PLease Enter Your First Address", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("PLease Enter Your Second Address", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("PLease Enter Your City", mContext);
+            } else if (((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString().trim().equalsIgnoreCase("Please Select Your State.")) {
+                Utility.toastHelper("PLease Select Your State", mContext);
+            } else if (((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim().isEmpty()) {
+                Utility.toastHelper("PLease Enter Your ZIP Code", mContext);
+            } else {*/
 
-            if (connectionDetector.isConnectingToInternet()) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("Username", ((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim());
-                jsonObject.addProperty("FirstName", ((EditText) rootView.findViewById(R.id.edtFirstName)).getText().toString().trim());
-                jsonObject.addProperty("LastName", ((EditText) rootView.findViewById(R.id.edtLastName)).getText().toString().trim());
-                jsonObject.addProperty("Telephone", ((EditText) rootView.findViewById(R.id.edtTelephone)).getText().toString().trim());
-                jsonObject.addProperty("Address1", ((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim());
-                jsonObject.addProperty("Address2", ((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim());
-                jsonObject.addProperty("City", ((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim());
-                jsonObject.addProperty("State", ((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString());
-                jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
-                jsonObject.addProperty("StateAbbreviation", "FL");
-                jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());
-                Log.e("dfdf g", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "");
-                if (!startDate.isEmpty())
-                    jsonObject.addProperty("ExamDate", startDate);
-                //jsonObject.addProperty("ExamDate", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "Z");
-                // jsonObject.addProperty("ExamDate", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM/dd/yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS"));
-                jsonObject.addProperty("CreateDate", Utility.getCurrentDate() + "Z");
-                Log.e("jsonObject ", jsonObject + "");
-                progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // TODO Auto-generated method stub
-                    }
-                });
-                updateProfile(jsonObject);
+                if (connectionDetector.isConnectingToInternet()) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("Username", ((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim());
+                    jsonObject.addProperty("FirstName", ((EditText) rootView.findViewById(R.id.edtFirstName)).getText().toString().trim());
+                    jsonObject.addProperty("LastName", ((EditText) rootView.findViewById(R.id.edtLastName)).getText().toString().trim());
+                    jsonObject.addProperty("Telephone", ((EditText) rootView.findViewById(R.id.edtTelephone)).getText().toString().trim());
+                    jsonObject.addProperty("Address1", ((EditText) rootView.findViewById(R.id.edtAddress1)).getText().toString().trim());
+                    jsonObject.addProperty("Address2", ((EditText) rootView.findViewById(R.id.edtAddress2)).getText().toString().trim());
+                    jsonObject.addProperty("City", ((EditText) rootView.findViewById(R.id.edtCity)).getText().toString().trim());
+                    jsonObject.addProperty("State", ((Spinner) rootView.findViewById(R.id.spinner_state)).getSelectedItem().toString());
+                    jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
+                    jsonObject.addProperty("StateAbbreviation", "FL");
+                    jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());
+                    Log.e("dfdf g", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "");
+                    if (!startDate.isEmpty())
+                        jsonObject.addProperty("ExamDate", startDate);
+                    //jsonObject.addProperty("ExamDate", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "Z");
+                    // jsonObject.addProperty("ExamDate", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM/dd/yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS"));
+                    jsonObject.addProperty("CreateDate", Utility.getCurrentDate() + "Z");
+                    Log.e("jsonObject ", jsonObject + "");
+                    progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            // TODO Auto-generated method stub
+                        }
+                    });
+                    updateProfile(jsonObject);
 
+                }
             }
-        }
+       // }
+
 
     }
 

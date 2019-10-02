@@ -46,8 +46,6 @@
                     android:textColor="@color/colorTextGray"
                     android:textSize="@dimen/font_size_regular"
                     android:typeface="serif" />
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +60,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/Correct_Answer"
+                    android:text="@string/score"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/font_size_regular"
                     android:typeface="serif" />

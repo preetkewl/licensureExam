@@ -118,7 +118,7 @@
                 android:id="@+id/retest_relativelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+              android:visibility="gone" >
 
                 <TextView
                     android:id="@+id/imgMarkedQuestion"
@@ -130,9 +130,9 @@
                     android:layout_toRightOf="@+id/imgEmoji"
                     android:background="@drawable/ic_retest"
                     android:gravity="center"
+                    android:button="@drawable/checkbox_selector"
                     android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/font_size_18"
                     android:tint="@color/colorAccent" />
 
