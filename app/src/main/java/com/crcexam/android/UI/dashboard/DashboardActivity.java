@@ -41,7 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.crcexam.android.constants.Constant.UserData.EMAIL;
+import static com.crcexam.android.constants.Constant.EMAIL;
 import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class DashboardActivity extends AppCompatActivity
@@ -95,14 +95,14 @@ public class DashboardActivity extends AppCompatActivity
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
         setClickListeners();
-         setDrawerData();
+        setDrawerData();
         getProfile();
 
     }
 
 
     private void getProfile() {
-        Log.e(TAG, "getProfile:vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv "  );
+        Log.e(TAG, "getProfile:vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv ");
         try {
             RetrofitLoggedIn retrofitLoggedIn = new RetrofitLoggedIn();
             Retrofit retrofit = retrofitLoggedIn.RetrofitClient(this, false);
@@ -119,28 +119,26 @@ public class DashboardActivity extends AppCompatActivity
 //                                progressHUD.dismiss();
 //                            }
                             // hideLoader(indicatorView);
-
                             Log.e("res code ", response.code() + "");
                             if (response.code() == 200) {
                                 String res = response.body().string();
                                 Log.e("log object ", res + "");
                                 JSONObject object = new JSONObject(res);
-                                if (object.getString("responsecode").equalsIgnoreCase("200")){
+                                //if (object.getString("responsecode").equalsIgnoreCase("200")) {
                                     Log.e("log obj ", object + "");
                                     String username = object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName");
                                     String useremail = object.getJSONObject("account").getString("Username");
-
                                     Log.e(TAG, "username onResponse: " + useremail);
-                                    ((TextView) findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
-                                    ((TextView) findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
+                                    ((TextView) navDrawer.findViewById(R.id.tvDrawerName)).setText(object.getJSONObject("account").getString("FirstName") + " " + object.getJSONObject("account").getString("LastName"));
+                                    ((TextView)  navDrawer.findViewById(R.id.tvDrawerEmail)).setText(object.getJSONObject("account").getString("Username"));
 
                                     PreferenceClass.setStringPreference(mContext, USER_NAME, username);
                                     PreferenceClass.setStringPreference(mContext, EMAIL, useremail);
 
                                     Log.e(TAG, "PreferenceClass onResponse: " + PreferenceClass.getStringPreferences(mContext, EMAIL));
-                                }else {
+                               // } else {
                                     //Do nothing
-                                }
+                                //}
 
                             } else {
                                 String error = response.errorBody().string();
@@ -173,14 +171,14 @@ public class DashboardActivity extends AppCompatActivity
             ((TextView) findViewById(R.id.tvDrawerName)).setText(PreferenceClass.getStringPreferences(mContext, USER_NAME));
             ((TextView) findViewById(R.id.tvDrawerEmail)).setText(PreferenceClass.getStringPreferences(mContext, EMAIL));
         } else {
-            //((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
-            //((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
+           // ((TextView) findViewById(R.id.tvDrawerName)).setText("Your Name");
+           // ((TextView) findViewById(R.id.tvDrawerEmail)).setText("Your Email");
         }
 
     }
 
     private void setClickListeners() {
-       findViewById(R.id.imgMenu).setOnClickListener(this);
+        findViewById(R.id.imgMenu).setOnClickListener(this);
     }
 
     private void setActionBar() {
@@ -208,11 +206,10 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.menu_results) {
             bottomNav.setSelectedItemId(R.id.navigation_results);
             openHistory();
-        }else if (id== R.id.menu_store){
+        } else if (id == R.id.menu_store) {
             bottomNav.setSelectedItemId(R.id.navigation_store);
             openStore();
-        }
-        else if (id == R.id.menu_profile) {
+        } else if (id == R.id.menu_profile) {
             bottomNav.setSelected(false);
             openProfile();
         } else if (id == R.id.menu_logout) {
@@ -359,3 +356,5 @@ public class DashboardActivity extends AppCompatActivity
         }
     }
 }
+
+

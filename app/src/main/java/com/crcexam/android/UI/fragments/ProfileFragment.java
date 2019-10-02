@@ -455,7 +455,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 if (object.getString("response").equalsIgnoreCase("success") && object.getInt("responsecode") == 0) {
                                     Log.e("account ", object.getJSONObject("account").toString());
                                     setDataOnView(object.getJSONObject("account"));
-
                                 } else if (object.getInt("responsecode") == 201) {
                                     Utility.toastHelper(object.getString("response"), mContext);
                                 } else if (object.getInt("responsecode") == 301) {
@@ -478,7 +477,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             e.printStackTrace();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.getLocalizedMessage();
@@ -568,8 +566,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } else if (!oldPass.equalsIgnoreCase(PreferenceClass.getStringPreferences(mContext, Constant.PASSWORD))) {
             Utility.toastHelper("Old Password do not match", mContext);
         } else {
-
-
 /*        if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordOld)).getText().toString().trim().isEmpty()) {
             Utility.toastHelper("old password is required", mContext);
         } else if (((EditText) layoutBottomSheet.findViewById(R.id.edtPasswordNew)).getText().toString().trim().isEmpty()) {
@@ -657,6 +653,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Log.e(TAG, "validateProfile: vvvvvvvvvvvvvvvvvvvvv"  );
             if (((EditText) rootView.findViewById(R.id.edtUsername)).getText().toString().trim().isEmpty()) {
                 Utility.toastHelper("username is required", mContext);
+
             }/* else if (((EditText) rootView.findViewById(R.id.edtFirstName)).getText().toString().trim().isEmpty()) {
                 Utility.toastHelper("First name is required", mContext);
             } else if (((EditText) rootView.findViewById(R.id.edtLastName)).getText().toString().trim().isEmpty()) {
@@ -706,7 +703,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 }
             }
        // }
-
 
     }
 
