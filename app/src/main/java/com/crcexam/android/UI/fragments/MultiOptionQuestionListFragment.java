@@ -419,7 +419,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     }
                     //see comented code below
                 } else {
-                    Log.e(TAG, "jsonObjectRecycler onItemClick: "+jsonObjectRecycler );
+                    Log.e(TAG, "cc onItemClick: "+jsonObjectRecycler );
                     str_your_wrong_ans = jsonObjectRecycler.getString("Answer");
                     db.updateQuestionData((arrayOption.getJSONObject(questionPostion - 1).getString("id")), "true", object.getJSONObject(position).getString("Answer"), "true");
                     Log.e(TAG, "---------------------------------------------------------------------------------" );
@@ -457,8 +457,6 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     }
 
     private void setRetestExamQuestions(JSONObject jsonObject) {
-
-
         try {
             jsonObject.put("your_wrong_ans",str_your_wrong_ans);
             Log.e(TAG, "wrongAnsCheck : jsonObject " + jsonObject);
@@ -476,6 +474,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 PreferenceClass.setStringPreference(mContext, Constant.WRONGQUESTION, jsonArray.toString());
                 Log.e(TAG, "setRetestExamQuestions wrongAnsCheck CART_JSON_ARRAY_LIST THIRD - " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

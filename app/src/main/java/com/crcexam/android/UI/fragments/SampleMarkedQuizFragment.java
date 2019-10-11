@@ -62,6 +62,13 @@ public class SampleMarkedQuizFragment extends Fragment implements View.OnClickLi
         if (!str.isEmpty()) {
             try {
                 jsonArray = new JSONArray(str);
+                ((TextView) rootView.findViewById(R.id.missed_quetions)).setVisibility(View.VISIBLE);
+                ((TextView) rootView.findViewById(R.id.tv_samplemarkedquestnNumber)).setVisibility(View.VISIBLE);
+                ((TextView) rootView.findViewById(R.id.textView_youranswer)).setVisibility(View.VISIBLE);
+                ((TextView) rootView.findViewById(R.id.textView_correctanswer)).setVisibility(View.VISIBLE);
+                ((TextView) rootView.findViewById(R.id.textView_decription)).setVisibility(View.VISIBLE);
+                ((ImageView) rootView.findViewById(R.id.imv_sampleprevious)).setVisibility(View.VISIBLE);
+                ((ImageView) rootView.findViewById(R.id.imv_samplenext)).setVisibility(View.VISIBLE);
                 showQuestion(0);
                 position = 0;
             } catch (JSONException e) {
@@ -69,6 +76,7 @@ public class SampleMarkedQuizFragment extends Fragment implements View.OnClickLi
             }
 
         }else {
+            ((TextView) rootView.findViewById(R.id.textView_nodata)).setVisibility(View.VISIBLE);
             ((TextView) rootView.findViewById(R.id.missed_quetions)).setVisibility(View.GONE);
             ((TextView) rootView.findViewById(R.id.textView_youranswer)).setVisibility(View.GONE);
             ((TextView) rootView.findViewById(R.id.textView_correctanswer)).setVisibility(View.GONE);
@@ -123,12 +131,14 @@ public class SampleMarkedQuizFragment extends Fragment implements View.OnClickLi
                 //setNextQuestnFromList();
                 Log.e(TAG, "showMarkedQuiz onClick: position = "+position );
                 Log.e(TAG, "showMarkedQuiz onClick: length "+jsonArray.length());
-
                 position++;
                 if (position+1 <= jsonArray.length()){
-                    Log.e(TAG, "showMarkedQuiz insideIF position "+position );
-                    showQuestion(position);
-
+                    if (position+1 == jsonArray.length()){
+                        loadFragment(new HomeFragment());
+                    }else {
+                        Log.e(TAG, "showMarkedQuiz insideIF position "+position );
+                        showQuestion(position);
+                    }
                 }else {
                     Log.e(TAG, "showMarkedQuiz onClick: empty" );
                 }

@@ -19,6 +19,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/font_size_heading"
         android:textStyle="bold"
+        android:visibility="gone"
         android:typeface="serif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@
         android:layout_marginEnd="8dp"
         android:textColor="@android:color/black"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_samplemarkedquestnNumber" />
@@ -44,6 +46,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="Your Answer :"
+        android:visibility="gone"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/missed_quetions"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Correct Answer :"
+        android:visibility="gone"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/textView_youranswer"
         app:layout_constraintStart_toStartOf="@+id/textView_youranswer"
@@ -67,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Description :"
+        android:visibility="gone"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/textView_correctanswer"
         app:layout_constraintStart_toStartOf="@+id/textView_correctanswer"
@@ -82,7 +87,7 @@
         android:padding="@dimen/padding_10"
         android:src="@drawable/ic_square_cross"
         android:tint="@color/colorAccent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -93,11 +98,23 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
         android:padding="@dimen/padding_10"
+        android:visibility="gone"
         android:src="@drawable/ic_right_box"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/imv_sampleprevious"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imv_sampleprevious" />
+
+    <TextView
+        android:id="@+id/textView_nodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Data Found"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
