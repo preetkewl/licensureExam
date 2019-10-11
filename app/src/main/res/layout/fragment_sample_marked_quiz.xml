@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.fragments.SampleMarkedQuizFragment">
+
+    <TextView
+        android:id="@+id/tv_samplemarkedquestnNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:text="Question 5 of 5 :"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_size_heading"
+        android:textStyle="bold"
+        android:typeface="serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/missed_quetions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_samplemarkedquestnNumber" />
+
+    <TextView
+        android:id="@+id/textView_youranswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Your Answer :"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/missed_quetions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/missed_quetions" />
+
+
+    <TextView
+        android:id="@+id/textView_correctanswer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Correct Answer :"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/textView_youranswer"
+        app:layout_constraintStart_toStartOf="@+id/textView_youranswer"
+        app:layout_constraintTop_toBottomOf="@+id/textView_youranswer" />
+
+    <TextView
+        android:id="@+id/textView_decription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Description :"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/textView_correctanswer"
+        app:layout_constraintStart_toStartOf="@+id/textView_correctanswer"
+        app:layout_constraintTop_toBottomOf="@+id/textView_correctanswer" />
+
+
+    <ImageView
+        android:id="@+id/imv_sampleprevious"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="start"
+        android:padding="@dimen/padding_10"
+        android:src="@drawable/ic_square_cross"
+        android:tint="@color/colorAccent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imv_samplenext"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:padding="@dimen/padding_10"
+        android:src="@drawable/ic_right_box"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/imv_sampleprevious"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imv_sampleprevious" />
+
+
+</android.support.constraint.ConstraintLayout>

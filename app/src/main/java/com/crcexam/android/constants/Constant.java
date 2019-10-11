@@ -17,6 +17,7 @@ public class Constant {
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String WRONGQUESTION = "wrong_question";
+    public static final String YOUR_ANSWER = "your_answer";
     public static final String FINISH_ACTIVITY = "finish_activity";
     public static final String IS_FIRST = "is_first";
     public static final String IS_LOGIN = "is_login";

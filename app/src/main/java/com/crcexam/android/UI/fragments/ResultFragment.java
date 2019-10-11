@@ -178,7 +178,6 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("data", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
                     bundle.putBoolean("is_misssed", true);
-
                     MultiOptionQuestionListFragment multiOptionQuestionListFragment = new MultiOptionQuestionListFragment();
                     multiOptionQuestionListFragment.setArguments(bundle);
                     // startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS)

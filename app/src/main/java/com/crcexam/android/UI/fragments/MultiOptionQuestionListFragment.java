@@ -2,6 +2,7 @@ package com.crcexam.android.UI.fragments;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,8 +28,10 @@ import android.widget.Toast;
 import com.crcexam.android.R;
 import com.crcexam.android.adapters.AnswerListAdapter;
 import com.crcexam.android.adapters.MissedQuestionAdapter;
+import com.crcexam.android.adapters.RetestSampleQuizAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.database.DatabaseHandler;
+import com.crcexam.android.interfaces.RecyclerViewClickWithJson;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
 import com.crcexam.android.utils.PreferenceClass;
 import com.crcexam.android.utils.Utility;
@@ -47,7 +50,7 @@ import java.util.Random;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MultiOptionQuestionListFragment extends Fragment implements View.OnClickListener, RecyclerviewClickListner {
+public class MultiOptionQuestionListFragment extends Fragment implements View.OnClickListener, RecyclerViewClickWithJson {
 
 
     private static final String TAG = "MultiOptionQuestionList";
@@ -55,9 +58,9 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     RecyclerView recyclerView;
     ArrayList<JSONObject> lstMissedQst = new ArrayList<>();
     ArrayList<JSONObject> lstQuestions = new ArrayList<>();
-    AnswerListAdapter multiOptionAdapter;
+    RetestSampleQuizAdapter multiOptionAdapter;
     MissedQuestionAdapter missedQuestionAdapter;
-    RecyclerviewClickListner mRvListener;
+    RecyclerViewClickWithJson mRvListener;
     // public static ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
     int position = 0;
     JSONArray arrayOption;
@@ -71,6 +74,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     private int questionPostion = 0, missed_qst_pos = 0;
     private boolean is_first = true;
     private JSONObject jsonObject ;
+    private boolean isMarked = false;
+    private String str_your_wrong_ans = "";
 
     public MultiOptionQuestionListFragment() {
         // Required empty public constructor
@@ -122,7 +127,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             lstAnswers.clear();
             currentObj = jsonObject;
             recyclerView = rootView.findViewById(R.id.recyclerview_option);
-            multiOptionAdapter = new AnswerListAdapter(mContext, lstAnswers, mRvListener);
+            multiOptionAdapter = new RetestSampleQuizAdapter(mContext, lstAnswers, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
             recyclerView.setLayoutManager(mLayoutManager);
             // JSONObject object=new JSONObject(jsonObject.toString().replaceAll("\\\\\\\\",""));
@@ -174,6 +179,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             ((TextView) rootView.findViewById(R.id.txtExplaintion)).setText(currentObj.getString("explaination"));
             ((TextView) rootView.findViewById(R.id.txtCorrectAns)).setText(ss1);
             SpannableString sYourAns = new SpannableString(mContext.getResources().getString(R.string.your_Answer1) + " " + currentObj.getString("your_ans"));
+
+            Log.e(TAG, " Spann adapterMissedQuestion: " + PreferenceClass.getStringPreferences(mContext,currentObj.getString("your_ans")));
             sYourAns.setSpan(new StyleSpan(Typeface.BOLD), 0, 12, 0); // set size
             sYourAns.setSpan(new ForegroundColorSpan(Color.BLACK), 0, 12, 0);// set color
             ((TextView) rootView.findViewById(R.id.txtYourAns)).setText(sYourAns);
@@ -353,9 +360,16 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                 }
                 break;
             case R.id.imgMarkedQuestion:
-                //Toast.makeText(mContext, "Text View Clicked", Toast.LENGTH_SHORT).show();
-                ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setBackground(getResources().getDrawable(R.drawable.ic_retest_blck));
-                setRetestExamQuestions(jsonObject);
+                if (isMarked){
+                    isMarked =false;
+                    ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setBackground(getResources().getDrawable(R.drawable.ic_retest));
+                }else {
+                    //Toast.makeText(mContext, "Text View Clicked", Toast.LENGTH_SHORT).show();
+                    ((TextView) rootView.findViewById(R.id.imgMarkedQuestion)).setBackground(getResources().getDrawable(R.drawable.ic_retest_blck));
+                    setRetestExamQuestions(jsonObject);
+                    isMarked = true;
+                }
+
                 break;
         }
     }
@@ -370,7 +384,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
 
     @Override
-    public void onItemClick(View view, int position, String response) {
+    public void onItemClick(View view, int position, String response, JSONObject jsonObjectRecycler) {
+        Log.e(TAG, "jsonObjectRecycler onItemClick: "+jsonObjectRecycler );
         try {
             DatabaseHandler db = new DatabaseHandler(mContext);
             is_SelectedAns = true;
@@ -402,7 +417,10 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
                         }
                     }
+                    //see comented code below
                 } else {
+                    Log.e(TAG, "jsonObjectRecycler onItemClick: "+jsonObjectRecycler );
+                    str_your_wrong_ans = jsonObjectRecycler.getString("Answer");
                     db.updateQuestionData((arrayOption.getJSONObject(questionPostion - 1).getString("id")), "true", object.getJSONObject(position).getString("Answer"), "true");
                     Log.e(TAG, "---------------------------------------------------------------------------------" );
                     jsonObject = new JSONObject();
@@ -410,36 +428,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     Log.e(TAG, "wrongAnsCheck - onItemClick: arrayOption - "+arrayOption.getJSONObject(questionPostion - 1));
 
                     Log.e(TAG, "---------------------------------------------------------------------------------" );
-/* try {
-                        lstMissedQuestion.clear();
-                        JSONArray array = null;
-                        if (!db.getAllMissedQuestions().toString().contains(currentObj.getString("Id")))
-                            db.addMissedQuestions(currentObj.toString());
 
-
-                        if (PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS).length() > 20) {
-                            array = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
-                            for (int i = 0; i < array.length(); i++) {
-                                lstMissedQuestion.add(array.getJSONObject(i));
-                            }
-                            System.out.println(("adddwddd prev " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString()));
-                            Log.e("arrayOption ifff ", arrayOption.length() + "  " + arrayOption);
-                            lstMissedQuestion.add(arrayOption.getJSONObject(questionPostion - 1));
-                            System.out.println("adddwddd new  " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString());
-
-                            PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, lstMissedQuestion.toString());
-                        } else {
-                            Log.e("arrayOption else ", arrayOption.length() + "  " + arrayOption);
-                            lstMissedQuestion.add(arrayOption.getJSONObject(questionPostion - 1));
-                            System.out.println("first new  " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString());
-
-                            PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, lstMissedQuestion.toString());
-
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }*/
                     ((TextView) view.findViewById(R.id.imgNumber)).setText("");
                     ((TextView) view.findViewById(R.id.imgNumber)).setBackground(mContext.getResources().getDrawable(R.drawable.ic_cross_mark));
 
@@ -469,16 +458,17 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
 
     private void setRetestExamQuestions(JSONObject jsonObject) {
 
-        Log.e(TAG, "wrongAnsCheck : jsonObject " + jsonObject);
-        Log.e(TAG, "wrongAnsCheck : CART_JSON_ARRAY_LIST " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
 
         try {
-            String questionSte = PreferenceClass.getStringPreferences(mContext,"");
+            jsonObject.put("your_wrong_ans",str_your_wrong_ans);
+            Log.e(TAG, "wrongAnsCheck : jsonObject " + jsonObject);
+            Log.e(TAG, "wrongAnsCheck : CART_JSON_ARRAY_LIST " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
+
+            String questionSte = PreferenceClass.getStringPreferences(mContext,Constant.WRONGQUESTION);
             if (questionSte.isEmpty()) {
                 JSONArray jsonArray = new JSONArray();
                 jsonArray.put(jsonObject);
                 PreferenceClass.setStringPreference(mContext, Constant.WRONGQUESTION, jsonArray.toString());
-
                 Log.e(TAG, " wrongAnsCheck CART_JSON_ARRAY_LIST SECOND - " + PreferenceClass.getStringPreferences(mContext, Constant.WRONGQUESTION));
             } else {
                 JSONArray jsonArray = new JSONArray(questionSte);
@@ -490,4 +480,34 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             e.printStackTrace();
         }
     }
+    /* try {
+                        lstMissedQuestion.clear();
+                        JSONArray array = null;
+                        if (!db.getAllMissedQuestions().toString().contains(currentObj.getString("Id")))
+                            db.addMissedQuestions(currentObj.toString());
+
+
+                        if (PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS).length() > 20) {
+                            array = new JSONArray(PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
+                            for (int i = 0; i < array.length(); i++) {
+                                lstMissedQuestion.add(array.getJSONObject(i));
+                            }
+                            System.out.println(("adddwddd prev " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString()));
+                            Log.e("arrayOption ifff ", arrayOption.length() + "  " + arrayOption);
+                            lstMissedQuestion.add(arrayOption.getJSONObject(questionPostion - 1));
+                            System.out.println("adddwddd new  " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString());
+
+                            PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, lstMissedQuestion.toString());
+                        } else {
+                            Log.e("arrayOption else ", arrayOption.length() + "  " + arrayOption);
+                            lstMissedQuestion.add(arrayOption.getJSONObject(questionPostion - 1));
+                            System.out.println("first new  " + lstMissedQuestion.size() + "  " + lstMissedQuestion.toString());
+
+                            PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, lstMissedQuestion.toString());
+
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }*/
 }

@@ -363,6 +363,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
             e.printStackTrace();
         }
         ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card "+ (position + 1) + " of "+ questionArraylist.size());
+        Log.e(TAG, "reverseImageFlipAnimation: Card " +  "Card "+ (position + 1) + " of "+ questionArraylist.size());
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.reverse_image_flip);
         anim.setTarget(imgView);
         //anim.setTarget(rootView.findViewById(R.id.tv_question));
@@ -382,6 +383,7 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
             e.printStackTrace();
         }
         ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Answer" + " " + (position + 1) + " of " + questionArraylist.size());
+        Log.e(TAG, "textFlipAnimation: Answer" + "Answer" + " " + (position + 1) + " of " + questionArraylist.size() );
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(mContext, R.animator.text_flip);
       //  anim.setTarget(imgView);
          anim.setTarget(rootView.findViewById(R.id.tvAnsBack));

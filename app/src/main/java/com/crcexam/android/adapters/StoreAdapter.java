@@ -43,13 +43,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder
         try {
             holder.tvTitle.setText(testList.get(position).getString("displayName"));
             holder.tvDescriptn.setText(testList.get(position).getString("longDescription"));
-            holder.tvAmount.setText("Buy $"+testList.get(position).getString("price"));
-            Log.e(TAG, "onBindViewHolder: price " + "Buy $"+testList.get(position).getString("price"));
+            //holder.tvAmount.setText("Buy $" + testList.get(position).getDouble("price"));
+            holder.tvAmount.setText("Buy $"+String.format("%.2f", testList.get(position).getDouble("price")));
             holder.tvAmount.setTag(testList.get(position));
             holder.tvAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(holder.itemView,position,testList.get(position).toString());
+                    listener.onItemClick(holder.itemView, position, testList.get(position).toString());
                 }
             });
 
@@ -58,7 +58,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder
         }
     }
 
-    @Override
+
     public int getItemCount() {
         return testList
                 .size();
@@ -66,7 +66,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvTitle, tvDescriptn,tvAmount;
+        public TextView tvTitle, tvDescriptn, tvAmount;
 
 
         public MyViewHolder(View view) {

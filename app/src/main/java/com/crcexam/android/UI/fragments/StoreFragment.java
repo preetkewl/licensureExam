@@ -300,6 +300,7 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
     }
 
     private void getAllExamList() {
+        Log.e(TAG, "doubleCheck getAllExamList: called" );
         try {
             progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
                 @Override
@@ -321,13 +322,14 @@ public class StoreFragment extends Fragment implements View.OnClickListener, Rec
                             if (progressHUD.isShowing() && progressHUD != null) {
                                 progressHUD.dismiss();
                             }
-                            Log.e("IabCheck onResponse  ", response.code() + "");
+                            Log.e(TAG, response.code() + " code doubleCheck ");
                             homeArraylist.clear();
                             ArrayList<JSONObject> lstMultipleChoice = new ArrayList<>();
                             if (response.code() == 200) {
                                 JSONArray array = new JSONArray(response.body().string());
-                                Log.e("IabCheck array  ", array + "");
+
                                 for (int i = 0; i < array.length(); i++) {
+                                    Log.e(TAG, "doubleCheck onResponse: getJSONObject = "+array.getJSONObject(i) );
                                     //homeArraylist.add(array.getJSONObject(i));
                                     if (!array.getJSONObject(i).getBoolean("isFree")) {
                                         lstMultipleChoice.add(array.getJSONObject(i));

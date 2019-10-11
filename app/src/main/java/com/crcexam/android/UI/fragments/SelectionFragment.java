@@ -304,6 +304,10 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                     }
                 }*/
                 break;
+
+            case  R.id.tv_selection_three:
+                loadFragment(new SampleMarkedQuizFragment());
+                break;
         }
     }
 

@@ -98,7 +98,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void singleTextView(TextView textView, final String strSignIn) {
-
         SpannableStringBuilder spanText = new SpannableStringBuilder();
         spanText.append("Don't Have An Account? ");
         spanText.append(strSignIn);
@@ -106,9 +105,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View widget) {
                 LoginActivity.viewPager.setCurrentItem(LoginActivity.viewPager.getCurrentItem() + 1, true);
-
             }
-
             @Override
             public void updateDrawState(TextPaint textPaint) {
                 textPaint.setColor(textPaint.linkColor);    // you can use custom color
@@ -120,7 +117,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View widget) {
                 // On Click Action
-
             }
 
             @Override
@@ -191,7 +187,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                 progressHUD.dismiss();
                             }
                             // hideLoader(indicatorView);
-
                             Log.e("res code ", response.code() + "");
                             if (response.code() == 200) {
                                 String res = response.body().string();
