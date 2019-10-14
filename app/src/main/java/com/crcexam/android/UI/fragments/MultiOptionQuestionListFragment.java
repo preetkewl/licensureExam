@@ -339,7 +339,8 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                                 // startActivity(new Intent(mContext, ResultFragment.class).putExtra("data", object + ""));
                                 //finish();
                                 //loadFragment(new HomeFragment());
-                            } else {
+                            }
+                            else {
                                 setNextQuestnFromList();
                             }
                         }

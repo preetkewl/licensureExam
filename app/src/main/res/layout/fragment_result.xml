@@ -66,7 +66,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_05"
                 android:layout_toRightOf="@+id/imgFalse"
-                android:text="Incorrect answer 40%"
+                android:text="Incorrect answer 50%"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/font_size_16" />
 

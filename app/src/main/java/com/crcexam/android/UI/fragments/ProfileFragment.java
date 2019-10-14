@@ -253,7 +253,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         rootView.findViewById(R.id.btnUpdateProfile).setOnClickListener(this);
         // rootView.findViewById(R.id.btnEditProfile).setOnClickListener(this);
         rootView.findViewById(R.id.btnChangePassword).setOnClickListener(this);
-        rootView.findViewById(R.id.edtExamDate).setOnClickListener(this);
+//        rootView.findViewById(R.id.edtExamDate).setOnClickListener(this);
 
     }
 
@@ -267,7 +267,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((TextView) rootView.findViewById(R.id.txtState)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtZIP)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.txtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+      //  ((TextView) rootView.findViewById(R.id.txtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         ((EditText) rootView.findViewById(R.id.edtUsername)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtFirstName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
@@ -278,13 +278,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 //        ((Spinner) rootView.findViewById(R.id.spinner_state)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtZIP)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((EditText) rootView.findViewById(R.id.edtTelephone)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((EditText) rootView.findViewById(R.id.edtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        //((EditText) rootView.findViewById(R.id.edtExamDate)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((Button) rootView.findViewById(R.id.btnUpdateProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         //((Button) rootView.findViewById(R.id.btnEditProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
         //username and exam date should not be editable.
         rootView.findViewById(R.id.edtUsername).setEnabled(true);
-        rootView.findViewById(R.id.edtExamDate).setEnabled(false);
+//        rootView.findViewById(R.id.edtExamDate).setEnabled(false);
 
     }
 
@@ -386,9 +386,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btnUpdateProfile:
                 validateProfile();
                 break;
-            case R.id.edtExamDate:
+            /*case R.id.edtExamDate:
                 showDate();
-                break;
+                break;*/
            /* case R.id.btnEditProfile:
                // editProfile(true);
                 break;*/
@@ -523,7 +523,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                /* if (objUser.getString("ExamDate").contains("Z"))
                     ((EditText) rootView.findViewById(R.id.edtExamDate)).setText(Utility.parseTime(objUser.getString("ExamDate"), "yyyy-MM-dd'T'HH:mm:ss.SSSZ", "MM-dd-yyyy") + "");
                 else*/
-                ((EditText) rootView.findViewById(R.id.edtExamDate)).setText(Utility.parseTime(objUser.getString("ExamDate"), "yyyy-MM-dd'T'HH:mm:ss.SSS", "MM-dd-yyyy") + "");
+               // ((EditText) rootView.findViewById(R.id.edtExamDate)).setText(Utility.parseTime(objUser.getString("ExamDate"), "yyyy-MM-dd'T'HH:mm:ss.SSS", "MM-dd-yyyy") + "");
                 startDate = objUser.getString("ExamDate");
                 // ((EditText) rootView.findViewById(R.id.edtTelephone)).setText(objUser.getString("ExamDate"));
             }
@@ -685,7 +685,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     jsonObject.addProperty("ZIP", ((EditText) rootView.findViewById(R.id.edtZIP)).getText().toString().trim());
                     jsonObject.addProperty("StateAbbreviation", "FL");
                     jsonObject.addProperty("ReceiveEmails", ((CheckBox) rootView.findViewById(R.id.ChkReceiveEmails)).isChecked());
-                    Log.e("dfdf g", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "");
+                    //Log.e("dfdf g", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "");
                     if (!startDate.isEmpty())
                         jsonObject.addProperty("ExamDate", startDate);
                     //jsonObject.addProperty("ExamDate", Utility.parseTime(((EditText) rootView.findViewById(R.id.edtExamDate)).getText().toString(), "MM-dd-yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS") + "Z");
@@ -776,7 +776,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showDate() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+       /* DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDate) {
                 year_first = selectedYear;
@@ -797,17 +797,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 }
                 // chkInDate = startDate;
                 // ((EditText) findViewById(R.id.edtExamDate)).setText(Utility.parseDate(((EditText) findViewById(R.id.edtExamDate)).getText().toString()));
-                /*if (((EditText) findViewById(R.id.etdCheckout)).getText().toString().length() > 0) {
+                *//*if (((EditText) findViewById(R.id.etdCheckout)).getText().toString().length() > 0) {
                     if (Utility.compareTwoDates(((EditText) findViewById(R.id.edtExamDate)).getText().toString(), ((EditText) findViewById(R.id.etdCheckout)).getText().toString())) {
 
                     } else {
                         ((EditText) findViewById(R.id.etdCheckout)).setText("");
                     }
-                }*/
+                }*//*
             }
         }, year_first, month_first, day_first);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        datePickerDialog.show();
+        datePickerDialog.show();*/
     }
 
 

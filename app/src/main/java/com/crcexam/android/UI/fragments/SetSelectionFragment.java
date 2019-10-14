@@ -118,8 +118,8 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
             } else {
                 Log.e(TAG, "setCheck init: else bundle null");
-            }
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -288,7 +288,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                 if (SelectedPos == 0) {
                     FlipQuestionListFragment flipQuestionListFragment = new FlipQuestionListFragment();
                     Bundle bundle = new Bundle();
-
+                    Log.e(TAG, "onClick: lstQuestions " + lstQuestions.size()   + bundle);
                     if (lstQuestions.size() > 4) {
                         bundle.putString("data", lstQuestions.subList(0, 5) + "");
                         flipQuestionListFragment.setArguments(bundle);
@@ -342,9 +342,8 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
                     flipQuestionListFragment.setArguments(bundle);
                     loadFragment(flipQuestionListFragment);
                     //startActivity(new Intent(mContext, FlipQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
-
                 } else {
-                    Log.e(" df >0 ", lstQuestions.subList(0, 5 * (SelectedPos + 1)) + "");
+//                    Log.e(" df >0 ", lstQuestions.subList(0, 5 * (SelectedPos + 1)) + "");
                     bundle.putString("data", lstQuestions + "");
                     flipQuestionListFragment.setArguments(bundle);
                     loadFragment(flipQuestionListFragment);
@@ -355,6 +354,10 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
         }
 
     }
+
+
+
+
 
 
     @Override

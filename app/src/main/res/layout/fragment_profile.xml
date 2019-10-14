@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10" />
 
-                <TextView
+              <!--  <TextView
                     android:id="@+id/txtExamDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10"
-                    android:enabled="false" />
+                    android:enabled="false" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

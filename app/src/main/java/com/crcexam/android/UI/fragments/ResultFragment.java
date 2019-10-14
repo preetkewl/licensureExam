@@ -121,6 +121,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                         object1.put("percentage", Utility.twoDecimal(per + ""));
                         lstHistory.add(object1);
                         PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
+                        Log.e(TAG, "setActionBar: PreferenceClass " + PreferenceClass.getStringPreferences(mContext,Constant.HISTORY) );
                     } else {
                         JSONObject object1 = new JSONObject();
                         object1.put("date", Calendar.getInstance().getTimeInMillis());
@@ -129,6 +130,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                         object1.put("percentage", Utility.twoDecimal(per + ""));
                         lstHistory.add(object1);
                         PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
+                        Log.e(TAG, "setActionBar: PreferenceClass " + PreferenceClass.getStringPreferences(mContext,Constant.HISTORY) );
                     }
                     Log.e("HISTORY   ", PreferenceClass.getStringPreferences(mContext, Constant.HISTORY));
                     Log.e("MISSED_QUESTIONS  ", PreferenceClass.getStringPreferences(mContext, Constant.MISSED_QUESTIONS));
