@@ -5,6 +5,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -15,12 +17,17 @@
             android:fillViewport="true">
 
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="@dimen/padding_20">
 
                 <TextView
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+
                     android:id="@+id/txtUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,6 +94,7 @@
 
 
                     <Button
+                        android:textAllCaps="false"
                         android:id="@+id/btnChangePassword"
                         android:layout_width="80dp"
                         android:layout_height="35dp"

@@ -21,7 +21,7 @@
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/navigation_info"
-        android:icon="@drawable/ic_info"
+        android:icon="@drawable/ic_info_selected"
         android:title="@string/info"
         app:showAsAction="always|withText" />
 

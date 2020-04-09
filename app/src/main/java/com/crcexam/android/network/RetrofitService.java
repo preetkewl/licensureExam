@@ -37,7 +37,7 @@ public interface RetrofitService {
     Call<ResponseBody> login(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("username") String username, @Header("password") String password);
 
     @POST("Mobile/Register")
-    Call<ResponseBody> register(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("username") String username, @Header("password") String password);
+    Call<ResponseBody> register(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("username") String username, @Header("password") String password, @Header("name") String name);
 
     @POST("reset_password")
     Call<ResponseBody> resetPassword(@Body JsonObject jsonObject);
@@ -72,9 +72,14 @@ public interface RetrofitService {
     @GET("IAPService?siteid=6")
     Call<ResponseBody> getAllExamList();
 
+    @GET("IAPService?")
+    Call<ResponseBody> getExamByID(@Query("siteid") int siteid, @Query("id") int id);
+
     @FormUrlEncoded
     @GET("Mobile/History")
     Call<ResponseBody> getHistoryResult(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("authtoken") String authtoken ,  @Field("Body content type") String title, @Header("mchistory") JsonObject obj);
 
+    @POST("Mobile/Login")
+    Call<ResponseBody> reset(@Header("apikey") String apikey, @Header("siteid") String siteid, @Header("username") String username,@Header("resetpassword") String value);
 
 }

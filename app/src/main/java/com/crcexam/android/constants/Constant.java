@@ -21,6 +21,10 @@ public class Constant {
     public static final String FINISH_ACTIVITY = "finish_activity";
     public static final String IS_FIRST = "is_first";
     public static final String IS_LOGIN = "is_login";
+    public static final String MULTIPLESELECTQSTCOUNTFRAGMENT = "mulitpleselectselectqstcountfragment";
+    public static final String SETSELECTIONFRAGMENT = "setselectionfragment";
+    public static final String SELECTIONFRAGMENT = "selectionfragment";
+    public static final String HOMEFRAGMENT = "homefragment";
     public static Boolean IS_SHOW_DOTS = false;
 
     public static class FontStyle {
@@ -52,6 +56,7 @@ public class Constant {
         public static final String AUTH_TOKEN = "authtoken";
         public static final String REFRESH_TOKEN = "refreshtoken";
         public static final String USER_NAME = "user_name";
+        public static final String EXAM_ID = "exam_id";
         public static final String EMAIL = "email";
         public static final String PASSWORD = "password";
     }

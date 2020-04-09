@@ -6,6 +6,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -103,6 +107,13 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
         rootView.findViewById(R.id.imageView_flipanimation).setOnClickListener(this);
         rootView.findViewById(R.id.questionanswer_cardview).setOnClickListener(this);
         rootView.findViewById(R.id.tv_question).setOnClickListener(this);
+
+//        rootView.findViewById(R.id.questionanswer_cardview).setBackground(getResources().getDrawable(R.drawable.gradient_back,null));
+        rootView.findViewById(R.id.imageView_flipanimation).setBackground(getResources().getDrawable(R.drawable.image1,null));
+
+
+        ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+//        imgView.setBackgroundColor(Color.argb(60,36, 167, 157));
     }
 
 
@@ -182,6 +193,9 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
                 ((TextView) rootView.findViewById(R.id.tv_questnNumber)).setText("Card 1 of" + " " + questionArraylist.size());
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -337,8 +351,15 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
 
     private void imageFlipAnimation() {
         ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+//        imgView.setBackgroundColor(Color.argb(60,36, 167, 157));
+
         rootView.findViewById(R.id.tvAnsBack).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.tv_question).setVisibility(View.GONE);
+//        rootView.findViewById(R.id.questionanswer_cardview).setBackground(getResources().getDrawable(R.drawable.gradient_front,null));
+
+        rootView.findViewById(R.id.imageView_flipanimation).setBackground(getResources().getDrawable(R.drawable.image1,null));
+
+
         try {
             if (position == questionArraylist.size() - 1) {
                 ((TextView) rootView.findViewById(R.id.tvAnsBack)).setText(Html.fromHtml(questionArraylist.get(position).getString("Back")));
@@ -360,8 +381,16 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
 
     private void reverseImageFlipAnimation() {
         ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+//        imgView.setBackgroundColor(Color.argb(60,36, 167, 157));
+
         rootView.findViewById(R.id.tvAnsBack).setVisibility(View.GONE);
+
         rootView.findViewById(R.id.tv_question).setVisibility(View.VISIBLE);
+
+//        rootView.findViewById(R.id.questionanswer_cardview).setBackground(getResources().getDrawable(R.drawable.gradient_back,null));
+
+        rootView.findViewById(R.id.imageView_flipanimation).setBackground(getResources().getDrawable(R.drawable.image2,null));
+
         try {
             if (position == questionArraylist.size() + 1) {
                 ((TextView) rootView.findViewById(R.id.tv_question)).setText(questionArraylist.get(0).getString("Front"));
@@ -380,6 +409,8 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
 
     private void textFlipAnimation() {
         ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+//        imgView.setBackgroundColor(Color.argb(60,36, 167, 157));
+
         rootView.findViewById(R.id.tvAnsBack).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.tv_question).setVisibility(View.GONE);
         try {
@@ -401,6 +432,8 @@ public class FlipQuestionListFragment extends Fragment implements View.OnClickLi
 
     private void reverseTextFlipAnimation() {
         ImageView imgView = rootView.findViewById(R.id.imageView_flipanimation);
+//        imgView.setBackgroundColor(Color.argb(60,36, 167, 157));
+
         rootView.findViewById(R.id.tvAnsBack).setVisibility(View.GONE);
         rootView.findViewById(R.id.tv_question).setVisibility(View.VISIBLE);
         try {

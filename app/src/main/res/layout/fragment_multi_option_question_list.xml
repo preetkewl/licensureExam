@@ -9,9 +9,9 @@
     <TextView
         android:id="@+id/tv_questnNumber"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_50"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorGreen"
         android:gravity="center"
         android:padding="@dimen/padding_10"
         android:text="Question 5 of 5 :"
@@ -157,32 +157,35 @@
         android:background="@color/colorGray" />
 
     <RelativeLayout
+        android:background="@color/colorGreen"
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_50"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/imv_previous"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
             android:layout_alignParentLeft="true"
             android:layout_gravity="start"
             android:padding="@dimen/padding_10"
-            android:src="@drawable/ic_square_cross"
-            android:tint="@color/colorAccent"
+            android:src="@drawable/ic_cross"
+            android:tint="@color/colorWhite"
             android:visibility="visible" />
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/imv_next"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
             android:layout_alignParentRight="true"
             android:layout_gravity="end"
             android:padding="@dimen/padding_10"
-            android:src="@drawable/ic_right_box"
-            android:tint="@color/colorAccent" />
+            android:src="@drawable/ic_next"
+            android:tint="@color/colorWhite" />
 
     </RelativeLayout>
 

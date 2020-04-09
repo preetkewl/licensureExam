@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15"
             android:elevation="3dp"
-            app:cardCornerRadius="40dp">
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,20 +80,23 @@
 
                 <ImageView
                     android:layout_width="@dimen/margin_50"
-                    android:layout_height="@dimen/margin_50"
-                    android:src="@drawable/group2" />
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_flip_set" />
 
                 <TextView
                     android:id="@+id/tv_selection_two"
+                    android:text="Start All 5 FlipSet"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15"
                     android:layout_marginBottom="@dimen/margin_15"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:padding="@dimen/padding_10"
-                    android:text="Start all 5 Questions"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
+
+                    android:textSize="@dimen/font_size_heading"
+                    android:textStyle="bold"
                     android:typeface="serif" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -103,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15"
             android:elevation="3dp"
-            app:cardCornerRadius="40dp">
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,20 +118,22 @@
                 <ImageView
                     android:layout_width="@dimen/margin_50"
                     android:layout_height="@dimen/margin_50"
-                    android:src="@drawable/group2" />
+                    android:src="@drawable/ic_flip_set" />
 
                 <TextView
                     android:id="@+id/tv_selection_three"
+                    android:text="Start marked FlipSet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_15"
                     android:layout_marginBottom="@dimen/margin_15"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:padding="@dimen/padding_10"
-                    android:text="Start marked Question quiz"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
+
+                    android:textSize="@dimen/font_size_heading"
+                    android:textStyle="bold"
                     android:typeface="serif" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -138,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15"
             android:elevation="3dp"
-            app:cardCornerRadius="40dp">
+            app:cardCornerRadius="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,19 +155,20 @@
                 <ImageView
                     android:layout_width="@dimen/margin_50"
                     android:layout_height="@dimen/margin_50"
-                    android:src="@drawable/group2" />
+                    android:src="@drawable/ic_flip_set" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/tv_selection_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15"
                     android:layout_marginBottom="@dimen/margin_15"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:padding="@dimen/padding_10"
-                    android:text="Start 5 random Questions"
+                    android:text="Start 5 Random FlipSet"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/font_size_heading"
                     android:typeface="serif" />
             </LinearLayout>
         </android.support.v7.widget.CardView>

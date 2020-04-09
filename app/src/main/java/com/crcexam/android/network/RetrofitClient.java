@@ -15,6 +15,8 @@ public class RetrofitClient {
     Retrofit retrofit = null;
 
     public Retrofit getRetrogitClient(Activity activity) {
+
+
         if (CheckInternetConnection.isNetworkAvailable(activity)) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

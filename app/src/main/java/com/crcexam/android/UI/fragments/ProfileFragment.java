@@ -1,6 +1,7 @@
 package com.crcexam.android.UI.fragments;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,11 +22,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ import android.widget.Toast;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.auth.LoginActivity;
+import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.adapters.SpinnerAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
@@ -201,7 +207,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         mContext = getContext();
         connectionDetector = new ConnectionDetector(mContext);
@@ -244,9 +250,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         /*int id =bottomNav.getMenu().;
         bottomNav.setC*/
 
+        hideKeyboard(getActivity());
 
+        setActionBar();
         return rootView;
     }
+
+    private void setActionBar() {
+        try {
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_dash);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setOnClickListener(this);
+//            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Result");
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+//            ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
 
     private void setListener() {
@@ -405,6 +443,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
            /* case R.id.llLogOut:
                 logout();
                 break;*/
+
+            case R.id.imgHome:
+                ((DashboardActivity)getActivity()).switchDrawer();
+                break;
         }
     }
 

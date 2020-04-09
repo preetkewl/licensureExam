@@ -2,13 +2,16 @@ package com.crcexam.android.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.crcexam.android.R;
@@ -166,5 +169,14 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void setStatusBarColor(Activity activity) {
+        if(activity!=null) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                activity.getWindow().setStatusBarColor(Color.WHITE);
+            }
+        }
     }
 }

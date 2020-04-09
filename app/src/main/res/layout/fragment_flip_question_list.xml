@@ -10,7 +10,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:background="@color/colorPrimary"
+          android:background="@color/colorGreen"
           android:gravity="center"
           android:padding="@dimen/padding_10"
           android:text="Question 5 of 5 :"
@@ -25,16 +25,20 @@
 
       <android.support.v7.widget.CardView
           android:id="@+id/questionanswer_cardview"
+          android:background="@drawable/gradient_front"
           android:layout_width="0dp"
           android:layout_height="0dp"
-          android:layout_marginStart="5dp"
-          android:layout_marginTop="5dp"
-          android:layout_marginEnd="5dp"
-          app:cardCornerRadius="2dp"
-          app:layout_constraintBottom_toTopOf="@+id/imv_previous"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="20dp"
+          android:layout_marginBottom="@dimen/margin_20"
+          app:cardCornerRadius="15dp"
+          app:layout_constraintBottom_toTopOf="@+id/rl_bottom"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/tv_questnNumber">
+
+<!--          android:background="@drawable/border_green_shadow"-->
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -42,53 +46,65 @@
 
 
                   <ImageView
+                      android:background="@drawable/image1"
                       android:id="@+id/imageView_flipanimation"
                       android:layout_width="0dp"
                       android:layout_height="0dp"
-                      android:background="@drawable/index_cards"
+                      android:layout_margin="0dp"
+
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintEnd_toEndOf="parent"
                       app:layout_constraintHorizontal_bias="0.0"
                       app:layout_constraintStart_toStartOf="parent"
                       app:layout_constraintTop_toTopOf="parent" />
 
-                  <TextView
-                      android:id="@+id/tv_question"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_centerInParent="true"
-                      android:layout_gravity="center"
-                      android:layout_marginTop="48dp"
-                      android:padding="@dimen/padding_10"
-                      android:textColor="@android:color/black"
-                      android:text="What are some ways that an experiential therapist may try to assist
-  a family in creating change?"
-                      android:textSize="25sp"
-                      android:typeface="serif"
-                      android:visibility="visible"
-                      app:layout_constraintTop_toTopOf="parent"
-                      tools:layout_editor_absoluteX="0dp" />
+                <TextView
 
-                  <TextView
-                      android:id="@+id/tvAnsBack"
-                      android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_centerInParent="true"
-                      android:layout_gravity="center"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginTop="76dp"
-                      android:layout_marginEnd="8dp"
-                      android:lineHeight="30dp"
-                      android:padding="@dimen/padding_10"
-                      android:textColor="@android:color/black"
-                      android:textSize="25sp"
-                      android:typeface="serif"
-                      android:visibility="gone"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintHorizontal_bias="0.0"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toTopOf="@+id/imageView_flipanimation"
-                      tools:text="What are some ways that an experiential therapist may try to assist
+                    android:id="@+id/tv_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+
+                    android:padding="@dimen/padding_10"
+                    android:text="What are some ways that an experiential therapist may try to assist
+  a family in creating change?"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="25sp"
+                    android:typeface="serif"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <TextView
+                    android:id="@+id/tvAnsBack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:lineHeight="30dp"
+                    android:padding="@dimen/padding_10"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="25sp"
+                    android:typeface="serif"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView_flipanimation"
+                    tools:text="What are some ways that an experiential therapist may try to assist
   a family in creating change? What are some ways that an experiential therapist may try to assist
   a family in creating change?" />
 
@@ -98,18 +114,26 @@
 
 
 
+<RelativeLayout
+    android:layout_marginTop="@dimen/margin_10"
+    android:id="@+id/rl_bottom"
+    android:background="@color/colorGreen"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
       <ImageView
           android:id="@+id/imv_previous"
-          android:layout_width="70dp"
-          android:layout_height="70dp"
+          android:layout_width="@dimen/margin_40"
+          android:layout_height="@dimen/margin_40"
           android:layout_alignParentLeft="true"
           android:layout_gravity="start"
           android:layout_marginStart="4dp"
-          android:layout_marginBottom="4dp"
-          android:padding="@dimen/padding_15"
-          android:src="@drawable/ic_square_cross"
+
+          android:padding="@dimen/padding_10"
+          android:src="@drawable/ic_cross"
           android:visibility="visible"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent" />
@@ -117,16 +141,17 @@
 
       <ImageView
           android:id="@+id/imv_next"
-          android:layout_width="65dp"
-          android:layout_height="65dp"
+          android:layout_width="@dimen/margin_40"
+          android:layout_height="@dimen/margin_40"
           android:layout_alignParentRight="true"
           android:layout_gravity="end"
           android:layout_marginEnd="4dp"
           android:layout_marginBottom="4dp"
-          android:padding="@dimen/padding_15"
-          android:src="@drawable/ic_right_box"
+          android:padding="@dimen/padding_10"
+          android:src="@drawable/ic_next"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent" />
+</RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

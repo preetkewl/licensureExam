@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
+import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
 import com.crcexam.android.network.RetrofitService;
@@ -52,6 +55,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
     ProgressHUD progressHUD;
     private int SelectedPos = 0;
     private View rootView;
+    String title_exam;
 
 
     public SelectionFragment() {
@@ -65,31 +69,69 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_selection, container, false);
         mContext = getContext();
-        //setActionBar();
+        setActionBar();
         setFontStyle();
         init();
         return rootView;
     }
 
+
+
     private void setActionBar() {
         try {
-            mToolbar = rootView.findViewById(R.id.toolbar_dash);
-            // setSupportActionBar(mToolbar);
-//            ActionBar actionBar = getSupportActionBar();
-//            actionBar.setDisplayShowTitleEnabled(false);
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_dash);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+//            Log.e("contentType sss ", getActivity().getIntent().getExtras().getString("contentType"));
+//            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText(getActivity().getIntent().getExtras().getString("contentType"));
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Simple Quiz");
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.VISIBLE);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
 //            actionBar.setDisplayHomeAsUpEnabled(false);
-//            actionBar.setHomeButtonEnabled(false);
+            actionBar.setHomeButtonEnabled(false);
+
+//            mToolbar.setNavigationIcon(null);
+//            mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//
+//        }
+//    }
+
+//    private void setActionBar() {
+//        try {
+//            mToolbar = rootView.findViewById(R.id.toolbar_dash);
+//            // setSupportActionBar(mToolbar);
+////            ActionBar actionBar = getSupportActionBar();
+////            actionBar.setDisplayShowTitleEnabled(false);
+////            actionBar.setDisplayHomeAsUpEnabled(false);
+////            actionBar.setHomeButtonEnabled(false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     private void setFontStyle() {
         //((TextView) rootView.findViewById(R.id.tv_testName)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
         //((TextView) rootView.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
-        ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        ((TextView) rootView.findViewById(R.id.tv_selection_three)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+        ((TextView) rootView.findViewById(R.id.tv_selection_one)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+        ((TextView) rootView.findViewById(R.id.tv_selection_two)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+        ((TextView) rootView.findViewById(R.id.tv_selection_three)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
 
     }
 
@@ -101,7 +143,9 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 JSONObject object = new JSONObject(bundleStr);
                 getAllExamList(object.getInt("id"));
                 listner();
-                ((TextView) getActivity().findViewById(R.id.tv_title)).setText(object.getString("displayName"));
+//                ((TextView) getActivity().findViewById(R.id.tv_title)).setText(object.getString("displayName"));
+                ((TextView) mToolbar.findViewById(R.id.tv_title)).setText(new Bundle().getString("contentType"));
+                title_exam = object.getString("displayName");
                 // ((TextView) rootView.findViewById(R.id.tv_testName)).setText(object.getString("displayName"));
             }
 
@@ -209,6 +253,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                     if (lstQuestions.size() % 5 != 0) {
                         Log.e(" not 555 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
                         bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()) + "");
+                        bundle.putString("displayName",title_exam);
                         multiOptionQuestionListFragment.setArguments(bundle);
                         loadFragment(multiOptionQuestionListFragment);
                         //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()) + ""));
@@ -216,6 +261,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                     } else {
                         Log.e(" df", lstQuestions.subList(0, 5).size() + "");
                         bundle.putString("data", lstQuestions.subList(0, 5) + "");
+                        bundle.putString("displayName",title_exam);
                         multiOptionQuestionListFragment.setArguments(bundle);
                         loadFragment(multiOptionQuestionListFragment);
                         //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
@@ -226,6 +272,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                         Log.e(" lstQuestions size ", lstQuestions.size() + "");
                         Log.e(" not 555 >0 ", lstQuestions.subList(0, lstQuestions.size()).size() + "");
                         bundle.putString("data", lstQuestions.subList(0, lstQuestions.size()).size() + "");
+                        bundle.putString("displayName",title_exam);
                         multiOptionQuestionListFragment.setArguments(bundle);
                         loadFragment(multiOptionQuestionListFragment);
                         //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, lstQuestions.size()).size() + ""));
@@ -233,6 +280,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                     } else {
                         Log.e(" df >0 ", lstQuestions.subList(0, 5 * (SelectedPos + 1)) + "");
                         bundle.putString("data", lstQuestions.subList(0, 5) + "");
+                        bundle.putString("displayName",title_exam);
                         multiOptionQuestionListFragment.setArguments(bundle);
                         loadFragment(multiOptionQuestionListFragment);
                         //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions.subList(0, 5) + ""));
@@ -259,6 +307,7 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
                 MultiOptionQuestionListFragment multiOptionQuestionListFragment1 = new MultiOptionQuestionListFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("data", lstQuestions + "");
+                bundle1.putString("displayName",title_exam);
                 multiOptionQuestionListFragment1.setArguments(bundle1);
                 loadFragment(multiOptionQuestionListFragment1);
                 //startActivity(new Intent(mContext, MultiOptionQuestionListFragment.class).putExtra("data", lstQuestions + ""));
@@ -308,13 +357,33 @@ public class SelectionFragment extends Fragment implements View.OnClickListener,
             case  R.id.tv_selection_three:
                 loadFragment(new SampleMarkedQuizFragment());
                 break;
+
+            case R.id.imgback:
+                ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.VISIBLE);
+                ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.GONE);
+                ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+//                ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Simple Quize");
+                ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+                //finish();
+//                Objects.requireNonNull(getActivity()).onBackPressed();
+
+                MultipleSelectQstCountFragment fragment = new MultipleSelectQstCountFragment();
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("contentType", "MultipleChoice");
+                fragment.setArguments(bundle2);
+                loadFragment(fragment);
+                break;
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = ((DashboardActivity)mContext).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }

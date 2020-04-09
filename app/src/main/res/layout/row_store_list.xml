@@ -20,20 +20,59 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-            <TextView
-                android:id="@+id/tv_testName"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:text="RExam Pro"
-                android:textColor="@color/colorBlue"
-                android:textSize="@dimen/font_size_heading"
+                android:layout_marginBottom="-5dp"
+                app:cardCornerRadius="5dp">
+            <LinearLayout
 
-                android:typeface="serif" />
+                android:paddingBottom="@dimen/margin_10"
+                android:background="@color/colorAccent"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight=".7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/tv_testName_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:text="Name :"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/font_size_heading"
+
+                        android:typeface="serif" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1.3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_testName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_10"
+                        android:text="fpe"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/font_size_heading"
+                        android:typeface="serif" />
+                </LinearLayout>
+
+            </LinearLayout>
+            </android.support.v7.widget.CardView>>
+
+
+
 
             <TextView
                 android:id="@+id/tv_testDescrptn"
@@ -47,19 +86,18 @@
                 android:textSize="@dimen/font_size_regular"
                 android:typeface="serif"/>
 
-            <TextView
+            <Button
                 android:id="@+id/tv_testAmount"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/margin_40"
                 android:layout_gravity="end"
                 android:layout_margin="@dimen/margin_10"
-                android:background="@drawable/shape_black_border"
+                android:background="@drawable/ic_rounded_register"
                 android:padding="@dimen/margin_10"
-                android:text="Buy $0.99"
-                android:typeface="serif"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/font_size_12" />
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font_size_12"
+                android:typeface="serif" />
 
         </LinearLayout>
 

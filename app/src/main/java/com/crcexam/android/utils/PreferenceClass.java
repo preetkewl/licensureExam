@@ -3,6 +3,10 @@ package com.crcexam.android.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.crcexam.android.constants.Constant.UserData.EXAM_ID;
 import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class PreferenceClass {
@@ -22,6 +26,18 @@ public class PreferenceClass {
     public static String getUserName(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(HOME2HOTEL_PREFERENCE, Context.MODE_PRIVATE);
         return sharedPreferences.getString(USER_NAME, "");
+    }
+
+    public static void setExams(Context context, Set<String> id) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(HOME2HOTEL_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet(EXAM_ID, id);
+        editor.apply();
+    }
+
+    public static Set<String> getExams(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(HOME2HOTEL_PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPreferences.getStringSet(EXAM_ID, new HashSet<String>());
     }
 
     public static void setStringPreference(Context context, String name, String value) {

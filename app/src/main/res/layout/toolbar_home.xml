@@ -5,8 +5,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/background"
     android:contentInsetStart="0dp"
+    android:background="@color/colorWhite"
     android:contentInsetLeft="0dp"
     android:contentInsetEnd="0dp"
     android:contentInsetRight="0dp"
@@ -24,83 +24,254 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imgback"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/arrow_back"
-            android:tint="@color/colorWhite"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
-            android:id="@+id/imgMenu"
+            android:id="@+id/imgHome"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_menu"
+            android:src="@drawable/ic_home"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imgback"
-            android:padding="@dimen/margin_10"
-            android:text="@string/crc_exam"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/font_size_heading"
-            android:typeface="serif"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title_center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="@dimen/margin_10"
-            android:text="@string/app_name"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/font_size_heading"
-            android:typeface="serif"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
-            android:id="@+id/imgRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:id="@+id/imgback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:padding="@dimen/margin_10"
-            android:src="@drawable/ic_square_cross"
-            android:tint="@color/colorWhite"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:src="@drawable/ic_back"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--                <ImageView-->
+<!--                    android:padding="@dimen/margin_10"-->
+<!--                    android:id="@+id/imgback"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:src="@drawable/ic_home"-->
+<!--                    android:tint="@color/colorWhite"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <ImageView
+
+
+                    android:id="@+id/imgMen"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:src="@drawable/ic_menu"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:gravity="left"
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgback"
+                    android:padding="@dimen/margin_10"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_size_heading"
+                    android:typeface="serif"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toRightOf="@+id/imgback"
+                    app:layout_constraintRight_toLeftOf="@+id/imgback"
+                    android:layout_marginStart="@dimen/margin_30"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+
+                    app:layout_constraintStart_toStartOf="@+id/imgback"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_size_heading"
+                    android:typeface="serif"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/imgRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:padding="@dimen/margin_10"
+                    android:src="@drawable/ic_square_cross"
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/donetextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:text="We can help you pass your exam!"-->
+        <!--            android:textSize="@dimen/font_size_16"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/TitleImage"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            />-->
+
+
+
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.Toolbar>
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:local="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/toolbar"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="56dp"-->
+<!--    android:background="@color/background"-->
+<!--    android:contentInsetStart="0dp"-->
+<!--    android:contentInsetLeft="0dp"-->
+<!--    android:contentInsetEnd="0dp"-->
+<!--    android:contentInsetRight="0dp"-->
+<!--    android:minHeight="?attr/actionBarSize"-->
+<!--    app:contentInsetEnd="0dp"-->
+<!--    app:contentInsetLeft="0dp"-->
+<!--    app:contentInsetRight="0dp"-->
+<!--    app:contentInsetStart="0dp"-->
+<!--    app:contentInsetStartWithNavigation="0dp"-->
+<!--    app:elevation="@dimen/margin_10"-->
+<!--    local:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+
+<!--    <android.support.constraint.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgback"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:src="@drawable/arrow_back"-->
+<!--            android:tint="@color/colorWhite"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgMenu"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:src="@drawable/ic_menu"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_toEndOf="@+id/imgback"-->
+<!--            android:padding="@dimen/margin_10"-->
+<!--            android:text="@string/crc_exam"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="@dimen/font_size_heading"-->
+<!--            android:typeface="serif"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_title_center"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:padding="@dimen/margin_10"-->
+<!--            android:text="@string/app_name"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="@dimen/font_size_heading"-->
+<!--            android:typeface="serif"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"/>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgRight"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:layout_marginRight="16dp"-->
+<!--            android:padding="@dimen/margin_10"-->
+<!--            android:src="@drawable/ic_square_cross"-->
+<!--            android:tint="@color/colorWhite"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--    </android.support.constraint.ConstraintLayout>-->
+
+<!--</android.support.v7.widget.Toolbar>-->

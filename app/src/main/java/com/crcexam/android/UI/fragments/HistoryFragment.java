@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
@@ -33,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment implements View.OnClickListener{
 
     View rootView;
     Context mContext;
@@ -49,6 +54,8 @@ public class HistoryFragment extends Fragment {
     HistoryAdapter historyAdapter;
     private ProgressHUD progressHUD;
     private ConnectionDetector connectionDetector;
+    Toolbar mToolbar;
+
 
     @Nullable
     @Override
@@ -68,8 +75,29 @@ public class HistoryFragment extends Fragment {
         } else {
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }*/
+
+        setActionBar();
         return rootView;
     }
+
+    private void setActionBar() {
+        try {
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_dash);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Result");
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.VISIBLE);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void adapter() {
         try {
@@ -177,5 +205,18 @@ public class HistoryFragment extends Fragment {
             return null;
         }
         return json;
+    }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+            Objects.requireNonNull(getActivity()).onBackPressed();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

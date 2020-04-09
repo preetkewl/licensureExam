@@ -26,10 +26,13 @@ import com.crcexam.android.utils.circleprogress.DonutProgress;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -48,6 +51,9 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private View rootView;
 
+    TextView tvResult;
+    TextView tvDate;
+
     public ResultFragment() {
         // Required empty public constructor
     }
@@ -60,14 +66,18 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
         mContext = getContext();
         rootView = inflater.inflate(R.layout.fragment_result, container, false);
         db = new DatabaseHandler(mContext);
+        tvResult = rootView.findViewById(R.id.tv_result);
+        tvDate = rootView.findViewById(R.id.tv_date);
+
+
         setActionBar();
         ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setShowText(false);
-        rootView.findViewById(R.id.btnExamPro).setOnClickListener(new View.OnClickListener() {
+       /* rootView.findViewById(R.id.btnExamPro).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new StoreFragment());
             }
-        });
+        });*/
         //setListener();
         return rootView;
     }
@@ -83,26 +93,48 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                 Log.e(TAG, "setActionBar:object " + object);
                 double totalQuestion = object.getInt("totla_question");
                 double totalCurrectAns = object.getInt("totla_currect");
+                String title_name = object.getString("test_name");
                 double per = (totalCurrectAns / totalQuestion) * 100;
                 ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setProgress((float) per);
                 Log.e(TAG, totalQuestion + "  totalCurrectAns  " + totalCurrectAns + " per " + per);
-                ((TextView) rootView.findViewById(R.id.txtCurrect)).setText("Corrrect answer " + Utility.twoDecimal(per + "") + "%");
-                ((TextView) rootView.findViewById(R.id.txtIncorrect)).setText("Incorrrect answer " + Utility.twoDecimal((100 - per) + "") + "%");
+                ((TextView) rootView.findViewById(R.id.txtCurrect)).setText("Corrrects: " + Utility.twoDecimal(per + "") + "%");
+                ((TextView) rootView.findViewById(R.id.txtIncorrect)).setText("Incorrrects: " + Utility.twoDecimal((100 - per) + "") + "%");
+                try {
+                    String result= String.valueOf(totalCurrectAns).replaceAll("\\.+$", "")
+                    +"/"+String.valueOf(totalQuestion).replaceAll("\\.+$", "");
+                    tvResult.setText(result);
+                    String day = getCurrentDay();
+                    String date= day+ ", " +getDate();
+                    tvDate.setText(date);
+                }catch (Exception e){
+
+                }
+
+
                 Log.e(TAG, totalCurrectAns / totalQuestion + "");
                 //  Log.e("fggff ",(totalCurrectAns/totalQuestion)*100+"");
                 Log.e(TAG, (totalCurrectAns / totalQuestion) * 100 + "");
+
+//                mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
+
+                mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_dash);
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
                 if (mToolbar != null){
-                    mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
+//                    mToolbar = mToolbar.findViewById(R.id.toolbar_dash);
                     //getActivity().setSupportActionBar(mToolbar);
                     ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                    ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
-                    ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
-                    ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Test Results");
+                    ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.VISIBLE);
+//                        ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setVisibility(View.VISIBLE);
+                    ((TextView) mToolbar.findViewById(R.id.tv_title_center)).setText("Results");
                     ((ImageView) mToolbar.findViewById(R.id.imgRight)).setVisibility(View.VISIBLE);
+                    ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+
 
                 }else {
                     setListener();
                 }
+
+                setListener();
 
                 if (totalCurrectAns == totalQuestion) {
                     PreferenceClass.setStringPreference(mContext, Constant.MISSED_QUESTIONS, "");
@@ -119,6 +151,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                         object1.put("currect_answer", totalCurrectAns);
                         object1.put("total_question", totalQuestion);
                         object1.put("percentage", Utility.twoDecimal(per + ""));
+                        object1.put("name",title_name);
                         lstHistory.add(object1);
                         PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
                         Log.e(TAG, "setActionBar: PreferenceClass " + PreferenceClass.getStringPreferences(mContext,Constant.HISTORY) );
@@ -128,6 +161,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                         object1.put("currect_answer", totalCurrectAns);
                         object1.put("total_question", totalQuestion);
                         object1.put("percentage", Utility.twoDecimal(per + ""));
+                        object1.put("name",title_name);
                         lstHistory.add(object1);
                         PreferenceClass.setStringPreference(mContext, Constant.HISTORY, lstHistory.toString());
                         Log.e(TAG, "setActionBar: PreferenceClass " + PreferenceClass.getStringPreferences(mContext,Constant.HISTORY) );
@@ -150,10 +184,32 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private String getCurrentDay() {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+        return dayOfTheWeek;
+    }
+
+    private String getDate() {
+        try {
+            Date c = Calendar.getInstance().getTime();
+            System.out.println("Current time => " + c);
+
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String formattedDate = df.format(c);
+            return formattedDate;
+        }catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 
     private void setListener() {
 //        rootView.findViewById(R.id.imgRight).setOnClickListener(this);
         rootView.findViewById(R.id.btnMissed).setOnClickListener(this);
+        rootView.findViewById(R.id.btnExamPro).setOnClickListener(this);
         Log.e(TAG, "setListener:btnMissed " + rootView);
 
     }
@@ -170,6 +226,14 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("data", db.getAllMissedQuestionsList().toString());
                     bundle.putBoolean("is_misssed", true);
+                    Bundle bundle1= getArguments();
+                    JSONObject object = null;
+                    try {
+                        object = new JSONObject(bundle1.getString("data"));
+                        bundle.putString("data2", object + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     MultiOptionQuestionListFragment multiOptionQuestionListFragment = new MultiOptionQuestionListFragment();
                     multiOptionQuestionListFragment.setArguments(bundle);
                     loadFragment(multiOptionQuestionListFragment);
@@ -187,6 +251,12 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     //getActivity().finish();
                 }
                 break;
+
+            case R.id.btnExamPro:
+                loadFragment(new StoreFragment());
+                break;
+
+
         }
     }
 

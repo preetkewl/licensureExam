@@ -6,16 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_dashboard"
-            android:icon="@drawable/ic_dashboard"
+            android:icon="@drawable/ic_drawer_home"
             android:title="@string/dashboard" />
 
         <item
             android:id="@+id/menu_profile"
-            android:icon="@drawable/ic_user"
+            android:icon="@drawable/ic_drawer_profile"
             android:title="@string/profile" />
         <item
             android:id="@+id/menu_results"
-            android:icon="@drawable/ic_list"
+            android:icon="@drawable/ic_drawer_testresult"
             android:title="@string/test_results" />
 
          <item
@@ -24,18 +24,27 @@
              android:title="@string/store" />
         <item
             android:id="@+id/menu_refer"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_drawer_refer"
             android:title="@string/refer" />
         <item
+            android:visible="true"
             android:id="@+id/menu_info"
-            android:icon="@drawable/ic_page"
+            android:icon="@drawable/ic_drawer_info"
             android:title="@string/info" />
 
-        <item
-            android:id="@+id/menu_logout"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/logout" />
+<!--        <item-->
+<!--            android:id="@+id/menu_logout"-->
+<!--            android:icon="@drawable/ic_logout"-->
+<!--            android:title="@string/logout"-->
+<!--            />-->
+
+
     </group>
+
+
+
+
+
     <!--  <item android:title="Communicate">
           <menu>
               <item
@@ -49,3 +58,5 @@
           </menu>
       </item>-->
 </menu>
+
+

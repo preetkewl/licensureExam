@@ -18,6 +18,8 @@
         android:typeface="serif" />
 
     <android.support.v7.widget.CardView
+        app:layout_constrainedHeight="true"
+
         android:id="@+id/exam_test_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +29,7 @@
         android:foreground="?attr/selectableItemBackground"
         app:cardElevation="5dp"
         android:elevation="3dp"
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true">
 
         <android.support.constraint.ConstraintLayout
@@ -46,40 +48,56 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/group1"
+                app:srcCompat="@drawable/ic_simple_quize"
                 tools:ignore="VectorDrawableCompat" />
 
             <TextView
+
+                android:layout_marginStart="80dp"
+                android:layout_marginLeft="80dp"
+
                 android:id="@+id/tv_testName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Test exam"
-                android:textColor="@color/colorBlue"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:text="Test Exams"
+
+                android:textColor="@color/color_black"
                 android:textSize="@dimen/font_size_heading"
+                android:textStyle="bold"
                 android:typeface="serif"
-                android:textAllCaps="true"
+
+
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintHorizontal_bias="0.26"
+                app:layout_constraintLeft_toRightOf="@+id/imageView2"
+
+                app:layout_constraintStart_toStartOf="@id/imageView2"
                 app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
             <TextView
+                android:layout_marginStart="80dp"
+                android:layout_marginLeft="80dp"
+
                 android:id="@+id/tv_testDescrptn"
                 style="@style/setFontStyle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_10"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="8dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:text="This is Test exam"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+
+
+                android:gravity="start"
+                android:text="This is test Exam"
                 android:textColor="@color/colorTextGray"
                 android:textSize="@dimen/font_size_regular"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constrainedHeight="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintStart_toStartOf="@+id/tv_testName"
+
                 app:layout_constraintTop_toBottomOf="@+id/tv_testName" />
         </android.support.constraint.ConstraintLayout>
 

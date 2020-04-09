@@ -45,13 +45,13 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.MyView
 
         try {
             holder.tvTitle.setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-            holder.tvTestName.setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
+            holder.tvTestName.setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Bold));
             holder.tvDescriptn.setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
 
             if (type.equalsIgnoreCase("FQL")) {
-                holder.imgIcon.setImageResource(R.drawable.group2);
+                holder.imgIcon.setImageResource(R.drawable.ic_flip_set);
             } else if (type.equalsIgnoreCase("SQ")) {
-                holder.imgIcon.setImageResource(R.drawable.group1);
+                holder.imgIcon.setImageResource(R.drawable.ic_simple_quize);
             }
             holder.tvTitle.setText(testList.get(position).getString("contentType"));
             holder.tvTestName.setText(testList.get(position).getString("displayName"));
@@ -69,6 +69,13 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.MyView
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public String retStr(String str){
+        String substr=str.substring(0,27);
+
+        return substr;
     }
 
     @Override

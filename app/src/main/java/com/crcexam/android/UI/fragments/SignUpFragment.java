@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.crcexam.android.R;
 import com.crcexam.android.UI.auth.LoginActivity;
+import com.crcexam.android.UI.auth.ResetActivity;
 import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
@@ -94,6 +95,52 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         TextView textView = rootview.findViewById(R.id.txtSignup);
 
         singleTextView(textView, fourth);
+
+        String fourth2 = "Reset Password";
+
+        TextView textView2 = rootview.findViewById(R.id.btnReset);
+
+        singleTextView1(textView2, fourth2);
+
+    }
+
+
+    private void singleTextView1(TextView textView, final String strSignIn) {
+
+        SpannableStringBuilder spanText = new SpannableStringBuilder();
+        spanText.append("");
+        spanText.append(strSignIn);
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                startActivity(new Intent(mContext, ResetActivity.class));
+
+                // openWebViewActivity(getResources().getString(R.string.policy_link));
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        spanText.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+
+                // On Click Action
+            }
+
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                textPaint.setColor(textPaint.linkColor);    // you can use custom color
+                textPaint.setUnderlineText(true);    // this remove the underline
+            }
+        }, spanText.length() - strSignIn.length(), spanText.length(), 0);
+
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(spanText, TextView.BufferType.SPANNABLE);
 
     }
 

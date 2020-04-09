@@ -65,7 +65,7 @@ and client-desired outcome"
             android:text="A"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/color_black"
             android:textSize="@dimen/font_size_18"
             android:tint="@color/colorAccent" />
     </RelativeLayout>

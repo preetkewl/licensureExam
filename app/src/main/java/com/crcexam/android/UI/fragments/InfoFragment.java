@@ -1,5 +1,6 @@
 package com.crcexam.android.UI.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,10 +10,14 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,12 +25,17 @@ import com.crcexam.android.R;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.utils.Utility;
 
+import java.util.Objects;
+
 public class InfoFragment extends Fragment implements View.OnClickListener {
 
     View rootView;
     Context mContext;
     public static String FACEBOOK_URL = "https://www.facebook.com/CRCExam";
     public static String FACEBOOK_PAGE_ID = "CRCExam";
+
+    Toolbar mToolbar;
+
 
 
     @Nullable
@@ -35,7 +45,40 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         mContext = getActivity();
         setFontStyle();
         setListener();
+
+        hideKeyboard(getActivity());
+        setActionBar();
         return rootView;
+    }
+
+    private void setActionBar() {
+        try {
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_dash);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Result");
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.VISIBLE);
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void setFontStyle() {
@@ -62,6 +105,17 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.imv_twitter:
                 openExternalBowser("https://twitter.com/LicensureExams");
+                break;
+            case R.id.imgback:
+                try {
+                    ((ImageView) mToolbar.findViewById(R.id.imgback)).setVisibility(View.GONE);
+                    ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.VISIBLE);
+                    ((ImageView) mToolbar.findViewById(R.id.imgback)).setOnClickListener(this);
+                    ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+                    Objects.requireNonNull(getActivity()).onBackPressed();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
         }
     }

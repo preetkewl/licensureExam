@@ -76,6 +76,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
     private JSONObject jsonObject ;
     private boolean isMarked = false;
     private String str_your_wrong_ans = "";
+    String title_name;
 
     public MultiOptionQuestionListFragment() {
         // Required empty public constructor
@@ -104,6 +105,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
             } else {
                 Toast.makeText(mContext, "No data found", Toast.LENGTH_SHORT).show();
             }
+            title_name=bundle.getString("displayName");
         }
         /*if (getActivity().getIntent().getStringExtra("data") != null) {
             getList();
@@ -330,6 +332,7 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                                 JSONObject object = new JSONObject();
                                 object.put("totla_currect", totalCurrectAns);
                                 object.put("totla_question", arrayOption.length());
+                                object.put("test_name",title_name);
                                 Log.e("go for result ", object + "");
                                 ResultFragment resultFragment = new ResultFragment();
                                 Bundle bundle = new Bundle();
@@ -352,7 +355,18 @@ public class MultiOptionQuestionListFragment extends Fragment implements View.On
                     if (missed_qst_pos == lstMissedQuestion.size() - 1) {
                         //finish();
                         Utility.clearBackStack(mContext);
-                        loadFragment(new ResultFragment());
+                        ResultFragment resultFragment = new ResultFragment();
+                        Bundle bundle = new Bundle();
+                        Bundle bundle1= getArguments();
+                        JSONObject object = null;
+                        try {
+                            object = new JSONObject(bundle1.getString("data2"));
+                            bundle.putString("data", object + "");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        resultFragment.setArguments(bundle);
+                        loadFragment(resultFragment);
                     } else {
                         missed_qst_pos++;
                         adapterMissedQuestion(missed_qst_pos);

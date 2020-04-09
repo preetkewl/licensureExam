@@ -13,14 +13,23 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_marginLeft="@dimen/margin_15"
+                android:layout_marginTop="@dimen/margin_10"
+                android:scaleType="fitXY"
+                android:background="@drawable/logo_top"
+                android:id="@+id/iv_logo"
+                android:layout_height="100dp"
+                android:layout_width="220dp"/>
+
             <TextView
                 android:id="@+id/txtDirectTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_30"
                 android:text="@string/Directors_msg"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/color_black_message"
                 android:textSize="@dimen/font_size_18"
                 android:textStyle="bold" />
 
@@ -32,7 +41,7 @@
                 android:layout_margin="@dimen/margin_20"
                 android:gravity="center"
                 android:text="@string/info_content"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/color_black_message"
                 android:textSize="@dimen/font_size_18" />
 
 
@@ -46,30 +55,30 @@
 
                 <ImageView
                     android:id="@+id/imv_facbook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="left|start"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_10"
-                    android:src="@drawable/facebook_48" />
+                    android:src="@drawable/ic_facebook" />
 
                 <ImageView
                     android:id="@+id/imv_twitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_toRightOf="@+id/imv_facbook"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_10"
-                    android:src="@drawable/twitter_48" />
+                    android:src="@drawable/ic_twitter" />
 
                 <ImageView
                     android:id="@+id/imv_linkedin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_toRightOf="@+id/imv_twitter"
                     android:layout_weight="1"
                     android:padding="@dimen/margin_10"
-                    android:src="@drawable/linkedin_48" />
+                    android:src="@drawable/ic_linkdln" />
 
 
             </RelativeLayout>

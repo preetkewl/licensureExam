@@ -1,5 +1,6 @@
 package com.crcexam.android.UI.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,16 +10,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
+import com.crcexam.android.UI.dashboard.DashboardActivity;
 import com.crcexam.android.adapters.ExamListAdapter;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.interfaces.RecyclerviewClickListner;
@@ -33,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,8 +54,6 @@ import static com.crcexam.android.constants.Constant.UserData.USER_NAME;
 
 public class HomeFragment extends Fragment implements RecyclerviewClickListner, View.OnClickListener {
 
-    public static final String mypreference = "mypref";
-    private static final String TAG = "HomeFragment";
     View rootView;
     Context mContext;
     RecyclerView recyclerView;
@@ -56,66 +62,73 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     RecyclerviewClickListner recyclerviewClickListner;
     ProgressHUD progressHUD;
     private ConnectionDetector connectionDetector;
+    Toolbar mToolbar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mContext = getActivity();
         setFontStyle();
         setListener();
         connectionDetector = new ConnectionDetector(mContext);
-        if (connectionDetector.isConnectingToInternet()) {
-            /*if (PreferenceClass.getStringPreferences(mContext, EMAIL).equalsIgnoreCase("")) {*/
-//            progressHUD = ProgressHUD.show(mContext, "", true, false, new DialogInterface.OnCancelListener() {
-//                @Override
-//                public void onCancel(DialogInterface dialog) {
-//                    // TODO Auto-generated method stub
-//                }
-//            });
-            //getProfile();
-            //}
-        } else {
+        if (!connectionDetector.isConnectingToInternet()) {
+
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }
-        //getAllExamList();
+        hideKeyboard(getActivity());
+        setActionBar();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         return rootView;
     }
+
+    private void setActionBar() {
+        try {
+            mToolbar = getActivity().findViewById(R.id.toolbar_dash);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+            ( mToolbar.findViewById(R.id.imgback)).setVisibility(View.GONE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setVisibility(View.VISIBLE);
+            ((ImageView) mToolbar.findViewById(R.id.imgHome)).setOnClickListener(this);
+//            ((TextView) mToolbar.findViewById(R.id.tv_title)).setText("Result");
+            ((TextView) mToolbar.findViewById(R.id.tv_title)).setVisibility(View.GONE);
+//            ((TextView) mToolbar.findViewById(R.id.tv_title)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.OpenSans_Bold));
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setHomeButtonEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
 
 
 
     private void setFontStyle() {
-        //((TextView) rootView.findViewById(R.id.txtDashboard)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-       // ((TextView) rootView.findViewById(R.id.txtResult)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtProfile)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.txtRef)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        //((TextView) rootView.findViewById(R.id.txtDirMsg)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        //  ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
         ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-//        ((TextView) rootView.findViewById(R.id.btnExamPro)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-        //((TextView) rootView.findViewById(R.id.btnPurchasedItem)).setTypeface(Utility.setFontStyle(mContext, Constant.FontStyle.Roboto_Light));
-
     }
 
     private void setListener() {
-//        ((TextView) rootView.findViewById(R.id.btnSampleQuiz)).setOnClickListener(this);
-//        ((TextView) rootView.findViewById(R.id.btnSampleFlip)).setOnClickListener(this);
-//        ((TextView) rootView.findViewById(R.id.btnExamPro)).setOnClickListener(this);
         rootView.findViewById(R.id.txtProfile).setOnClickListener(this);
         rootView.findViewById(R.id.txtRef).setOnClickListener(this);
-        //rootView.findViewById(R.id.txtResult).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_quiz).setOnClickListener(this);
         rootView.findViewById(R.id.cardView_sample_flipCard).setOnClickListener(this);
-        //rootView.findViewById(R.id.cardView_exam_pro).setOnClickListener(this);
-       // rootView.findViewById(R.id.cardView_Prchased_item).setOnClickListener(this);
-
-        //   ((TextView) rootView.findViewById(R.id.txtDirMsgTitle)).setOnClickListener(this);
-
     }
 
     @Override
@@ -124,12 +137,8 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
             JSONObject object = new JSONObject(response);
             if (object.getString("contentType").equalsIgnoreCase("FlipSet")) {
                 loadFragment(new SetSelectionFragment());
-                //startActivity(new Intent(getActivity(), FlipSetSelectionActivity.class).putExtra("data", response));
-
             } else {
                 loadFragment(new SelectionFragment());
-                // startActivity(new Intent(getActivity(), SelectionActivity.class).putExtra("data", response));
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,16 +225,8 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 bundles.putString("contentType", "FlipSet");
                 fragments.setArguments(bundles);
                 loadFragment(fragments);
-                //loadFragment(new MultipleSelectQstCountFragment());
-                // startActivity(new Intent(getActivity(), MultipleSelectQstCountActivity.class).putExtra("contentType", "FlipSet"));
-                break;
-            /*case R.id.cardView_exam_pro:
-                bottomNav.setSelectedItemId(R.id.navigation_store);
-                loadFragment(new StoreFragment());
-                break;*/
-            /*case R.id.cardView_Prchased_item:
-                loadFragment(new PurchasedItemsFragment());
-                break;*/
+                              break;
+
             case R.id.txtProfile:
                 loadFragment(new ProfileFragment());
                 //  startActivity(new Intent(getActivity(), ProfileActivity.class));
@@ -241,19 +242,18 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                 startActivity(intent);*/
                 break;
 
-          /*  case R.id.txtResult:
-                bottomNav.setSelectedItemId(R.id.navigation_results);
-                loadFragment(new HistoryFragment());
-                break;*/
+
+            case R.id.imgHome:
+                ((DashboardActivity)getActivity()).switchDrawer();
+                break;
+
         }
     }
 
 
     private void loadFragment(Fragment fragment) {
-        // load fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        //transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 

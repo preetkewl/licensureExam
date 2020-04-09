@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="No History available"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/font_size_16"
         android:visibility="gone" />
 </RelativeLayout>

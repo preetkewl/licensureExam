@@ -111,7 +111,7 @@ public class Splash_Activity extends AppCompatActivity {
         });*/
 
         //setFontsStyle();
-        initializeViews();
+     //   initializeViews();
     }
 
     private void initializeViews() {

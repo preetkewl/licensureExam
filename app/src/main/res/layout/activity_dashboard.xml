@@ -28,9 +28,10 @@
             android:background="@android:color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toTopOf="@+id/navigation"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/navigation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_dash" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_dash"
+            />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
@@ -54,11 +55,25 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/splash_backgorund"
+        android:background="@color/colorThemeBlue"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main2"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/activity_main2_drawer" />
+        app:menu="@menu/activity_main2_drawer">
+        <Button
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="@dimen/margin_20"
+            android:layout_marginLeft="@dimen/margin_20"
+            android:textAllCaps="false"
+            android:id="@+id/menu_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_rounded_register"
+            android:text="@string/logout"
+            android:textColor="@color/colorWhite"
+            />
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

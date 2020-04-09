@@ -7,11 +7,12 @@
     tools:context=".UI.fragments.SampleMarkedQuizFragment">
 
     <TextView
+
         android:id="@+id/tv_samplemarkedquestnNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorGreen"
         android:gravity="center"
         android:padding="@dimen/padding_10"
         android:text="Question 5 of 5 :"
@@ -26,6 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:text="sdfsf"
         android:id="@+id/missed_quetions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,13 +35,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_size_heading"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_samplemarkedquestnNumber" />
 
     <TextView
+        android:textSize="@dimen/font_size_heading"
+
         android:id="@+id/textView_youranswer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -54,6 +58,8 @@
 
 
     <TextView
+        android:textSize="@dimen/font_size_heading"
+
         android:id="@+id/textView_correctanswer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -66,46 +72,59 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_youranswer" />
 
     <TextView
+        android:textSize="@dimen/font_size_heading"
+
         android:id="@+id/textView_decription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Description :"
         android:visibility="gone"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorGreen"
         app:layout_constraintEnd_toEndOf="@+id/textView_correctanswer"
         app:layout_constraintStart_toStartOf="@+id/textView_correctanswer"
         app:layout_constraintTop_toBottomOf="@+id/textView_correctanswer" />
 
+    <RelativeLayout
+        android:background="@color/colorGreen"
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
 
     <ImageView
         android:id="@+id/imv_sampleprevious"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/margin_40"
+        android:layout_height="@dimen/margin_40"
         android:layout_alignParentLeft="true"
         android:layout_gravity="start"
         android:padding="@dimen/padding_10"
-        android:src="@drawable/ic_square_cross"
-        android:tint="@color/colorAccent"
+        android:src="@drawable/ic_cross"
+        android:tint="@color/colorWhite"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imv_samplenext"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="@dimen/margin_40"
+        android:layout_height="@dimen/margin_40"
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
         android:padding="@dimen/padding_10"
         android:visibility="gone"
-        android:src="@drawable/ic_right_box"
-        android:tint="@color/colorAccent"
+        android:src="@drawable/ic_next"
+        android:tint="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/imv_sampleprevious"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imv_sampleprevious" />
 
+    </RelativeLayout>
+
     <TextView
+        android:textSize="@dimen/font_size_heading"
         android:id="@+id/textView_nodata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

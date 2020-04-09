@@ -1,6 +1,8 @@
 package com.crcexam.android.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         try {
+            holder.cvResult.setCardBackgroundColor(Color.parseColor("#560eff"));
+            holder.tvName.setText(testList.get(position).getString("name"));
             holder.tvDate.setText(Utility.getCurrentDate(testList.get(position).getLong("date")));
             Log.e(TAG, "onBindViewHolder: " + holder.tvDate );
             holder.tvCorrectAns.setText(testList.get(position).getString("percentage")+"%");
@@ -54,7 +58,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvDate, tvCorrectAns, tvNumbr;
+        public TextView tvDate, tvCorrectAns, tvNumbr, tvName;
+        private CardView cvResult;
 
 
         public MyViewHolder(View view) {
@@ -62,6 +67,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             tvDate = view.findViewById(R.id.tv_date);
             tvCorrectAns = view.findViewById(R.id.tv_correctanswer);
             tvNumbr = view.findViewById(R.id.tv_number);
+            tvName = view.findViewById(R.id.tv_name);
+            cvResult = view.findViewById(R.id.cv_result);
+
         }
     }
 

@@ -5,6 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="@dimen/margin_40"
+            android:textColor="@color/color_black_message"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="24/42"
+            android:id="@+id/tv_result"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:layout_below="@+id/tv_result"
+            android:textSize="@dimen/font_size_18"
+            android:textColor="@color/color_black_message"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="Quiz Completes"
+            android:id="@+id/tv_completes"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+
+            android:layout_below="@+id/tv_completes"
+            android:textSize="12sp"
+            android:textColor="@color/colorGrayTwo"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="Thu - 21 Oct, 2019"
+            android:id="@+id/tv_date"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="250dp"
@@ -30,14 +71,15 @@
                 android:tint="@color/colorAccent" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/txtCurrect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_05"
                 android:layout_toRightOf="@+id/imgTrue"
-                android:text="Correct answer 50%"
-                android:textColor="@color/colorBlack"
+                android:text="Corrects:  50%"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/font_size_16" />
 
         </RelativeLayout>
@@ -57,17 +99,18 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_circle"
-                android:tint="@color/colorGray" />
+                android:tint="@color/colorAccent" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/txtIncorrect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_05"
                 android:layout_toRightOf="@+id/imgFalse"
-                android:text="Incorrect answer 50%"
-                android:textColor="@color/colorBlack"
+                android:text="Incorrects: 50%"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/font_size_16" />
 
         </RelativeLayout>
@@ -80,12 +123,13 @@
             android:gravity="center_vertical">
 
             <Button
+                android:textColor="@color/colorWhite"
                 android:id="@+id/btnMissed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/square_btn"
+                android:background="@drawable/rounded_btn"
                 android:paddingLeft="@dimen/margin_15"
                 android:paddingRight="@dimen/margin_15"
                 android:text="Review missed"
@@ -93,6 +137,7 @@
 
 
             <Button
+                android:textColor="@color/colorWhite"
                 android:id="@+id/btnExamPro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,13 +145,24 @@
                 android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginTop="40dp"
                 android:layout_toRightOf="@+id/btnMissed"
-                android:background="@drawable/square_btn"
+                android:background="@drawable/rounded_btn"
                 android:paddingLeft="@dimen/margin_15"
                 android:paddingRight="@dimen/margin_15"
                 android:text="Exam Pro"
                 android:textAllCaps="false" />
+
+
+           <!-- <Button
+                android:id="@+id/btn_get_more_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnMissed"
+                android:text="Get More Questions"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@drawable/square_btn"/>-->
         </RelativeLayout>
     </RelativeLayout>
+
 
     <com.crcexam.android.utils.circleprogress.DonutProgress
         android:id="@+id/donut_progress"
@@ -114,10 +170,13 @@
         android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="50dp"
-        app:donut_finished_color="@color/colorAccent"
+        app:donut_finished_color="@color/colorGreen"
         app:donut_finished_stroke_width="25dp"
         app:donut_show_text="false"
         app:donut_unfinished_color="@color/colorGray"
-        app:donut_unfinished_stroke_width="25dp"
+        app:donut_unfinished_stroke_width="22dp"
         custom:donut_progress="50" />
+
+
+
 </RelativeLayout>

@@ -183,7 +183,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 home2hotel = retrofit.create(RetrofitService.class);
             }
             if (home2hotel != null) {
-                home2hotel.register(API_KEY, SITE_ID, email, password).enqueue(new Callback<ResponseBody>() {
+                home2hotel.register(API_KEY, SITE_ID, email, password, "Vikram Madaan").enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {

@@ -1,7 +1,10 @@
 package com.crcexam.android.UI.dashboard;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +21,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crcexam.android.R;
@@ -25,7 +31,10 @@ import com.crcexam.android.UI.auth.LoginActivity;
 import com.crcexam.android.UI.fragments.HistoryFragment;
 import com.crcexam.android.UI.fragments.HomeFragment;
 import com.crcexam.android.UI.fragments.InfoFragment;
+import com.crcexam.android.UI.fragments.MultipleSelectQstCountFragment;
 import com.crcexam.android.UI.fragments.ProfileFragment;
+import com.crcexam.android.UI.fragments.SelectionFragment;
+import com.crcexam.android.UI.fragments.SetSelectionFragment;
 import com.crcexam.android.UI.fragments.StoreFragment;
 import com.crcexam.android.constants.Constant;
 import com.crcexam.android.network.RetrofitLoggedIn;
@@ -34,6 +43,8 @@ import com.crcexam.android.utils.PreferenceClass;
 import com.crcexam.android.utils.Utility;
 
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -54,6 +65,9 @@ public class DashboardActivity extends AppCompatActivity
     Toolbar mToolbar;
     private NavigationView navDrawer;
     private DrawerLayout mdrawer;
+    Button logoutBT;
+    ImageView iv_back_btn;
+    Activity activity = this;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -94,10 +108,38 @@ public class DashboardActivity extends AppCompatActivity
         bottomNav = findViewById(R.id.navigation);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         openDashboard();
-        setClickListeners();
+
         //setDrawerData();
         getProfile();
 
+
+        logoutBT= (Button) findViewById(R.id.menu_logout);
+        logoutBT.setOnClickListener(this);
+        View headerView = navDrawer.getHeaderView(0);
+//        TextView navUsername = (TextView) headerView.findViewById(R.id.navUsername);
+        iv_back_btn = (ImageView) headerView.findViewById(R.id.iv_back_btn);
+//        navUsername.setText("Your Text Here");
+
+        setStatusBarColor();
+        setClickListeners();
+        hideKeyboard(activity);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    private void setStatusBarColor() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
     }
 
 
@@ -178,7 +220,8 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     private void setClickListeners() {
-        findViewById(R.id.imgMenu).setOnClickListener(this);
+        findViewById(R.id.imgHome).setOnClickListener(this);
+        iv_back_btn.setOnClickListener(this);
     }
 
     private void setActionBar() {
@@ -189,7 +232,7 @@ public class DashboardActivity extends AppCompatActivity
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setHomeButtonEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -241,6 +284,64 @@ public class DashboardActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        try {
+
+//            int count = getFragmentManager().getBackStackEntryCount();
+//            for(int i=0; getFragmentManager().getBackStackEntryCount() > 0;i++) {
+//                if (getFragmentManager().getBackStackEntryCount() > 0) {
+//                    getFragmentManager().popBackStack();
+//
+//                }
+//            }
+
+            final MultipleSelectQstCountFragment multipleSelectQstCountFragment =
+                    (MultipleSelectQstCountFragment) getSupportFragmentManager().findFragmentByTag(Constant.MULTIPLESELECTQSTCOUNTFRAGMENT);
+            final SelectionFragment selectionFragment =
+                    (SelectionFragment) getSupportFragmentManager().findFragmentByTag(Constant.SELECTIONFRAGMENT);
+            final SetSelectionFragment setSelectionFragment =
+                    (SetSelectionFragment) getSupportFragmentManager().findFragmentByTag(Constant.SETSELECTIONFRAGMENT);
+
+            if(multipleSelectQstCountFragment!=null && multipleSelectQstCountFragment.getTag().equals(Constant.SETSELECTIONFRAGMENT)){
+//                int count = getFragmentManager().getBackStackEntryCount();
+                for(int i=0; getFragmentManager().getBackStackEntryCount() > 0;i++) {
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
+                        getFragmentManager().popBackStack();
+
+                    }
+                }
+
+            }else if(selectionFragment!=null && selectionFragment.getTag().equals(Constant.SETSELECTIONFRAGMENT)){
+//                int count = getFragmentManager().getBackStackEntryCount();
+                for(int i=0; getFragmentManager().getBackStackEntryCount() > 0;i++) {
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
+                        getFragmentManager().popBackStack();
+
+                    }
+                }
+
+
+            }else if(setSelectionFragment!=null && setSelectionFragment.getTag().equals(Constant.SETSELECTIONFRAGMENT)){
+
+
+//                int count = getFragmentManager().getBackStackEntryCount();
+                for(int i=0; getFragmentManager().getBackStackEntryCount() > 0;i++) {
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
+                        getFragmentManager().popBackStack();
+
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            int count = getFragmentManager().getBackStackEntryCount();
+            for(int i=0; getFragmentManager().getBackStackEntryCount() > 0;i++) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
+                    getFragmentManager().popBackStack();
+
+                }
+            }
+            e.printStackTrace();
+        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -268,7 +369,14 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgMenu:
+            case R.id.imgHome:
+                switchDrawer();
+                break;
+            case R.id.menu_logout:
+                logout();
+                break;
+
+                case R.id.iv_back_btn:
                 switchDrawer();
                 break;
         }
@@ -287,11 +395,13 @@ public class DashboardActivity extends AppCompatActivity
     }
 
 
-    private void switchDrawer() {
-        if (mdrawer.isDrawerOpen(navDrawer)) {
-            mdrawer.closeDrawer(Gravity.LEFT);
-        } else {
-            mdrawer.openDrawer(Gravity.LEFT);
+    public void switchDrawer() {
+        if(mdrawer!=null && navDrawer!=null) {
+            if (mdrawer.isDrawerOpen(navDrawer)) {
+                mdrawer.closeDrawer(Gravity.LEFT);
+            } else {
+                mdrawer.openDrawer(Gravity.LEFT);
+            }
         }
     }
 
@@ -350,7 +460,8 @@ public class DashboardActivity extends AppCompatActivity
         if (getCurrentFragment() instanceof HomeFragment) {
             switchDrawer();
         } else {
-            setToolbarTitle(getResources().getString(R.string.crc_exam));
+            setToolbarTitle("");
+//            setToolbarTitle(getResources().getString(R.string.crc_exam));
             navDrawer.setCheckedItem(R.id.menu_dashboard);
             loadFragment(new HomeFragment());
         }
