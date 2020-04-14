@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -50,6 +51,8 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
     DatabaseHandler db;
     private Context mContext;
     private View rootView;
+
+    HashSet<String> hashSet;
 
     TextView tvResult;
     TextView tvDate;
@@ -69,6 +72,11 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
         tvResult = rootView.findViewById(R.id.tv_result);
         tvDate = rootView.findViewById(R.id.tv_date);
 
+        hashSet = (HashSet<String>) PreferenceClass.getIds(getActivity());
+
+        hashSet.add(PreferenceClass.getExamId(getActivity()));
+
+        PreferenceClass.setIds(getActivity(), hashSet);
 
         setActionBar();
         ((DonutProgress) rootView.findViewById(R.id.donut_progress)).setShowText(false);
@@ -106,6 +114,7 @@ public class ResultFragment extends Fragment implements View.OnClickListener {
                     String day = getCurrentDay();
                     String date= day+ ", " +getDate();
                     tvDate.setText(date);
+                    PreferenceClass.setDate(getActivity(), date);
                 }catch (Exception e){
 
                 }

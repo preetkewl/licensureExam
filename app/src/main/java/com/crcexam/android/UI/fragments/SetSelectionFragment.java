@@ -55,6 +55,7 @@ public class SetSelectionFragment extends Fragment implements View.OnClickListen
     ExamListAdapter homeAdapter;
     RecyclerviewClickListner recyclerviewClickListner;
     ConnectionDetector cd;
+
     private Context mContext;
     private View rootView;
     private int SelectedPos = 0;

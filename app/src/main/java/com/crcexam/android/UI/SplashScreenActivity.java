@@ -34,6 +34,16 @@ public class SplashScreenActivity extends Activity implements View.OnClickListen
         startBtn = (Button) findViewById(R.id.startbtn);
         startBtn.setOnClickListener(this);
 
+        if (PreferenceClass.getBooleanPreferences(getApplicationContext(), Constant.IS_LOGIN)) {
+           termsPolicy.setVisibility(View.GONE);
+           startBtn.setVisibility(View.GONE);
+        } else {
+            termsPolicy.setVisibility(View.VISIBLE);
+            startBtn.setVisibility(View.VISIBLE);
+
+        }
+
+
 //        initializeViews();
         customTextView(termsPolicy);
 
@@ -118,6 +128,7 @@ public class SplashScreenActivity extends Activity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.startbtn:
                 startBtn.setVisibility(View.GONE);
+                PreferenceClass.setBooleanPreference(getApplicationContext(), Constant.IS_LOGIN, true);
                 termsPolicy.setText("Loading....");
                 initializeViews();
                 break;

@@ -57,6 +57,7 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
     ProgressHUD progressHUD;
     HashSet<String> hashSet = new HashSet<String>();
     Toolbar mToolbar;
+    int count;
     private Context mContext;
     private View rootView;
 
@@ -148,7 +149,7 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                 SetSelectionFragment setSelectionFragment = new SetSelectionFragment();
                 bundle.putString("data", response);
                 setSelectionFragment.setArguments(bundle);
-
+                PreferenceClass.setExamId(getActivity(), object.getString("id"));
 
                 FragmentTransaction transaction = Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, setSelectionFragment, Constant.SETSELECTIONFRAGMENT);
@@ -157,6 +158,7 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                 SelectionFragment selectionFragment = new SelectionFragment();
                 bundle.putString("data", response);
                 selectionFragment.setArguments(bundle);
+                PreferenceClass.setExamId(getActivity(), object.getString("id"));
 
                 FragmentTransaction transaction = Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, selectionFragment, Constant.SELECTIONFRAGMENT);
@@ -187,6 +189,7 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        count = 0;
                         try {
                             if (progressHUD.isShowing() && progressHUD != null) {
                                 progressHUD.dismiss();
@@ -198,19 +201,25 @@ public class MultipleSelectQstCountFragment extends Fragment implements Recycler
                                 Log.e("array  ", array + "");
                                 Bundle bundle = MultipleSelectQstCountFragment.this.getArguments();
                                 if (bundle != null) {
-                                    if (bundle.getString("contentType").equalsIgnoreCase("MultipleChoice"))
+                                    if (bundle.getString("contentType").equalsIgnoreCase("MultipleChoice")) {
                                         for (int i = 0; i < array.length(); i++) {
+                                            count++;
                                             if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("MultipleChoice")) {
                                                 lstMultipleChoice.add(array.getJSONObject(i));
                                             }
                                         }
+                                        PreferenceClass.setMultiple(getActivity(), count);
+                                    }
 
-                                    if (bundle.getString("contentType").equalsIgnoreCase("FlipSet"))
+                                    if (bundle.getString("contentType").equalsIgnoreCase("FlipSet")) {
                                         for (int i = 0; i < array.length(); i++) {
+                                            count++;
                                             if (array.getJSONObject(i).getBoolean("isFree") && array.getJSONObject(i).getString("contentType").equalsIgnoreCase("FlipSet")) {
                                                 lstFlipSet.add(array.getJSONObject(i));
                                             }
                                         }
+                                        PreferenceClass.setFlip(getActivity(), count);
+                                    }
 
                                     PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstMultipleChoice.toString());
 

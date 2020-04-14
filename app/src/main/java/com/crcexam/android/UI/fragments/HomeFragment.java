@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
 
     View rootView;
     Context mContext;
+    TextView tv_date, tv_result;
     RecyclerView recyclerView;
     ArrayList<JSONObject> homeArraylist = new ArrayList<>();
     ExamListAdapter homeAdapter;
@@ -68,7 +69,7 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-
+        getAllExamList();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mContext = getActivity();
@@ -76,12 +77,16 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
         setListener();
         connectionDetector = new ConnectionDetector(mContext);
         if (!connectionDetector.isConnectingToInternet()) {
-
             Utility.toastHelper(mContext.getResources().getString(R.string.check_network), mContext);
         }
         hideKeyboard(getActivity());
         setActionBar();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        tv_date = rootView.findViewById(R.id.tv_date);
+        tv_result = rootView.findViewById(R.id.tv_result);
+        tv_date.setText(PreferenceClass.getDate(getActivity()));
+
+//        int total = PreferenceClass.getFlip(getActivity()) + PreferenceClass.getMultiple(getActivity()) ;
 
         return rootView;
     }
@@ -174,18 +179,22 @@ public class HomeFragment extends Fragment implements RecyclerviewClickListner, 
                             if (response.code() == 200) {
                                 JSONArray array = new JSONArray(response.body().string());
                                 Log.e("array  ", array + "");
-                                for (int i = 0; i < array.length(); i++) {
-                                    homeArraylist.add(array.getJSONObject(i));
-                                    if (!array.getJSONObject(i).getBoolean("isFree")) {
-                                        lstBuy.add(array.getJSONObject(i));
-                                    }
-                                }
-                                PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
-                                homeAdapter = new ExamListAdapter(getActivity(), homeArraylist, recyclerviewClickListner,"");
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recyclerView.setLayoutManager(mLayoutManager);
-                                recyclerView.setAdapter(homeAdapter);
-                                recyclerView.setNestedScrollingEnabled(false);
+//                                for (int i = 0; i < array.length(); i++) {
+//                                    homeArraylist.add(array.getJSONObject(i));
+//                                    if (!array.getJSONObject(i).getBoolean("isFree")) {
+//                                        lstBuy.add(array.getJSONObject(i));
+//                                    }
+//                                }
+//                                PreferenceClass.setStringPreference(mContext, Constant.STORE_DATA, lstBuy.toString());
+//                                homeAdapter = new ExamListAdapter(getActivity(), homeArraylist, recyclerviewClickListner,"");
+//                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+//                                recyclerView.setLayoutManager(mLayoutManager);
+//                                recyclerView.setAdapter(homeAdapter);
+//                                recyclerView.setNestedScrollingEnabled(false);
+
+                                tv_result.setText(PreferenceClass.getIds(getActivity()).size() + "/" + (array.length() + 3));
+
+
                             } else {
                                 String error = response.errorBody().string();
                                 Log.e("error  ", error + "");

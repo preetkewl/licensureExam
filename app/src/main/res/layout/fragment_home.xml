@@ -1,275 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <ImageView
 
-            android:layout_marginLeft="@dimen/font_size_20"
             android:id="@+id/TitleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/font_size_20"
             android:src="@drawable/logo" />
 
         <TextView
-            android:layout_marginLeft="@dimen/font_size_20"
-            android:textStyle="bold"
-            android:textColor="@color/color_black"
-            android:layout_marginTop="@dimen/font_size_20"
             android:id="@+id/donetextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/font_size_20"
+            android:layout_marginTop="@dimen/font_size_20"
             android:text="@string/welcome_to_licensure"
+            android:textColor="@color/color_black"
             android:textSize="@dimen/font_size_16"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/TitleImage"
-            app:layout_constraintTop_toBottomOf="@+id/TitleImage"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/TitleImage" />
 
         <RelativeLayout
             android:id="@+id/rl_test"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="center"
-
-            android:layout_marginTop="@dimen/font_size_20"
-            app:layout_constraintTop_toBottomOf="@+id/donetextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/font_size_20"
+
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donetextView">
 
 
             <com.crcexam.android.utils.circleprogress.DonutProgress
-
-                android:layout_centerHorizontal="true"
                 android:id="@+id/donut_progress"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 app:donut_finished_color="@color/colorGreen"
                 app:donut_finished_stroke_width="25dp"
                 app:donut_show_text="false"
                 app:donut_unfinished_color="@color/colorGray"
                 app:donut_unfinished_stroke_width="22dp"
-                custom:donut_progress="50" />
-
+                custom:donut_progress="100" />
 
 
             <RelativeLayout
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
 
-                    android:textSize="@dimen/margin_40"
-                    android:textColor="@color/color_black_message"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:text="24/42"
+                <TextView
                     android:id="@+id/tv_result"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-
-                    android:layout_below="@+id/tv_result"
-                    android:textSize="@dimen/font_size_18"
-                    android:textColor="@color/color_black_message"
-                    android:textStyle="bold"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Quiz Completes"
+                    android:gravity="center"
+                    android:textColor="@color/color_black_message"
+                    android:textSize="@dimen/margin_40"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/tv_completes"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_result"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="Quiz Completes"
+                    android:textColor="@color/color_black_message"
+                    android:textSize="@dimen/font_size_18"
+                    android:textStyle="bold" />
+
                 <TextView
 
-                    android:layout_below="@+id/tv_completes"
-                    android:textSize="12sp"
-                    android:textColor="@color/colorGrayTwo"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:text="Thu - 21 Oct, 2019"
                     android:id="@+id/tv_date"
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_completes"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="Thu - 21 Oct, 2019"
+                    android:textColor="@color/colorGrayTwo"
+                    android:textSize="12sp" />
             </RelativeLayout>
-<!--            <ImageView-->
+            <!--            <ImageView-->
 
-<!--                android:src="@drawable/ic_dashboard_progress_img"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="220dp"/>-->
-
-
+            <!--                android:src="@drawable/ic_dashboard_progress_img"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="220dp"/>-->
 
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/ll_test"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/ll_test"-->
+            <!--                android:layout_centerInParent="true"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content">-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/no_of_test_attempted"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/color_black"-->
-<!--                    android:layout_marginTop="@dimen/font_size_20"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:text="@string/no_of_test_attempted"-->
-<!--                    android:textSize="@dimen/font_size_16"-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/no_of_test_attempted"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:textColor="@color/color_black"-->
+            <!--                    android:layout_marginTop="@dimen/font_size_20"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerHorizontal="true"-->
+            <!--                    android:text="@string/no_of_test_attempted"-->
+            <!--                    android:textSize="@dimen/font_size_16"-->
 
-<!--                    />-->
+            <!--                    />-->
 
-<!--                <TextView-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/color_black"-->
-<!--                    android:layout_marginTop="@dimen/font_size_20"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:text="@string/per"-->
-<!--                    android:textSize="@dimen/font_size_16"-->
+            <!--                <TextView-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:textColor="@color/color_black"-->
+            <!--                    android:layout_marginTop="@dimen/font_size_20"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerHorizontal="true"-->
+            <!--                    android:text="@string/per"-->
+            <!--                    android:textSize="@dimen/font_size_16"-->
 
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:id="@+id/total_noof_test"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/color_black"-->
-<!--                    android:layout_marginTop="@dimen/font_size_20"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:text="@string/total_noof_test"-->
-<!--                    android:textSize="@dimen/font_size_16"-->
+            <!--                    />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/total_noof_test"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:textColor="@color/color_black"-->
+            <!--                    android:layout_marginTop="@dimen/font_size_20"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerHorizontal="true"-->
+            <!--                    android:text="@string/total_noof_test"-->
+            <!--                    android:textSize="@dimen/font_size_16"-->
 
-<!--                    />-->
+            <!--                    />-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
-<!--            <TextView-->
-<!--                android:layout_marginBottom="@dimen/dimens_30"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_below="@+id/ll_test"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textColor="@color/color_black"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:text="@string/quiz_complete"-->
-<!--                android:textSize="@dimen/font_size_16"-->
+            <!--            <TextView-->
+            <!--                android:layout_marginBottom="@dimen/dimens_30"-->
+            <!--                android:layout_centerInParent="true"-->
+            <!--                android:layout_below="@+id/ll_test"-->
+            <!--                android:textStyle="bold"-->
+            <!--                android:textColor="@color/color_black"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:text="@string/quiz_complete"-->
+            <!--                android:textSize="@dimen/font_size_16"-->
 
-<!--                />-->
+            <!--                />-->
 
         </RelativeLayout>
 
 
         <TextView
-            android:layout_marginTop="@dimen/margin_10"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rl_test"
-            android:textColor="@color/color_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
             android:text="@string/no_quiz_attempt"
+            android:textColor="@color/color_black"
             android:textSize="@dimen/font_size_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_test"
 
             />
 
 
         <LinearLayout
-            android:weightSum="3"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="220dp">
-
-
+            android:layout_height="220dp"
+            android:orientation="vertical"
+            android:weightSum="3">
 
 
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:weightSum="2.4"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="3"
-                android:layout_height="0dp">
-
+                android:weightSum="2.4">
 
 
                 <LinearLayout
-                    android:layout_weight=".15"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight=".15" />
 
 
                 <LinearLayout
-                    android:weightSum="1"
-                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
                     <LinearLayout
 
                         android:id="@+id/cardView_sample_quiz"
-                        android:background="@drawable/selector_simple_quiz"
-                        android:weightSum="1"
-                        android:layout_weight=".65"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp">
+                        android:layout_height="0dp"
+                        android:layout_weight=".65"
+                        android:background="@drawable/selector_simple_quiz"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
                         <LinearLayout
-                            android:gravity="center"
-                            android:layout_weight=".6"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp">
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+                            android:gravity="center">
 
 
                             <ImageView
-                                android:src="@drawable/ic_dash_simple_quiz"
                                 android:layout_width="@dimen/padding_70"
-                                android:layout_height="@dimen/padding_70"/>
+                                android:layout_height="@dimen/padding_70"
+                                android:src="@drawable/ic_dash_simple_quiz" />
 
                         </LinearLayout>
 
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_marginLeft="@dimen/font_size_20"
                             android:layout_weight=".4"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/btnSampleQuiz"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:text="@string/simple_quiz"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:text="@string/simple_quiz"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/colorWhite"
-                                android:text="@string/mcqs"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/mcqs"
+                                android:textColor="@color/colorWhite" />
 
 
                         </LinearLayout>
@@ -279,92 +270,88 @@
 
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_weight=".35"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp">
+                        android:layout_height="0dp"
+                        android:layout_weight=".35"
+                        android:gravity="center">
 
                         <Button
                             android:id="@+id/txtProfile"
-                            android:padding="15dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:drawableStart="@drawable/ic_drawer_profile"
-                            android:textAllCaps="false"
                             android:layout_width="150dp"
                             android:layout_height="55dp"
+                            android:layout_gravity="center"
                             android:background="@drawable/selector_dash_btn"
+                            android:drawableStart="@drawable/ic_drawer_profile"
+                            android:gravity="center"
+                            android:padding="15dp"
                             android:text="@string/profile"
-                            android:textColor="@color/colorWhite"
-                            />
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
 
-
-
-
                 <LinearLayout
-                    android:layout_weight=".15"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight=".15" />
 
                 <LinearLayout
-                    android:weightSum="1"
-                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
                     <LinearLayout
                         android:id="@+id/cardView_sample_flipCard"
-                        android:background="@drawable/selector_flipcard_quiz"
-                        android:weightSum="1"
-                        android:layout_weight=".65"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp">
+                        android:layout_height="0dp"
+                        android:layout_weight=".65"
+                        android:background="@drawable/selector_flipcard_quiz"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
                         <LinearLayout
-                            android:gravity="center"
-                            android:layout_weight=".6"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp">
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+                            android:gravity="center">
 
 
                             <ImageView
-                                android:src="@drawable/ic_dash_flipcard_quiz"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/padding_70"/>
+                                android:layout_height="@dimen/padding_70"
+                                android:src="@drawable/ic_dash_flipcard_quiz" />
 
                         </LinearLayout>
 
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_marginLeft="@dimen/font_size_20"
                             android:layout_weight=".4"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/btnSampleFlip"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:text="@string/flip_card_quiz"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:text="@string/flip_card_quiz"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
                             <TextView
-                                android:textSize="12sp"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/colorWhite"
-                                android:text="@string/cards_flip_quiz"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/cards_flip_quiz"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="12sp" />
 
 
                         </LinearLayout>
@@ -373,42 +360,36 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_weight=".35"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp">
+                        android:layout_height="0dp"
+                        android:layout_weight=".35"
+                        android:gravity="center">
 
                         <Button
                             android:id="@+id/txtRef"
-                            android:text="@string/refer"
-                            android:padding="15dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:drawableStart="@drawable/ic_drawer_refer"
-                            android:textAllCaps="false"
                             android:layout_width="150dp"
                             android:layout_height="55dp"
+                            android:layout_gravity="center"
                             android:background="@drawable/selector_dash_btn"
-                            android:textColor="@color/colorWhite"
-                            />
+                            android:drawableStart="@drawable/ic_drawer_refer"
+                            android:gravity="center"
+                            android:padding="15dp"
+                            android:text="@string/refer"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
 
-
                 <LinearLayout
-                    android:layout_weight=".15"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight=".15" />
 
 
             </LinearLayout>
-
-
-
-
 
 
         </LinearLayout>

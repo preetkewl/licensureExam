@@ -56,7 +56,11 @@ public class Constant {
         public static final String AUTH_TOKEN = "authtoken";
         public static final String REFRESH_TOKEN = "refreshtoken";
         public static final String USER_NAME = "user_name";
+        public static final String LAST_DATE = "date";
+        public static final String FLIP_COUNT = "flipCount";
+        public static final String MULTIPLE_COUNT = "MultipleCount";
         public static final String EXAM_ID = "exam_id";
+        public static final String SOLVE_EXAM_ID = "solve_exam_id";
         public static final String EMAIL = "email";
         public static final String PASSWORD = "password";
     }
