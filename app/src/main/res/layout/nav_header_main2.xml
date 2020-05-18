@@ -53,7 +53,7 @@
     </RelativeLayout>
 
 
-    <!--    <com.crcexam.android.utils.CircleImageView-->
+    <!--    <com.crcexam.utils.CircleImageView-->
     <!--        android:id="@+id/imgProfile"-->
     <!--        android:layout_width="150dp"-->
     <!--        android:layout_height="150dp"-->
@@ -125,7 +125,7 @@
 <!--    </RelativeLayout>-->
 
 
-<!--&lt;!&ndash;    <com.crcexam.android.utils.CircleImageView&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.crcexam.utils.CircleImageView&ndash;&gt;-->
 <!--&lt;!&ndash;        android:id="@+id/imgProfile"&ndash;&gt;-->
 <!--&lt;!&ndash;        android:layout_width="150dp"&ndash;&gt;-->
 <!--&lt;!&ndash;        android:layout_height="150dp"&ndash;&gt;-->
